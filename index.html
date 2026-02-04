@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zeosys | Engineering Your Future</title>
+    <meta name="description" content="Premium tech training for the next generation of software engineers.">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <!-- Split Theme Toggle -->
+    <div class="theme-controls">
+        <button class="theme-btn active" id="btn-dark" title="Dark Mode">☾</button>
+        <button class="theme-btn" id="btn-light" title="Light Mode">☀</button>
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav-wrapper">
+        <nav class="nav-pill">
+            <a href="#" class="nav-logo">Zeosys.</a>
+            <ul class="nav-links">
+                <li><a href="#tracks">Tracks</a></li>
+                <li><a href="#methodology">Why Us</a></li>
+                <li><a href="#join" style="color: var(--text-accent);">Apply &rarr;</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Background FX -->
+    <div class="bg-grid"></div>
+    <div class="cursor-dot" data-cursor-dot></div>
+    <div class="cursor-outline" data-cursor-outline></div>
+
+    <!-- Ambient Background -->
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+
+    <!-- Scroll Guide -->
+    <div class="scroll-guide">
+        <div class="scroll-guide-progress" id="scroll-progress"></div>
+    </div>
+
+    <main class="container">
+        <!-- Hero Section -->
+        <section class="hero section">
+            <div class="hero-content">
+                <h1>Master the <br><span class="text-gradient">Art of Engineering.</span></h1>
+                <p
+                    style="color: var(--text-secondary); font-size: 1.15rem; margin-bottom: 2rem; max-width: 500px; line-height: 1.6;">
+                    We don't just teach code. We teach you how to architect scalable systems, review code like a lead,
+                    and ship products that matter.
+                </p>
+                <div style="display: flex; gap: 1rem;">
+                    <a href="#tracks" class="btn-primary">Explore Tracks</a>
+                    <a href="#demo"
+                        style="color: var(--text-primary); text-decoration: none; padding: 0.5rem 1rem; font-weight: 500;">View
+                        Curriculum</a>
+                </div>
+            </div>
+
+            <!-- Detailed Hero SVG Illustration -->
+            <div class="hero-visual">
+                <svg viewBox="0 0 600 450" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                            <feGaussianBlur stdDeviation="15" result="blur" />
+                            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                        </filter>
+                    </defs>
+
+                    <!-- Background Glow -->
+                    <circle cx="300" cy="225" r="150" fill="var(--text-accent)" opacity="0.1" filter="url(#glow)" />
+
+                    <!-- Floating Code Window (Main) -->
+                    <g transform="translate(50, 50)">
+                        <rect x="0" y="0" width="400" height="280" rx="12" fill="var(--bg-surface)"
+                            stroke="var(--border)" stroke-width="1.5" />
+                        <!-- Window Dots -->
+                        <circle cx="20" cy="20" r="4" fill="#ef4444" opacity="0.8" />
+                        <circle cx="35" cy="20" r="4" fill="#eab308" opacity="0.8" />
+                        <circle cx="50" cy="20" r="4" fill="#22c55e" opacity="0.8" />
+                        <!-- Code Lines -->
+                        <rect x="25" y="60" width="100" height="8" rx="2" fill="var(--text-accent)" opacity="0.6" />
+                        <rect x="25" y="80" width="200" height="8" rx="2" fill="var(--text-secondary)" opacity="0.3" />
+                        <rect x="25" y="100" width="180" height="8" rx="2" fill="var(--text-secondary)" opacity="0.3" />
+                        <rect x="40" y="120" width="220" height="8" rx="2" fill="var(--text-secondary)" opacity="0.3" />
+                        <rect x="25" y="140" width="150" height="8" rx="2" fill="var(--text-secondary)" opacity="0.3" />
+
+                        <!-- Animated Cursor -->
+                        <rect x="180" y="140" width="2" height="12" fill="var(--text-primary)">
+                            <animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite" />
+                        </rect>
+                    </g>
+
+                    <!-- Floating Widgets (Learning Path) -->
+                    <g transform="translate(380, 240)">
+                        <rect x="0" y="0" width="140" height="100" rx="12" fill="var(--bg-surface)"
+                            stroke="var(--border)" stroke-width="1.5"
+                            style="filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));">
+                            <animateTransform attributeName="transform" type="translate" values="0,0; 0,-10; 0,0"
+                                dur="6s" repeatCount="indefinite" />
+                        </rect>
+                        <text x="20" y="40" fill="var(--text-primary)" font-size="24" font-weight="bold">95%</text>
+                        <text x="20" y="60" fill="var(--text-secondary)" font-size="10">Placement Rate</text>
+                    </g>
+
+                    <g transform="translate(20, 260)">
+                        <rect x="0" y="0" width="120" height="80" rx="12" fill="var(--bg-surface)"
+                            stroke="var(--border)" stroke-width="1.5"
+                            style="filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));">
+                            <animateTransform attributeName="transform" type="translate" values="0,0; 0,-8; 0,0"
+                                dur="5s" delay="1s" repeatCount="indefinite" />
+                        </rect>
+                        <circle cx="30" cy="40" r="15" fill="var(--text-accent)" opacity="0.2" />
+                        <path d="M30 40 L40 30 M30 40 L40 50" stroke="var(--text-accent)" stroke-width="2" />
+                    </g>
+                </svg>
+            </div>
+        </section>
+
+        <!-- Stats -->
+        <section class="stats-grid section">
+            <div class="stat-item">
+                <h3>95%</h3>
+                <p>Placement Rate</p>
+            </div>
+            <div class="stat-item">
+                <h3>120%</h3>
+                <p>Avg Salary Hike</p>
+            </div>
+            <div class="stat-item">
+                <h3>500+</h3>
+                <p>Verified Engineers</p>
+            </div>
+        </section>
+
+        <!-- Partner Logos (Moved Up for Credibility) -->
+        <section class="section" style="padding: 2rem 0 4rem 0; opacity: 0.8;">
+            <div class="trust-logos">
+                <div class="trust-logo" title="WebScale">
+                    <svg viewBox="0 0 40 40" fill="currentColor">
+                        <path d="M20 5 L35 30 L5 30 Z" opacity="0.8" />
+                        <path d="M20 12 L28 26 L12 26 Z" fill="white" />
+                    </svg>
+                    <span>WebScale</span>
+                </div>
+                <div class="trust-logo" title="DataFlow">
+                    <svg viewBox="0 0 40 40" fill="currentColor">
+                        <circle cx="12" cy="20" r="8" opacity="0.6" />
+                        <circle cx="28" cy="20" r="8" opacity="0.9" />
+                    </svg>
+                    <span>DataFlow</span>
+                </div>
+                <div class="trust-logo" title="TechCorp">
+                    <svg viewBox="0 0 40 40" fill="currentColor">
+                        <rect x="10" y="10" width="20" height="20" rx="4" opacity="0.8" />
+                        <rect x="16" y="16" width="8" height="8" fill="white" />
+                    </svg>
+                    <span>TechCorp</span>
+                </div>
+                <div class="trust-logo" title="CloudNine">
+                    <svg viewBox="0 0 40 40" fill="currentColor">
+                        <path d="M10 25 Q10 15 20 15 Q25 10 30 15 Q35 15 35 25 Z" opacity="0.8" />
+                    </svg>
+                    <span>CloudNine</span>
+                </div>
+                <div class="trust-logo" title="AI Nexus">
+                    <svg viewBox="0 0 40 40" fill="currentColor">
+                        <circle cx="20" cy="20" r="12" stroke="currentColor" stroke-width="3" fill="none" />
+                        <circle cx="20" cy="20" r="5" fill="white" />
+                    </svg>
+                    <span>AI Nexus</span>
+                </div>
+                <div class="trust-logo" title="DigitalWay">
+                    <svg viewBox="0 0 40 40" fill="currentColor">
+                        <path d="M10 10 L20 20 L10 30 M20 10 L30 20 L20 30" stroke="currentColor" stroke-width="3"
+                            fill="none" />
+                    </svg>
+                    <span>DigitalWay</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Us Section (Hub & Spoke) -->
+        <section class="section why-us-section" style="position: relative; overflow: hidden; padding: 6rem 0;">
+            <div class="hub-container">
+                <div class="spoke-side left">
+                    <div class="spoke-item">
+                        <div class="spoke-icon">⚡</div>
+                    </div>
+                    <div class="spoke-item">
+                        <div class="spoke-icon">⚙️</div>
+                    </div>
+                </div>
+                <!-- Center Hub -->
+                <div class="hub-center">
+                    <div class="hub-lock-icon">🔒</div>
+                    <h2>Unlocking<br>Potential</h2>
+                    <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem;">Discover why
+                        leading engineers choose Zeosys to master their craft at scale.</p>
+                    <a href="#" class="btn-primary">Start Learning</a>
+                </div>
+                <div class="spoke-side right">
+                    <div class="spoke-item">
+                        <div class="spoke-icon">💬</div>
+                    </div>
+                    <div class="spoke-item">
+                        <div class="spoke-icon">🔑</div>
+                    </div>
+                </div>
+                <!-- SVG Lines Background -->
+                <svg class="hub-lines" viewBox="0 0 1200 400" preserveAspectRatio="none">
+                    <path class="line-path left-top" d="M300,100 C450,100 450,200 600,200" />
+                    <path class="line-path left-bottom" d="M300,300 C450,300 450,200 600,200" />
+                    <path class="line-path right-top" d="M900,100 C750,100 750,200 600,200" />
+                    <path class="line-path right-bottom" d="M900,300 C750,300 750,200 600,200" />
+                </svg>
+            </div>
+        </section>
+
+        <!-- Feature Cards (Benefits) -->
+        <section class="section">
+            <div class="grid-cols-3">
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <span class="badge-yellow">FEATURE</span>
+                        <span class="feature-emoji">🤖</span>
+                    </div>
+                    <h3>AI-Powered Personalization</h3>
+                    <p>Adaptive learning algorithms tailor content to your unique needs and pace.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <span class="badge-yellow">FEATURE</span>
+                        <span class="feature-emoji">🛠️</span>
+                    </div>
+                    <h3>Project-Based Curriculum</h3>
+                    <p>Build portfolio-worthy projects from day one with expert guidance.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <span class="badge-yellow">FEATURE</span>
+                        <span class="feature-emoji">👨‍💻</span>
+                    </div>
+                    <h3>Industry Mentor Network</h3>
+                    <p>Learn directly from professionals at top tech companies like Google & Amazon.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tracks Grid (Product) -->
+        <section id="tracks" class="section">
+            <div style="margin-bottom: 3rem;">
+                <h2 class="text-gradient">Engineering Tracks</h2>
+                <p style="color: var(--text-secondary);">Select your specialization and start building.</p>
+            </div>
+            <div id="tracks-container" class="grid-cols-3">
+                <!-- Rendered by JS -->
+            </div>
+        </section>
+
+        <!-- Tech Stack (Skills) -->
+        <section class="section skills-section">
+            <h2 style="color: var(--text-primary); font-weight: 700;">Tech Stack</h2>
+            <div class="skills-container">
+                <div class="skills-col">
+                    <h4>Core</h4>
+                    <ul class="skill-list">
+                        <li class="skill-item">Next.js</li>
+                        <li class="skill-item">React</li>
+                        <li class="skill-item">TypeScript</li>
+                        <li class="skill-item">Node.js</li>
+                        <li class="skill-item">System Design</li>
+                    </ul>
+                </div>
+                <div class="skills-col">
+                    <h4>Tools</h4>
+                    <ul class="skill-list">
+                        <li class="skill-item">Git</li>
+                        <li class="skill-item">Linux</li>
+                        <li class="skill-item">Docker</li>
+                        <li class="skill-item">Figma</li>
+                        <li class="skill-item">AI Workflows</li>
+                    </ul>
+                </div>
+                <div class="skills-col">
+                    <h4>Languages</h4>
+                    <ul class="skill-list">
+                        <li class="skill-item">JavaScript</li>
+                        <li class="skill-item">Java</li>
+                        <li class="skill-item">C++</li>
+                        <li class="skill-item">Python</li>
+                        <li class="skill-item">SQL</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Powered By Section (Technical Depth) -->
+        <section class="section powered-by-section">
+            <h2 class="text-gradient" style="font-size: 2.5rem; margin-bottom: 4rem;">Built on a foundation of fast,
+                <br> production-grade tooling
+            </h2>
+            <div class="circuit-container">
+                <div class="circuit-chip">
+                    <span
+                        style="font-size: 0.9rem; letter-spacing: 0.1em; color: var(--text-secondary); text-transform: uppercase;">Powered
+                        By</span>
+                    <div class="chip-lines-left"></div>
+                    <div class="chip-lines-right"></div>
+                    <div class="chip-lines-bottom"></div>
+                </div>
+                <div class="circuit-grid">
+                    <div class="tech-card-dark">
+                        <div class="tech-icon-large">⚛️</div>
+                        <h3>MERN Stack ↗</h3>
+                        <p>The library for web and native user interfaces. Built on the latest React features.</p>
+                    </div>
+                    <div class="tech-card-dark">
+                        <div class="tech-icon-large">⚡</div>
+                        <h3>Vite & Turborepo ↗</h3>
+                        <p>Incremental bundlers optimized for JavaScript and TypeScript, written in Rust.</p>
+                    </div>
+                    <div class="tech-card-dark">
+                        <div class="tech-icon-large">☁️</div>
+                        <h3>AWS Cloud ↗</h3>
+                        <p>Scalable infrastructure primitives for the next generation of fast developer tools.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Showcase Section (Proof) -->
+        <section class="section showcase-section">
+            <h2 class="text-gradient" style="font-size: 3rem; margin-bottom: 3rem; line-height: 1.1;">The portfolio of
+                choice <br> when it matters</h2>
+            <div class="showcase-grid">
+                <div class="showcase-card large">
+                    <div class="showcase-preview" style="background: linear-gradient(45deg, #1e1e24, #2d2d35);">
+                        <div class="mock-browser">
+                            <div class="mock-dots"><span></span><span></span><span></span></div>
+                            <div class="mock-content">
+                                <span style="font-size: 2rem;">🎙️</span>
+                                <h4>Audible Clone</h4>
+                                <p>Next.js Audio Streaming</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="showcase-meta"><span>Audio Engine</span><span>Next.js</span></div>
+                </div>
+                <div class="showcase-card">
+                    <div class="showcase-preview" style="background: linear-gradient(135deg, #0f172a, #1e293b);">
+                        <div class="mock-simple"><span style="font-size: 2rem;">📊</span>
+                            <h4>SaaS Analytics</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="showcase-card">
+                    <div class="showcase-preview" style="background: linear-gradient(135deg, #2e1065, #4c1d95);">
+                        <div class="mock-simple"><span style="font-size: 2rem;">🛍️</span>
+                            <h4>Nike Store</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="showcase-card large">
+                    <div class="showcase-preview" style="background: linear-gradient(45deg, #171717, #262626);">
+                        <div class="mock-browser">
+                            <div class="mock-dots"><span></span><span></span><span></span></div>
+                            <div class="mock-content">
+                                <span style="font-size: 2rem;">📝</span>
+                                <h4>Notion Clone</h4>
+                                <p>Real-time Collab</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="showcase-meta"><span>WebSockets</span><span>React</span></div>
+                </div>
+            </div>
+            <div style="margin-top: 4rem; text-align: center;">
+                <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 1.1rem;">For performance,
+                    efficiency and engineering depth.</p>
+                <a href="#" class="btn-showcase">View Student Showcase</a>
+            </div>
+        </section>
+
+        <!-- Testimonials (Social Proof) -->
+        <section class="section" style="text-align: center;">
+            <h2 class="text-gradient" style="margin-bottom: 3rem;">What Our <span
+                    style="color: #7c3aed;">Students</span> Say</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="test-header">
+                        <div class="avatar-circle" style="background: linear-gradient(135deg, #ef4444, #f59e0b);">MC
+                        </div>
+                        <div class="test-info">
+                            <h4>Michael Chen</h4><span>Data Science</span>
+                        </div>
+                    </div>
+                    <p>"Transformed my career. Hands-on projects made all the difference."</p>
+                </div>
+                <div class="testimonial-card">
+                    <div class="test-header">
+                        <div class="avatar-circle" style="background: linear-gradient(135deg, #10b981, #3b82f6);">ER
+                        </div>
+                        <div class="test-info">
+                            <h4>Emily Rodriguez</h4><span>Web Dev</span>
+                        </div>
+                    </div>
+                    <p>"Cutting-edge tech with industry-relevant curriculum. Highly recommended!"</p>
+                </div>
+                <div class="testimonial-card">
+                    <div class="test-header">
+                        <div class="avatar-circle" style="background: linear-gradient(135deg, #8b5cf6, #ec4899);">DT
+                        </div>
+                        <div class="test-info">
+                            <h4>David Thompson</h4><span>AI/ML Student</span>
+                        </div>
+                    </div>
+                    <p>"Exceeded all expectations. Amazing practical skills gained."</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="section faq-section">
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <span
+                    style="color: var(--text-accent); font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em;">FAQ</span>
+                <h2 class="text-gradient" style="margin-top: 0.5rem;">Have a Question?</h2>
+            </div>
+
+            <div class="faq-grid">
+                <div class="faq-col">
+                    <details class="faq-item">
+                        <summary>Does Zeosys offer a free trial?</summary>
+                        <p>Yes, the first module of every track is free to audit so you can experience our teaching
+                            style.</p>
+                    </details>
+                    <details class="faq-item">
+                        <summary>Is the curriculum beginner friendly?</summary>
+                        <p>We have tracks for all levels. The 'Foundations' track is designed for absolute beginners.
+                        </p>
+                    </details>
+                    <details class="faq-item">
+                        <summary>How much does full access cost?</summary>
+                        <p>We offer flexible monthly and annual plans. Check our pricing page for details.</p>
+                    </details>
+                </div>
+                <div class="faq-col">
+                    <details class="faq-item">
+                        <summary>Is Zeosys compatible with my schedule?</summary>
+                        <p>Absolutely. All content is self-paced with weekly live mentorship sessions you can join or
+                            watch later.</p>
+                    </details>
+                    <details class="faq-item">
+                        <summary>Do you offer career support?</summary>
+                        <p>Yes, our 'Career OS' module includes resume reviews, mock interviews, and referrals.</p>
+                    </details>
+                    <details class="faq-item">
+                        <summary>How do I get mentor support?</summary>
+                        <p>Support is available 24/7 via our Discord community and direct office hours.</p>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    <footer>
+        <div class="container footer-container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <!-- Legacy Brand -->
+                    <h2
+                        style="font-size: 3.5rem; color: var(--text-primary); margin-bottom: 0.5rem; font-weight: 800; letter-spacing: -0.05em;">
+                        Zeosys.</h2>
+                    <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.25rem; font-weight: 500;">
+                        Learn. Lead. Level up.</p>
+
+                    <div class="newsletter-form">
+                        <input type="email" placeholder="email@domain.com" class="newsletter-input">
+                        <button class="newsletter-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="footer-links-group">
+                    <div class="footer-col-simple">
+                        <a href="#">Manifesto</a>
+                        <a href="#">Curriculum</a>
+                        <a href="#">Mentors</a>
+                    </div>
+                    <div class="footer-col-simple">
+                        <a href="#">Privacy</a>
+                        <a href="#">Terms</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p style="font-family: monospace; opacity: 0.5;">EST. 2026 // SYSTEM.READY</p>
+                <div class="social-icons">
+                    <a href="#" aria-label="X">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                        </svg>
+                    </a>
+                    <a href="#" aria-label="GitHub">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02a9.56 9.56 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z" />
+                        </svg>
+                    </a>
+                    <a href="#" aria-label="LinkedIn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <circle cx="4" cy="4" r="2" />
+                            <path d="M2 9h4v12H2zm6 0h4v1.54h.06A4.39 4.39 0 0 1 19.34 14C19.34 21 15 21 15 21H8V9z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
