@@ -101,6 +101,12 @@ html {
     /* Prevent horizontal scroll globally */
 }
 
+/* Accessibility: Robust Focus Indicator */
+:focus-visible {
+    outline: 2px solid var(--text-accent);
+    outline-offset: 4px;
+}
+
 /* Reset */
 * {
     margin: 0;

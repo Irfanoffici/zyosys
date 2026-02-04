@@ -12,13 +12,13 @@
 <body>
     <!-- Split Theme Toggle -->
     <div class="theme-controls">
-        <button class="theme-btn active" id="btn-dark" title="Dark Mode">☾</button>
-        <button class="theme-btn" id="btn-light" title="Light Mode">☀</button>
+        <button class="theme-btn active" id="btn-dark" aria-label="Switch to Dark Mode" title="Dark Mode">☾</button>
+        <button class="theme-btn" id="btn-light" aria-label="Switch to Light Mode" title="Light Mode">☀</button>
     </div>
 
     <!-- Navigation -->
     <div class="nav-wrapper">
-        <nav class="nav-pill">
+        <nav class="nav-pill" aria-label="Main Navigation">
             <a href="#" class="nav-logo">Zeosys.</a>
             <ul class="nav-links">
                 <li><a href="#tracks">Tracks</a></li>
@@ -29,16 +29,16 @@
     </div>
 
     <!-- Background FX -->
-    <div class="bg-grid"></div>
-    <div class="cursor-dot" data-cursor-dot></div>
-    <div class="cursor-outline" data-cursor-outline></div>
+    <div class="bg-grid" aria-hidden="true"></div>
+    <div class="cursor-dot" data-cursor-dot aria-hidden="true"></div>
+    <div class="cursor-outline" data-cursor-outline aria-hidden="true"></div>
 
     <!-- Ambient Background -->
-    <div class="ambient-orb orb-1"></div>
-    <div class="ambient-orb orb-2"></div>
+    <div class="ambient-orb orb-1" aria-hidden="true"></div>
+    <div class="ambient-orb orb-2" aria-hidden="true"></div>
 
     <!-- Scroll Guide -->
-    <div class="scroll-guide">
+    <div class="scroll-guide" aria-hidden="true">
         <div class="scroll-guide-progress" id="scroll-progress"></div>
     </div>
 
@@ -61,7 +61,7 @@
             </div>
 
             <!-- Detailed Hero SVG Illustration -->
-            <div class="hero-visual">
+            <div class="hero-visual" aria-hidden="true">
                 <svg viewBox="0 0 600 450" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
@@ -479,10 +479,11 @@
                         Learn. Lead. Level up.</p>
 
                     <div class="newsletter-form">
-                        <input type="email" placeholder="email@domain.com" class="newsletter-input">
-                        <button class="newsletter-btn">
+                        <input type="email" placeholder="email@domain.com" class="newsletter-input"
+                            aria-label="Email address for newsletter" name="email" autocomplete="email">
+                        <button class="newsletter-btn" aria-label="Subscribe">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
+                                stroke-width="2" aria-hidden="true">
                                 <path d="M5 12h14M12 5l7 7-7 7" />
                             </svg>
                         </button>
@@ -501,7 +502,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p style="font-family: monospace; opacity: 0.5;">EST. 2026 // SYSTEM.READY</p>
+                <p style="font-family: monospace; opacity: 0.8;">EST. 2026 // SYSTEM.READY</p>
                 <div class="social-icons">
                     <a href="#" aria-label="X">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
