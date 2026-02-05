@@ -39,7 +39,9 @@
 <body>
     <!-- Top Announcement Bar -->
     <div class="top-bar">
-        <span>🚀 New Cohort Starting Soon: <strong>Apply Now</strong></span>
+        <span>🚀 New Cohort Starting Soon: <a
+                href="https://wa.me/918870095446?text=Hi%20Zeosys,%20I%20am%20interested%20in%20joining%20the%20new%20cohort."
+                target="_blank" style="color: white; text-decoration: underline;"><strong>Apply Now</strong></a></span>
     </div>
 
     <!-- Theme Toggle -->
@@ -57,7 +59,8 @@
             <ul class="nav-links">
                 <li><a href="#tracks" aria-label="View our engineering tracks">Tracks</a></li>
                 <li><a href="#methodology" aria-label="Why choose Zeosys">Why Us</a></li>
-                <li><a href="#join" style="color: var(--text-accent);" aria-label="Apply to Zeosys">Apply &rarr;</a>
+                <li><a href="https://wa.me/918870095446?text=Hi%20Zeosys,%20I%20would%20like%20to%20apply%20for%20a%20course."
+                        target="_blank" style="color: var(--text-accent);" aria-label="Apply to Zeosys">Apply &rarr;</a>
                 </li>
             </ul>
         </nav>
@@ -98,7 +101,7 @@
 
             <!-- Detailed Hero SVG Illustration -->
             <div class="hero-visual" aria-hidden="true">
-                <svg viewBox="0 0 600 450" xmlns="http://www.w3.org/2000/svg">
+                <svg viewBox="0 0 600 450" xmlns="http://www.w3.org/2000/svg" loading="lazy" decoding="async">
                     <defs>
                         <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
                             <feGaussianBlur stdDeviation="15" result="blur" />
@@ -220,7 +223,8 @@
         </section>
 
         <!-- Why Us Section (Hub & Spoke) -->
-        <section class="section why-us-section" style="position: relative; overflow: hidden; padding: 6rem 0;">
+        <section id="methodology" class="section why-us-section"
+            style="position: relative; overflow: hidden; padding: 6rem 0;">
             <div class="hub-container">
                 <div class="spoke-side left">
                     <div class="spoke-item">
@@ -236,7 +240,8 @@
                     <h2>Unlocking<br>Potential</h2>
                     <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem;">Discover why
                         leading engineers choose Zeosys to master their craft at scale.</p>
-                    <a href="#" class="btn-primary">Start Learning</a>
+                    <a href="https://wa.me/918870095446?text=Hi%20Zeosys,%20I'm%20ready%20to%20start%20learning.%20Tell%20me%20more!"
+                        target="_blank" class="btn-primary">Start Learning</a>
                 </div>
                 <div class="spoke-side right">
                     <div class="spoke-item">
@@ -304,31 +309,49 @@
                 <div class="skills-col">
                     <h4>Core</h4>
                     <ul class="skill-list">
-                        <li class="skill-item">Next.js</li>
-                        <li class="skill-item">React</li>
-                        <li class="skill-item">TypeScript</li>
-                        <li class="skill-item">Node.js</li>
-                        <li class="skill-item">System Design</li>
+                        <li class="skill-item" data-desc="The React Framework for the Web"
+                            data-url="https://nextjs.org/">Next.js</li>
+                        <li class="skill-item" data-desc="The library for web and native user interfaces"
+                            data-url="https://react.dev/">React</li>
+                        <li class="skill-item" data-desc="JavaScript with syntax for types"
+                            data-url="https://www.typescriptlang.org/">TypeScript</li>
+                        <li class="skill-item" data-desc="JavaScript runtime built on Chrome's V8 engine"
+                            data-url="https://nodejs.org/">Node.js</li>
+                        <li class="skill-item" data-desc="Process of defining architecture, interfaces, and data"
+                            data-url="https://en.wikipedia.org/wiki/Systems_design">System Design</li>
                     </ul>
                 </div>
                 <div class="skills-col">
                     <h4>Tools</h4>
                     <ul class="skill-list">
-                        <li class="skill-item">Git</li>
-                        <li class="skill-item">Linux</li>
-                        <li class="skill-item">Docker</li>
-                        <li class="skill-item">Figma</li>
-                        <li class="skill-item">AI Workflows</li>
+                        <li class="skill-item" data-desc="Distributed version control system"
+                            data-url="https://git-scm.com/">Git</li>
+                        <li class="skill-item" data-desc="Open-source operating system kernel"
+                            data-url="https://www.linux.org/">Linux</li>
+                        <li class="skill-item" data-desc="Accelerate how you build, share, and run applications"
+                            data-url="https://www.docker.com/">Docker</li>
+                        <li class="skill-item" data-desc="The collaborative interface design tool"
+                            data-url="https://www.figma.com/">Figma</li>
+                        <li class="skill-item" data-desc="Modern AI-assisted development pipelines"
+                            data-url="https://openai.com/">AI Workflows</li>
                     </ul>
                 </div>
                 <div class="skills-col">
                     <h4>Languages</h4>
                     <ul class="skill-list">
-                        <li class="skill-item">JavaScript</li>
-                        <li class="skill-item">Java</li>
-                        <li class="skill-item">C++</li>
-                        <li class="skill-item">Python</li>
-                        <li class="skill-item">SQL</li>
+                        <li class="skill-item"
+                            data-desc="Lightweight, interpreted, or just-in-time compiled programming language"
+                            data-url="https://developer.mozilla.org/en-US/docs/Web/JavaScript">JavaScript</li>
+                        <li class="skill-item" data-desc="Class-based, object-oriented programming language"
+                            data-url="https://www.java.com/">Java</li>
+                        <li class="skill-item"
+                            data-desc="Cross-platform language that can be used to create high-performance applications"
+                            data-url="https://isocpp.org/">C++</li>
+                        <li class="skill-item" data-desc="High-level, general-purpose programming language"
+                            data-url="https://www.python.org/">Python</li>
+                        <li class="skill-item"
+                            data-desc="Standard language for storing, manipulating and retrieving data in databases"
+                            data-url="https://en.wikipedia.org/wiki/SQL">SQL</li>
                     </ul>
                 </div>
             </div>
