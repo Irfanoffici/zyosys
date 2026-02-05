@@ -65,13 +65,13 @@
     --nav-bg: rgba(255, 255, 255, 0.9);
     --nav-border: rgba(0, 0, 0, 0.05);
 
-    /* Light Mode Card Shadows (Much stronger lift) */
-    --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    /* Light Mode Card Shadows (Premium Soft Lift) */
+    --shadow-card: 0 20px 40px -10px rgba(0, 0, 0, 0.08), 0 10px 20px -5px rgba(0, 0, 0, 0.04);
 
     /* Light Mode Glass & Footer */
     --bg-glass: rgba(255, 255, 255, 0.85);
     --bg-footer: radial-gradient(circle at 50% 100%, #e0e7ff 0%, #f4f4f5 100%);
-    --shadow-container: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+    --shadow-container: 0 40px 80px -20px rgba(0, 0, 0, 0.15);
     --border-glass: rgba(0, 0, 0, 0.05);
 }
 
@@ -183,8 +183,12 @@ body {
     border-radius: 2.5rem;
     /* Distinct rounded corners */
     position: relative;
+    /* Distinct rounded corners */
+    position: relative;
     overflow: hidden;
     transition: transform 0.3s ease;
+
+
 }
 
 /* Alternate Backgrounds for "Card" feel */
@@ -267,10 +271,30 @@ h2 {
     background: rgba(0, 0, 0, 0.1);
 }
 
+/* Top Bar */
+.top-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 36px;
+    background: var(--text-accent);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.85rem;
+    font-weight: 500;
+    z-index: 1001;
+    display: none;
+    /* Above everything */
+}
+
 /* New Navbar (Wider, Professional) */
 .nav-wrapper {
     position: fixed;
-    top: 2rem;
+    top: 3.5rem;
+    /* Adjusted for Top Bar (2.25rem bar + 1.25rem gap) */
     max-width: 900px;
     margin: 0 auto;
     left: 0;
@@ -288,7 +312,7 @@ h2 {
 
 .nav-pill {
     padding: 0.75rem 2rem;
-    border-radius: 20px;
+    border-radius: 99px;
     background: var(--nav-bg);
     /* Glass feel */
     backdrop-filter: blur(24px);
@@ -297,7 +321,7 @@ h2 {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
     transition: background-color 0.3s, border-color 0.3s;
 }
 
@@ -352,7 +376,8 @@ h2 {
     grid-template-columns: 1fr;
     place-items: center;
     text-align: center;
-    padding-top: var(--space-16);
+    padding-top: 10rem;
+    /* Increased to clear floating nav */
     background: transparent !important;
     border: none !important;
 }
@@ -643,14 +668,16 @@ footer::before {
     filter: blur(10px);
 }
 
-/* Footer Ambient Orbs */
-footer .footer-orb {
+/* Footer Ambient Orbs - Base Style */
+.ambient-orb {
     position: absolute;
     border-radius: 50%;
     filter: blur(80px);
-    opacity: 0.4;
-    z-index: -1;
-    animation: float 10s infinite ease-in-out alternate;
+    /* Heavy blur */
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.6;
+    /* New Breathing */
 }
 
 footer .orb-f1 {
@@ -891,7 +918,6 @@ footer .orb-f2 {
     border-radius: 50%;
     pointer-events: none;
     z-index: -1;
-    animation: float 15s infinite ease-in-out;
 }
 
 .orb-1 {
@@ -937,17 +963,6 @@ footer .orb-f2 {
     pointer-events: none;
 }
 
-@keyframes float {
-
-    0%,
-    100% {
-        transform: translate(0, 0);
-    }
-
-    50% {
-        transform: translate(40px, 60px);
-    }
-}
 
 /* --- Powered By Section/* --- Circuit Section --- */
 .powered-by-section {
@@ -1504,20 +1519,7 @@ html {
     transition: background 0.3s ease;
 }
 
-/* Liquid Animation for Main Container Bottom */
-@keyframes liquidMorph {
-    0% {
-        border-radius: 0 0 50% 50% / 0 0 40px 40px;
-    }
 
-    50% {
-        border-radius: 0 0 50% 50% / 0 0 70px 70px;
-    }
-
-    100% {
-        border-radius: 0 0 50% 50% / 0 0 40px 40px;
-    }
-}
 
 main {
     position: relative;
@@ -1573,25 +1575,18 @@ main {
 
     background: var(--bg-footer);
     display: flex;
+    display: flex;
     flex-direction: column;
     justify-content: center;
     overflow: hidden;
 
-    will-change: transform, filter, opacity;
+    /* Memory: Only promote to layer when needed. Opacity/Filter are cheap. */
+    will-change: transform, opacity;
 }
+
 
 /* Footer Content Animation */
-@keyframes floatUp {
-    0% {
-        opacity: 0;
-        transform: translateY(30px);
-    }
 
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
 
 .footer-container {
     padding: 2rem 4rem;
@@ -1612,10 +1607,21 @@ main {
     border-top: 1px solid var(--border);
 }
 
-.footer-container>* {
-    animation: floatUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-    opacity: 0;
+
+
+
+
+
+.ambient-orb {
+    /* Existing positioning might be absolute, ensure this doesn't conflict */
+    /* If orbs move via scroll, this adds a secondary layer of movement if structured correctly, 
+       but if they use `transform` for scroll, this conflicts. 
+       Use a wrapper or accumulation? 
+       Actually, `style.css` doesn't seem to have `.ambient-orb` definition here yet, 
+       I need to find where it is defined or add it. */
 }
+
+.hero-visual {}
 
 /* Stagger Animations */
 .footer-top {

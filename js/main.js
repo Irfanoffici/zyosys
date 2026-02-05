@@ -3,6 +3,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     initTheme();
     renderTracks();
+    initAdvancedUI();
 });
 
 function initTheme() {
@@ -156,20 +157,20 @@ function initAdvancedUI() {
                 // Linked to the scroll progress of the spacer entering the viewport
                 gsap.fromTo(footerBg,
                     {
-                        yPercent: -30,    // Starts slightly shifted up/down (parallax feel)
-                        opacity: 0.2,
-                        filter: "blur(20px)"
+                        yPercent: -50,
+                        opacity: 1,       // Visible (but behind glass/blur)
+                        filter: "blur(20px) brightness(0.5)" // Dim and blurry initially
                     },
                     {
                         yPercent: 0,
                         opacity: 1,
-                        filter: "blur(0px)",
-                        ease: "power2.out", // Smooth deceleration
+                        filter: "blur(0px) brightness(1)",   // Clear and bright
+                        ease: "power2.out",
                         scrollTrigger: {
                             trigger: spacer,
-                            start: "top bottom", // When spacer top hits viewport bottom
-                            end: "bottom bottom", // When spacer bottom hits viewport bottom
-                            scrub: true, // Tied to scroll bar
+                            start: "top bottom",
+                            end: "bottom bottom",
+                            scrub: 1,
                         }
                     }
                 );
@@ -193,3 +194,4 @@ function initAdvancedUI() {
         });
     }
 }
+
