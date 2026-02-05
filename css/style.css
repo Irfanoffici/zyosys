@@ -34,6 +34,12 @@
     /* Grid */
     --max-width: 1200px;
     --radius: 12px;
+
+    /* Glass & Footer Defaults (Dark) */
+    --bg-glass: rgba(10, 10, 10, 0.85);
+    --bg-footer: radial-gradient(circle at 50% 100%, #1a1a2e 0%, #000000 100%);
+    --shadow-container: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    --border-glass: rgba(255, 255, 255, 0.03);
 }
 
 [data-theme="light"] {
@@ -61,7 +67,15 @@
 
     /* Light Mode Card Shadows (Much stronger lift) */
     --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+    /* Light Mode Glass & Footer */
+    --bg-glass: rgba(255, 255, 255, 0.85);
+    --bg-footer: radial-gradient(circle at 50% 100%, #e0e7ff 0%, #f4f4f5 100%);
+    --shadow-container: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+    --border-glass: rgba(0, 0, 0, 0.05);
 }
+
+
 
 /* ... existing code ... */
 
@@ -120,8 +134,9 @@ body {
     font-family: 'Inter', sans-serif;
     line-height: 1.5;
     transition: background-color 0.3s ease, color 0.3s ease;
-    overflow-x: hidden;
     /* Double safety */
+    position: relative;
+    z-index: 1;
 }
 
 /* --- Layout Engine --- */
@@ -130,6 +145,34 @@ body {
     max-width: var(--max-width);
     margin: 0 auto;
     padding: 0 var(--space-4);
+
+    /* Premium Glass Effect */
+    background: var(--bg-glass);
+    backdrop-filter: blur(80px);
+    /* Increased blur */
+    -webkit-backdrop-filter: blur(80px);
+    border-left: 1px solid var(--border-glass);
+    border-right: 1px solid var(--border-glass);
+
+    position: relative;
+    z-index: 10;
+    border-radius: 0 0 2rem 2rem;
+    /* Smooth bottom edge */
+    box-shadow: var(--shadow-container);
+    margin-bottom: 400px;
+    /* Space for footer reveal */
+}
+
+/* Parallax Elements */
+.parallax-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    will-change: transform;
 }
 
 /* Section Styling (Rounded & Card-like) */
@@ -175,46 +218,53 @@ h2 {
 
 /* --- Components --- */
 
-/* Split Theme Toggles (Top-Left) */
-.theme-controls {
+/* Single Theme Toggle (Minimal) */
+.theme-toggle {
     position: fixed;
     top: 2rem;
     left: 2rem;
-    display: flex;
-    gap: 0.5rem;
-    z-index: 1000;
-    background: var(--nav-bg);
-    padding: 0.5rem;
-    border-radius: 99px;
-    border: 1px solid var(--nav-border);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-}
-
-.theme-btn {
-    width: 36px;
-    height: 36px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
-    border: none;
-    background: transparent;
-    color: var(--text-secondary);
-    cursor: pointer;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    color: var(--text-primary);
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s;
-    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 1000;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.theme-btn.active {
-    background: var(--text-primary);
-    color: var(--bg-body);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+.theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: rotate(15deg) scale(1.05);
+    border-color: var(--text-accent);
 }
 
-.theme-btn:hover:not(.active) {
+.theme-toggle:active {
+    transform: scale(0.95);
+}
+
+.theme-toggle svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    /* Default to outline for moon */
+    transition: all 0.3s ease;
+}
+
+[data-theme="light"] .theme-toggle {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.1);
     color: var(--text-primary);
-    background: var(--bg-surface-hover);
+}
+
+[data-theme="light"] .theme-toggle:hover {
+    background: rgba(0, 0, 0, 0.1);
 }
 
 /* New Navbar (Wider, Professional) */
@@ -557,11 +607,67 @@ h2 {
 }
 
 footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 400px;
+    /* Fixed height for reveal */
+    z-index: -10;
+    /* Behind main content */
     border-top: 1px solid var(--border);
     padding: var(--space-16) 0;
     color: var(--text-secondary);
     text-align: center;
     font-size: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    /* Footer Design */
+    background: var(--bg-footer);
+    overflow: hidden;
+}
+
+/* Footer Blur Overlay for "Flowing" Effect */
+footer::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: linear-gradient(to bottom, var(--bg-body), transparent);
+    z-index: 1;
+    pointer-events: none;
+    filter: blur(10px);
+}
+
+/* Footer Ambient Orbs */
+footer .footer-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.4;
+    z-index: -1;
+    animation: float 10s infinite ease-in-out alternate;
+}
+
+footer .orb-f1 {
+    width: 300px;
+    height: 300px;
+    background: var(--text-accent);
+    bottom: -100px;
+    left: -50px;
+}
+
+footer .orb-f2 {
+    width: 200px;
+    height: 200px;
+    background: blue;
+    bottom: 50px;
+    right: -50px;
+    animation-delay: 2s;
 }
 
 /* Responsive */
@@ -798,7 +904,37 @@ footer {
     bottom: -30%;
     right: -20%;
     background: radial-gradient(circle, rgba(59, 130, 246, 0.06) 0%, transparent 70%);
-    animation-delay: -7s;
+    animation-delay: -5s;
+}
+
+.orb-3 {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
+    animation-delay: -10s;
+}
+
+/* More Blurs */
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120%;
+    height: 120%;
+    background: radial-gradient(circle, rgba(124, 58, 237, 0.05), transparent 60%);
+    filter: blur(60px);
+    z-index: -1;
+    pointer-events: none;
 }
 
 @keyframes float {
@@ -1909,8 +2045,8 @@ footer {
     position: relative;
     z-index: 10;
     padding: 3rem;
-    background: rgba(10, 10, 10, 0.8);
-    /* Semi-transparent background */
+    background: var(--bg-glass);
+    /* Adaptive Glass */
     backdrop-filter: blur(12px);
     border: 1px solid var(--border);
     border-radius: 24px;

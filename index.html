@@ -5,25 +5,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zeosys | Engineering Your Future</title>
-    <meta name="description" content="Premium tech training for the next generation of software engineers.">
+    <meta name="description"
+        content="Premium tech training for the next generation of software engineers. Master scalable systems, code reviews, and product shipping.">
+    <meta name="keywords" content="coding bootcamp, software engineering, system design, react, next.js, career growth">
+    <meta name="author" content="Zeosys">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://zeosys.com/">
+    <meta property="og:title" content="Zeosys | Engineering Your Future">
+    <meta property="og:description"
+        content="Premium tech training for the next generation of software engineers. Master scalable systems.">
+    <meta property="og:image" content="https://zeosys.com/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://zeosys.com/">
+    <meta property="twitter:title" content="Zeosys | Engineering Your Future">
+    <meta property="twitter:description" content="Premium tech training for the next generation of software engineers.">
+    <meta property="twitter:image" content="https://zeosys.com/twitter-image.jpg">
+
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-    <!-- Split Theme Toggle -->
-    <div class="theme-controls">
-        <button class="theme-btn active" id="btn-dark" aria-label="Switch to Dark Mode" title="Dark Mode">☾</button>
-        <button class="theme-btn" id="btn-light" aria-label="Switch to Light Mode" title="Light Mode">☀</button>
-    </div>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Dark Mode" title="Toggle Theme">
+        <svg class="theme-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+    </button>
 
     <!-- Navigation -->
     <div class="nav-wrapper">
         <nav class="nav-pill" aria-label="Main Navigation">
             <a href="#" class="nav-logo">Zeosys.</a>
             <ul class="nav-links">
-                <li><a href="#tracks">Tracks</a></li>
-                <li><a href="#methodology">Why Us</a></li>
-                <li><a href="#join" style="color: var(--text-accent);">Apply &rarr;</a></li>
+                <li><a href="#tracks" aria-label="View our engineering tracks">Tracks</a></li>
+                <li><a href="#methodology" aria-label="Why choose Zeosys">Why Us</a></li>
+                <li><a href="#join" style="color: var(--text-accent);" aria-label="Apply to Zeosys">Apply &rarr;</a>
+                </li>
             </ul>
         </nav>
     </div>
@@ -34,8 +60,9 @@
     <div class="cursor-outline" data-cursor-outline aria-hidden="true"></div>
 
     <!-- Ambient Background -->
-    <div class="ambient-orb orb-1" aria-hidden="true"></div>
-    <div class="ambient-orb orb-2" aria-hidden="true"></div>
+    <div class="ambient-orb orb-1" data-speed="0.05" aria-hidden="true"></div>
+    <div class="ambient-orb orb-2" data-speed="0.08" aria-hidden="true"></div>
+    <div class="ambient-orb orb-3" data-speed="0.02" aria-hidden="true"></div>
 
     <!-- Scroll Guide -->
     <div class="scroll-guide" aria-hidden="true">
@@ -53,8 +80,8 @@
                     and ship products that matter.
                 </p>
                 <div style="display: flex; gap: 1rem;">
-                    <a href="#tracks" class="btn-primary">Explore Tracks</a>
-                    <a href="#demo"
+                    <a href="#tracks" class="btn-primary" aria-label="Explore our engineering tracks">Explore Tracks</a>
+                    <a href="#demo" aria-label="View our curriculum"
                         style="color: var(--text-primary); text-decoration: none; padding: 0.5rem 1rem; font-weight: 500;">View
                         Curriculum</a>
                 </div>
@@ -381,7 +408,7 @@
             <div style="margin-top: 4rem; text-align: center;">
                 <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 1.1rem;">For performance,
                     efficiency and engineering depth.</p>
-                <a href="#" class="btn-showcase">View Student Showcase</a>
+                <a href="#" class="btn-showcase" aria-label="View student showcase projects">View Student Showcase</a>
             </div>
         </section>
 
@@ -468,6 +495,8 @@
 
     </main>
     <footer>
+        <div class="footer-orb orb-f1"></div>
+        <div class="footer-orb orb-f2"></div>
         <div class="container footer-container">
             <div class="footer-top">
                 <div class="footer-brand">
@@ -527,8 +556,8 @@
         </div>
     </footer>
 
-    <script src="js/config.js"></script>
-    <script src="js/main.js"></script>
+    <script src="js/config.js" defer></script>
+    <script src="js/main.js" defer></script>
 </body>
 
 </html>

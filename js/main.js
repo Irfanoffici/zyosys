@@ -6,9 +6,12 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initTheme() {
-    const btnDark = document.getElementById('btn-dark');
-    const btnLight = document.getElementById('btn-light');
+    const toggleBtn = document.getElementById('theme-toggle');
     const html = document.documentElement;
+
+    // Icons
+    const moonIcon = '<svg class="theme-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>';
+    const sunIcon = '<svg class="theme-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>';
 
     // Load saved preference
     const saved = localStorage.getItem('theme') || 'dark';
@@ -18,22 +21,20 @@ function initTheme() {
         html.setAttribute('data-theme', theme);
         localStorage.setItem('theme', theme);
 
-        // Update button states
-        if (theme === 'dark') {
-            btnDark.classList.add('active');
-            btnLight.classList.remove('active');
-        } else {
-            btnLight.classList.add('active');
-            btnDark.classList.remove('active');
+        // Update Icon
+        if (toggleBtn) {
+            toggleBtn.innerHTML = theme === 'dark' ? moonIcon : sunIcon;
+            toggleBtn.setAttribute('aria-label', theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode');
         }
     }
 
-    // Listeners
-    if (btnDark) {
-        btnDark.addEventListener('click', () => setTheme('dark'));
-    }
-    if (btnLight) {
-        btnLight.addEventListener('click', () => setTheme('light'));
+    // Toggle Listener
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+            const current = localStorage.getItem('theme') || 'dark';
+            const next = current === 'dark' ? 'light' : 'dark';
+            setTheme(next);
+        });
     }
 }
 
@@ -121,4 +122,30 @@ function initAdvancedUI() {
             }
         }, 16);
     }
+
+    // 3. Parallax Effect (Orbs)
+    const orbs = document.querySelectorAll('.ambient-orb');
+    window.addEventListener('scroll', () => {
+        const scrolled = window.scrollY;
+        orbs.forEach(orb => {
+            const speed = orb.getAttribute('data-speed') || 0.05;
+            const yPos = -(scrolled * speed);
+            orb.style.transform = `translateY(${yPos}px)`;
+        });
+    });
+
+    // 4. Footer Reveal Adjustment (Dynamic Margin)
+    const footer = document.querySelector('footer');
+    const mainContainer = document.querySelector('.container');
+
+    function adjustFooterSpace() {
+        if (footer && mainContainer) {
+            const footerHeight = footer.offsetHeight;
+            mainContainer.style.marginBottom = `${footerHeight}px`;
+        }
+    }
+
+    // Run on load and resize
+    adjustFooterSpace();
+    window.addEventListener('resize', adjustFooterSpace);
 }
