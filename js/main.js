@@ -1,13 +1,101 @@
-// Fresh Start: Minimal & Efficient JS
+// Fresh Start:// Main JavaScript - Optimized
 
+// Initialize
 document.addEventListener('DOMContentLoaded', () => {
     initTheme();
     renderTracks();
     initAdvancedUI();
+
+    if (typeof gsap !== 'undefined') {
+        initParallax();
+        initFooterReveal();
+    }
+
+    initTechTooltips();
 });
 
+// --- Feature: Dynamic Tech Tooltips ---
+// --- Feature: Dynamic Tech Tooltips (Optimized) ---
+function initTechTooltips() {
+    const skills = document.querySelectorAll('.skill-item');
+    if (!skills.length) return;
+
+    // Create Tooltip Element
+    const tooltip = document.createElement('div');
+    tooltip.className = 'tech-tooltip';
+    document.body.appendChild(tooltip);
+
+    // GSAP Setup
+    let xSet, ySet;
+    let isVisible = false;
+
+    if (typeof gsap !== 'undefined') {
+        xSet = gsap.quickSetter(tooltip, "x", "px");
+        ySet = gsap.quickSetter(tooltip, "y", "px");
+    }
+
+    skills.forEach(skill => {
+        // Hover In
+        skill.addEventListener('mouseenter', () => {
+            const desc = skill.getAttribute('data-desc');
+            if (desc) {
+                tooltip.textContent = desc;
+                tooltip.classList.add('visible');
+                isVisible = true;
+            }
+        });
+
+        // Hover Out
+        skill.addEventListener('mouseleave', () => {
+            tooltip.classList.remove('visible');
+            isVisible = false;
+        });
+
+        // Click -> Open URL
+        skill.addEventListener('click', () => {
+            const url = skill.getAttribute('data-url');
+            if (url) {
+                window.open(url, '_blank');
+            }
+        });
+    });
+
+    // Follow Cursor (Optimized)
+    window.addEventListener('mousemove', (e) => {
+        if (!isVisible) return;
+
+        const x = e.clientX + 15;
+        const y = e.clientY + 15;
+
+        if (xSet && ySet) {
+            xSet(x);
+            ySet(y);
+        } else {
+            tooltip.style.left = `${x}px`;
+            tooltip.style.top = `${y}px`;
+        }
+    });
+
+    // Mobile Ease: Tap to show is tricky with hover logic, usually better to ignore on touch
+    // or rely on active state. We'll stick to hover focus for now.
+
+    // Make skills look clickable
+    skills.forEach(skill => skill.style.cursor = 'pointer');
+}
+
+// --- Service Worker Registration (Zero Latency) ---
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+            .then(reg => console.log('SW Registered'))
+            .catch(err => console.log('SW Failed', err));
+    });
+}
+
+// --- Theme Management ---
 function initTheme() {
-    const toggleBtn = document.getElementById('theme-toggle');
+    const toggleBtnFixed = document.getElementById('theme-toggle');
+    const toggleBtnNav = document.getElementById('theme-toggle-nav');
     const html = document.documentElement;
 
     // Icons
@@ -22,21 +110,30 @@ function initTheme() {
         html.setAttribute('data-theme', theme);
         localStorage.setItem('theme', theme);
 
-        // Update Icon
-        if (toggleBtn) {
-            toggleBtn.innerHTML = theme === 'dark' ? moonIcon : sunIcon;
-            toggleBtn.setAttribute('aria-label', theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode');
+        const icon = theme === 'dark' ? moonIcon : sunIcon;
+        const label = theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+
+        // Update Fixed Key
+        if (toggleBtnFixed) {
+            toggleBtnFixed.innerHTML = icon;
+            toggleBtnFixed.setAttribute('aria-label', label);
+        }
+        // Update Nav Key
+        if (toggleBtnNav) {
+            toggleBtnNav.innerHTML = icon;
+            toggleBtnNav.setAttribute('aria-label', label);
         }
     }
 
-    // Toggle Listener
-    if (toggleBtn) {
-        toggleBtn.addEventListener('click', () => {
-            const current = localStorage.getItem('theme') || 'dark';
-            const next = current === 'dark' ? 'light' : 'dark';
-            setTheme(next);
-        });
-    }
+    // Toggle Listener Helper
+    const toggleTheme = () => {
+        const current = localStorage.getItem('theme') || 'dark';
+        const next = current === 'dark' ? 'light' : 'dark';
+        setTheme(next);
+    };
+
+    if (toggleBtnFixed) toggleBtnFixed.addEventListener('click', toggleTheme);
+    if (toggleBtnNav) toggleBtnNav.addEventListener('click', toggleTheme);
 }
 
 function renderTracks() {
@@ -109,31 +206,65 @@ function initAdvancedUI() {
     metrics.forEach(metric => observer.observe(metric));
 
     function animateCount(el, target) {
-        let current = 0;
-        const duration = 2000; // 2 seconds
-        const step = target / (duration / 16); // 60fps
+        let obj = { val: 0 };
+        // Use GSAP if available
+        if (typeof gsap !== 'undefined') {
+            gsap.to(obj, {
+                val: target,
+                duration: 2,
+                ease: "power2.out",
+                onUpdate: function () {
+                    el.innerText = Math.floor(obj.val).toLocaleString() + (target < 100 ? '%' : '+');
+                }
+            });
+        } else {
+            // Fallback
+            let current = 0;
+            const duration = 2000; // 2 seconds
+            const step = target / (duration / 16); // 60fps
 
-        const timer = setInterval(() => {
-            current += step;
-            if (current >= target) {
-                el.innerText = target.toLocaleString() + (target < 100 ? '%' : '+');
-                clearInterval(timer);
-            } else {
-                el.innerText = Math.floor(current).toLocaleString();
-            }
-        }, 16);
+            const timer = setInterval(() => {
+                current += step;
+                if (current >= target) {
+                    el.innerText = target.toLocaleString() + (target < 100 ? '%' : '+');
+                    clearInterval(timer);
+                } else {
+                    el.innerText = Math.floor(current).toLocaleString();
+                }
+            }, 16);
+        }
     }
 
     // 3. Parallax Effect (Orbs)
+    // 3. Parallax Effect (Orbs) - Optimized with GSAP ScrollTrigger
     const orbs = document.querySelectorAll('.ambient-orb');
-    window.addEventListener('scroll', () => {
-        const scrolled = window.scrollY;
+
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         orbs.forEach(orb => {
-            const speed = orb.getAttribute('data-speed') || 0.05;
-            const yPos = -(scrolled * speed);
-            orb.style.transform = `translateY(${yPos}px)`;
+            const speed = parseFloat(orb.getAttribute('data-speed') || 0.05);
+
+            gsap.to(orb, {
+                y: (i, target) => - (document.documentElement.scrollHeight * speed),
+                ease: "none",
+                scrollTrigger: {
+                    trigger: document.body,
+                    start: "top top",
+                    end: "bottom bottom",
+                    scrub: 0 // Direct sync, use 0.5 or 1 for smoothing if desired
+                }
+            });
         });
-    });
+    } else {
+        // Fallback
+        window.addEventListener('scroll', () => {
+            const scrolled = window.scrollY;
+            orbs.forEach(orb => {
+                const speed = orb.getAttribute('data-speed') || 0.05;
+                const yPos = -(scrolled * speed);
+                orb.style.transform = `translateY(${yPos}px)`;
+            });
+        });
+    }
 
     // 4. GSAP Parallax Footer Reveal
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
@@ -149,38 +280,29 @@ function initAdvancedUI() {
             const h = footerBg.offsetHeight;
             spacer.style.height = `${h}px`;
 
-            // Standard Reveal Effect (Desktop)
-            if (window.innerWidth > 768) {
-                // Kill old triggers if any (optional, but good practice if complex)
+            // Standard Reveal Effect (Universal)
 
-                // Animation Timeline
-                // Linked to the scroll progress of the spacer entering the viewport
-                gsap.fromTo(footerBg,
-                    {
-                        yPercent: -50,
-                        opacity: 1,       // Visible (but behind glass/blur)
-                        filter: "blur(20px) brightness(0.5)" // Dim and blurry initially
-                    },
-                    {
-                        yPercent: 0,
-                        opacity: 1,
-                        filter: "blur(0px) brightness(1)",   // Clear and bright
-                        ease: "power2.out",
-                        scrollTrigger: {
-                            trigger: spacer,
-                            start: "top bottom",
-                            end: "bottom bottom",
-                            scrub: 1,
-                        }
+            // Animation Timeline
+            // Linked to the scroll progress of the spacer entering the viewport
+            gsap.fromTo(footerBg,
+                {
+                    yPercent: -50,
+                    opacity: 1,       // Visible (but behind glass/blur)
+                    filter: "blur(20px) brightness(0.5)" // Dim and blurry initially
+                },
+                {
+                    yPercent: 0,
+                    opacity: 1,
+                    filter: "blur(0px) brightness(1)",   // Clear and bright
+                    ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: spacer,
+                        start: "top bottom",
+                        end: "bottom bottom",
+                        scrub: 1,
                     }
-                );
-            } else {
-                // Mobile: Just standard stacking, reset props
-                gsap.set(footerBg, { yPercent: 0, opacity: 1, filter: "blur(0px)" });
-                footerBg.style.position = "relative";
-                footerBg.style.zIndex = "1";
-                spacer.style.display = "none";
-            }
+                }
+            );
         }
 
         // Init & Resize

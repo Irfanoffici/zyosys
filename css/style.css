@@ -19,8 +19,8 @@
 
     --text-primary: #ffffff;
     /* Pure White for max contrast */
-    --text-secondary: #888888;
-    /* Neutral Gray */
+    --text-secondary: #a1a1aa;
+    /* Zinc 400 - Better Contrast */
     --text-accent: #7c3aed;
     /* Electric Violet */
 
@@ -53,8 +53,8 @@
 
     --text-primary: #18181b;
     /* Zinc 900 */
-    --text-secondary: #52525b;
-    /* Zinc 600 */
+    --text-secondary: #3f3f46;
+    /* Zinc 700 - Better Contrast */
     --text-accent: #7c3aed;
     /* Violet */
 
@@ -102,7 +102,7 @@
     padding: 2rem;
     text-align: left;
     position: relative;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -129,7 +129,8 @@ html {
 }
 
 body {
-    background-color: var(--bg-body);
+    background-color: transparent;
+    /* Allow Fixed Footer to show through spacer */
     color: var(--text-primary);
     font-family: 'Inter', sans-serif;
     line-height: 1.5;
@@ -139,12 +140,21 @@ body {
     z-index: 1;
 }
 
+main {
+    position: relative;
+    z-index: 2;
+    /* Ensure it covers footer */
+    background-color: var(--bg-body);
+    /* Mask the fixed footer */
+    width: 100%;
+}
+
 /* --- Layout Engine --- */
 .container {
     width: 100%;
     max-width: var(--max-width);
     margin: 0 auto;
-    padding: 0 var(--space-4);
+    padding: 0 clamp(1rem, 5vw, var(--space-4));
 
     /* Premium Glass Effect */
     background: var(--bg-glass);
@@ -177,7 +187,7 @@ body {
 
 /* Section Styling (Rounded & Card-like) */
 .section {
-    padding: var(--space-16) var(--space-8);
+    padding: clamp(var(--space-8), 8vw, var(--space-16)) clamp(var(--space-4), 5vw, var(--space-8));
     margin: var(--space-8) auto;
     max-width: var(--max-width);
     border-radius: 2.5rem;
@@ -213,6 +223,16 @@ h2 {
     margin-bottom: var(--space-2);
 }
 
+h3 {
+    font-size: clamp(1.2rem, 3vw, 1.75rem);
+    font-weight: 600;
+}
+
+h4 {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    font-weight: 600;
+}
+
 .text-gradient {
     background: linear-gradient(to right, var(--text-primary), var(--text-secondary));
     -webkit-background-clip: text;
@@ -221,6 +241,43 @@ h2 {
 }
 
 /* --- Components --- */
+
+/* Nav Theme Toggle (Default Hidden on Desktop) */
+.theme-toggle-nav {
+    display: none;
+    /* Hidden by default */
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-left: 1rem;
+}
+
+.theme-toggle-nav:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: rotate(15deg);
+    border-color: var(--text-accent);
+}
+
+.theme-toggle-nav svg {
+    width: 18px;
+    height: 18px;
+}
+
+[data-theme="light"] .theme-toggle-nav {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .theme-toggle-nav:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
 
 /* Single Theme Toggle (Minimal) */
 .theme-toggle {
@@ -239,7 +296,7 @@ h2 {
     justify-content: center;
     cursor: pointer;
     z-index: 1000;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition: background-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
@@ -271,6 +328,49 @@ h2 {
     background: rgba(0, 0, 0, 0.1);
 }
 
+/* Dynamic Tech Tooltip */
+.tech-tooltip {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    pointer-events: none;
+    /* Let clicks pass through if needed, but we handle click on item */
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+
+    /* Performance: Hardware Acceleration */
+    will-change: transform;
+    transform: translateZ(0);
+
+    /* Glass & Soft Shadow */
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    max-width: 250px;
+    line-height: 1.4;
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .tech-tooltip {
+        display: none !important;
+    }
+}
+
+.tech-tooltip.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+
+
 /* Top Bar */
 .top-bar {
     position: fixed;
@@ -288,6 +388,7 @@ h2 {
     z-index: 1001;
     display: none;
     /* Above everything */
+    will-change: transform;
 }
 
 /* New Navbar (Wider, Professional) */
@@ -322,7 +423,68 @@ h2 {
     align-items: center;
     width: 100%;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
-    transition: background-color 0.3s, border-color 0.3s;
+    transition: background-color 0.3s, border-color 0.3s, padding 0.3s, border-radius 0.3s;
+}
+
+/* Immersive Floating Nav (Dynamic Island) */
+@media (max-width: 900px) {
+    .nav-wrapper {
+        top: 12px;
+        /* Float below top edge */
+        padding: 0;
+        max-width: 100%;
+        display: flex;
+        justify-content: center;
+        /* Center the island */
+    }
+
+    .nav-pill {
+        padding: 0.75rem 1.75rem;
+        /* Dynamic Island Shape */
+        border-radius: 99px;
+        /* Pill Shape */
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        /* Restore border */
+
+        width: fit-content;
+        /* Dynamic Width */
+        min-width: 320px;
+        /* Minimum functional width */
+        max-width: 90vw;
+        /* Safety Margin */
+        margin: 0 auto;
+
+        justify-content: space-between;
+        background: rgba(var(--nav-bg-rgb), 0.85);
+        /* Slightly more opaque */
+        backdrop-filter: blur(20px);
+        /* Premium Blur */
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        /* Deep shadow */
+
+        /* Apple-style Spring Animation */
+        transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .nav-logo {
+        font-size: 1.1rem;
+    }
+
+    /* Hide text links, keep CTA only for clean "App-like" feel */
+    .nav-links li:not(:last-child) {
+        display: none;
+    }
+
+    /* Toggle Visibility Swap */
+    .theme-toggle {
+        display: none !important;
+        /* Hide fixed toggle */
+    }
+
+    .theme-toggle-nav {
+        display: flex;
+        /* Show nav toggle */
+    }
 }
 
 .nav-logo {
@@ -392,12 +554,12 @@ h2 {
 /* Stats (Inside the rounded container) */
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     gap: var(--space-8);
     text-align: center;
 }
 
-.stat-item h3 {
+.stat-item h2 {
     font-size: 3.5rem;
     font-weight: 800;
     color: var(--text-accent);
@@ -471,7 +633,7 @@ h2 {
     gap: 0.8rem;
     color: var(--text-secondary);
     opacity: 0.5;
-    transition: all 0.3s ease;
+    transition: opacity 0.3s ease, color 0.3s ease, transform 0.3s ease;
     cursor: default;
 }
 
@@ -497,11 +659,32 @@ h2 {
 
 /* --- Premium Cards & Buttons (Reference Style) --- */
 
-/* Cards Grid */
+/* Comfort Layout - Responsive Grids */
+/* Immersive Grid (Miniature Desktop Feel) */
 .grid-cols-3 {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    /* Allow smaller items to preserve side-by-side grid on mobile */
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: var(--space-8);
+}
+
+@media (max-width: 600px) {
+    .grid-cols-3 {
+        /* On very small screens, allow even smaller items to keep 2-col visual if possible, or stack cleanly */
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 1.5rem;
+    }
+
+    /* Stats grid specific */
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        /* Force 2x2 grid */
+    }
+
+    .stat-item:last-child {
+        grid-column: span 2;
+        /* Center the odd one out */
+    }
 }
 
 /* Reference Card Style */
@@ -512,7 +695,7 @@ h2 {
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     height: 100%;
     /* Uniform height */
 }
@@ -575,11 +758,12 @@ h2 {
     content: "";
     position: absolute;
     top: 0;
-    left: -100%;
+    left: 0;
     width: 100%;
     height: 100%;
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
     transition: 0.5s;
+    transform: translateX(-100%);
 }
 
 .btn-card:hover {
@@ -588,7 +772,7 @@ h2 {
 }
 
 .btn-card:hover::after {
-    left: 100%;
+    transform: translateX(100%);
 }
 
 /* Footer Links */
@@ -678,6 +862,8 @@ footer::before {
     pointer-events: none;
     opacity: 0.6;
     /* New Breathing */
+    will-change: transform;
+    transform: translateZ(0);
 }
 
 footer .orb-f1 {
@@ -808,7 +994,7 @@ footer .orb-f2 {
 }
 
 /* Align headers perfectly with list items */
-.skills-col h4 {
+.skills-col h3 {
     margin-left: 0;
     padding-left: 1rem;
     /* Clean padding */
@@ -834,7 +1020,7 @@ footer .orb-f2 {
     padding: 0.5rem 0;
     /* Compact spacing */
     cursor: default;
-    transition: all 0.2s ease;
+    transition: color 0.2s ease, text-shadow 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
     border-radius: 0;
     font-weight: 400;
 }
@@ -995,6 +1181,7 @@ footer .orb-f2 {
 
 .circuit-chip span {
     background: var(--bg-surface);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: var(--text-primary);
     /* Fallback */
@@ -1180,7 +1367,7 @@ footer .orb-f2 {
     border-radius: 16px;
     overflow: hidden;
     position: relative;
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), border-color 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
@@ -1232,7 +1419,7 @@ footer .orb-f2 {
     color: white;
 }
 
-.mock-simple h4 {
+.mock-simple h3 {
     margin-top: 1rem;
     font-weight: 600;
     font-size: 1.1rem;
@@ -1292,7 +1479,7 @@ footer .orb-f2 {
     height: 100%;
 }
 
-.mock-content h4 {
+.mock-content h3 {
     font-size: 1.25rem;
     margin: 1rem 0 0.5rem 0;
 }
@@ -1328,7 +1515,7 @@ footer .orb-f2 {
     border-radius: 8px;
     text-decoration: none;
     font-weight: 700;
-    transition: all 0.2s;
+    transition: background-color 0.2s, transform 0.2s;
     display: inline-block;
 }
 
@@ -1345,6 +1532,11 @@ footer .orb-f2 {
     .showcase-card.large {
         grid-column: span 1;
     }
+
+    .hero-visual {
+        max-width: 80%;
+        margin: 2rem auto;
+    }
 }
 
 @media (max-width: 768px) {
@@ -1352,37 +1544,29 @@ footer .orb-f2 {
         grid-template-columns: 1fr;
     }
 
-    .showcase-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .showcase-card.large {
-        grid-column: span 1;
-    }
-
-    .circuit-grid::before {
-        display: none;
-    }
-
-    /* Hide complex lines on mobile */
+    .circuit-grid::before,
     .tech-card-dark::before {
         display: none;
     }
-}
 
-.split-layout {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
-}
-
-@media (max-width: 768px) {
     .split-layout {
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
         gap: 2rem;
+        text-align: center;
+    }
+
+    .hero {
+        text-align: center;
+        padding-top: 8rem;
+    }
+
+    .hero-content h1 {
+        font-size: clamp(2rem, 8vw, 3rem);
     }
 }
+
+
 
 .mission-card {
     background: var(--bg-surface);
@@ -1493,7 +1677,7 @@ footer .orb-f2 {
     font-size: 1rem;
 }
 
-.test-info h4 {
+.test-info h3 {
     font-size: 1rem;
     margin: 0;
     color: var(--text-primary);
@@ -1582,6 +1766,7 @@ main {
 
     /* Memory: Only promote to layer when needed. Opacity/Filter are cheap. */
     will-change: transform, opacity;
+    transform: translateZ(0);
 }
 
 
@@ -1612,16 +1797,7 @@ main {
 
 
 
-.ambient-orb {
-    /* Existing positioning might be absolute, ensure this doesn't conflict */
-    /* If orbs move via scroll, this adds a secondary layer of movement if structured correctly, 
-       but if they use `transform` for scroll, this conflicts. 
-       Use a wrapper or accumulation? 
-       Actually, `style.css` doesn't seem to have `.ambient-orb` definition here yet, 
-       I need to find where it is defined or add it. */
-}
 
-.hero-visual {}
 
 /* Stagger Animations */
 .footer-top {
@@ -2418,18 +2594,23 @@ main {
         text-align: center;
     }
 
-    /* Fix Navbar Overlap */
+    /* Ensure Notch Stays Attached (Small Mobile Override) */
+    /* Update: Dynamic Island should float even on small screens */
     .nav-wrapper {
-        top: 0.5rem;
-        /* Move up slightly */
-        padding: 0 0.5rem;
+        top: 10px;
+        /* Slightly tighter top */
+        padding: 0 10px;
+        /* Safety side padding */
     }
 
+    .nav-pill {
+        min-width: 280px;
+        /* Slightly smaller island minimum */
+    }
+
+    /* Fixed toggle is hidden, so this is irrelevant, but keep safe */
     .theme-controls {
-        top: 0.5rem;
-        left: 0.5rem;
-        transform: scale(0.75);
-        /* Shrink controls */
+        display: none;
     }
 
     .hero {
