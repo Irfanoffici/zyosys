@@ -134,18 +134,62 @@ function initAdvancedUI() {
         });
     });
 
-    // 4. Footer Reveal Adjustment (Dynamic Margin)
-    const footer = document.querySelector('footer');
-    const mainContainer = document.querySelector('.container');
+    // 4. GSAP Parallax Footer Reveal
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        gsap.registerPlugin(ScrollTrigger);
 
-    function adjustFooterSpace() {
-        if (footer && mainContainer) {
-            const footerHeight = footer.offsetHeight;
-            mainContainer.style.marginBottom = `${footerHeight}px`;
+        const footerBg = document.querySelector('.footer-bg');
+        const spacer = document.getElementById('footer-parallax');
+
+        function refreshFooter() {
+            if (!footerBg || !spacer) return;
+
+            // Sync spacer height to visual footer height
+            const h = footerBg.offsetHeight;
+            spacer.style.height = `${h}px`;
+
+            // Standard Reveal Effect (Desktop)
+            if (window.innerWidth > 768) {
+                // Kill old triggers if any (optional, but good practice if complex)
+
+                // Animation Timeline
+                // Linked to the scroll progress of the spacer entering the viewport
+                gsap.fromTo(footerBg,
+                    {
+                        yPercent: -30,    // Starts slightly shifted up/down (parallax feel)
+                        opacity: 0.2,
+                        filter: "blur(20px)"
+                    },
+                    {
+                        yPercent: 0,
+                        opacity: 1,
+                        filter: "blur(0px)",
+                        ease: "power2.out", // Smooth deceleration
+                        scrollTrigger: {
+                            trigger: spacer,
+                            start: "top bottom", // When spacer top hits viewport bottom
+                            end: "bottom bottom", // When spacer bottom hits viewport bottom
+                            scrub: true, // Tied to scroll bar
+                        }
+                    }
+                );
+            } else {
+                // Mobile: Just standard stacking, reset props
+                gsap.set(footerBg, { yPercent: 0, opacity: 1, filter: "blur(0px)" });
+                footerBg.style.position = "relative";
+                footerBg.style.zIndex = "1";
+                spacer.style.display = "none";
+            }
         }
-    }
 
-    // Run on load and resize
-    adjustFooterSpace();
-    window.addEventListener('resize', adjustFooterSpace);
+        // Init & Resize
+        refreshFooter();
+        // Give a moment for layouts to settle
+        setTimeout(refreshFooter, 100);
+
+        window.addEventListener('resize', () => {
+            ScrollTrigger.refresh();
+            refreshFooter();
+        });
+    }
 }

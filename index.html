@@ -30,6 +30,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link rel="stylesheet" href="css/style.css">
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 </head>
 
 <body>
@@ -494,7 +498,13 @@
         </section>
 
     </main>
-    <footer>
+    <!-- Parallax Footer Wrapper (Spacer) -->
+    <section id="footer-parallax" style="opacity: 0; pointer-events: none;">
+        <!-- This section reserves space in the DOM -->
+    </section>
+
+    <!-- Fixed Footer Container (Visual) -->
+    <footer class="footer-bg">
         <div class="footer-orb orb-f1"></div>
         <div class="footer-orb orb-f2"></div>
         <div class="container footer-container">

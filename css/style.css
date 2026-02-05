@@ -1523,32 +1523,16 @@ main {
     position: relative;
     z-index: 10;
     background: var(--bg-body);
-    /* Dynamic Background */
-    /* Shadow adapted for theme */
-    box-shadow: 0 20px 100px rgba(0, 0, 0, 0.8);
-    margin-bottom: 800px !important;
-
-    border-radius: 0 0 50% 50% / 0 0 40px 40px;
-    animation: liquidMorph 8s ease-in-out infinite;
-
-    overflow: hidden;
-    transition: background 0.3s ease;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    /* Shadow to separate from footer */
+    /* No margin-bottom here, regulated by spacer in HTML/JS */
+    will-change: transform;
 }
 
-/* "Liquid Drop" / Blur Mask */
-main::after {
-    content: '';
-    position: absolute;
-    bottom: -200px;
-    left: 0;
+/* Spacer is invisible but takes up space */
+#footer-parallax {
     width: 100%;
-    height: 200px;
-    /* Gradient needs to be theme-aware or just careful */
-    background: linear-gradient(to bottom, var(--bg-body) 20%, rgba(0, 0, 0, 0));
-    backdrop-filter: blur(60px);
-    -webkit-backdrop-filter: blur(60px);
-    pointer-events: none;
-    z-index: 11;
+    /* Height set by JS or auto if content flowed */
 }
 
 /* On mobile, disable reveal */
@@ -1576,20 +1560,24 @@ main::after {
 }
 
 /* 2. Glassy Footer Styling */
-footer {
+/* The Fixed Visual Footer */
+.footer-bg {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-    z-index: 0;
-    /* Theme-aware Gradient */
-    background: radial-gradient(circle at 50% 100%, var(--bg-surface), var(--bg-body) 80%);
-    height: 800px;
+    height: auto;
+    min-height: 400px;
+    z-index: -1;
+    /* Behind main content */
+
+    background: var(--bg-footer);
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: center;
     overflow: hidden;
-    transition: background 0.3s ease;
+
+    will-change: transform, filter, opacity;
 }
 
 /* Footer Content Animation */
