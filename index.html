@@ -19,16 +19,38 @@
     <meta property="og:image" content="https://zeosys.com/og-image.jpg">
 
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://zeosys.com/">
-    <meta property="twitter:title" content="Zeosys | Engineering Your Future">
-    <meta property="twitter:description" content="Premium tech training for the next generation of software engineers.">
-    <meta property="twitter:image" content="https://zeosys.com/twitter-image.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://zeosys.com/">
+    <meta name="twitter:title" content="Zeosys | Engineering Your Future">
+    <meta name="twitter:description" content="Premium tech training for the next generation of software engineers.">
+    <meta name="twitter:image" content="https://zeosys.com/twitter-image.jpg">
+    <meta name="theme-color" content="#7c3aed">
+    <link rel="canonical" href="https://zeosys.com/">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
 
-    <!-- Resource Hints -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "EducationalOrganization",
+      "name": "Zeosys",
+      "url": "https://zeosys.com",
+      "logo": "https://zeosys.com/logo.png",
+      "sameAs": [
+        "https://twitter.com/zeosys",
+        "https://linkedin.com/company/zeosys"
+      ],
+      "description": "Premium tech training for the next generation of software engineers.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Global",
+        "addressCountry": "Remote"
+      }
+    }
+    </script>
 
+    <!-- Resource Hints: Removed aggressive preloads to prevent bandwidth contention -->
     <link rel="stylesheet" href="css/style.css">
 
     <!-- GSAP -->
@@ -102,7 +124,7 @@
                     We don't just teach code. We teach you how to architect scalable systems, review code like a lead,
                     and ship products that matter.
                 </p>
-                <div style="display: flex; gap: 1rem;">
+                <div class="hero-actions">
                     <a href="#tracks" class="btn-primary" aria-label="Explore our engineering tracks">Explore Tracks</a>
                     <a href="#demo" aria-label="View our curriculum"
                         style="color: var(--text-primary); text-decoration: none; padding: 0.5rem 1rem; font-weight: 500;">View
@@ -604,6 +626,11 @@
             </div>
         </div>
     </footer>
+
+    </footer>
+
+    <!-- Smooth Scroll (Lenis) -->
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 
     <script src="js/config.js" defer></script>
     <script src="js/main.js" defer></script>

@@ -110,9 +110,30 @@
 }
 
 html {
-    scroll-behavior: smooth;
+    /* scroll-behavior: smooth;  <-- REMOVED for Lenis JS Scroll */
     overflow-x: hidden;
     /* Prevent horizontal scroll globally */
+}
+
+html.lenis,
+html.lenis body {
+    height: auto;
+}
+
+.lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+    overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+    pointer-events: none;
 }
 
 /* Accessibility: Robust Focus Indicator */
@@ -136,8 +157,23 @@ body {
     line-height: 1.5;
     transition: background-color 0.3s ease, color 0.3s ease;
     /* Double safety */
+    /* Double safety */
     position: relative;
     z-index: 1;
+    text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Optimize Fonts: Block display ensures no text is shown until font is ready */
+/* This prevents the "Flash of Unstyled Text" (FOUT) flicker of swapping fonts */
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: block;
+    /* Stable loading, no swap flicker */
+    src: url(https://fonts.gstatic.com/s/inter/v13/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7W0Q5nw.woff2) format('woff2');
 }
 
 main {
@@ -182,7 +218,7 @@ main {
     height: 100%;
     pointer-events: none;
     z-index: -1;
-    will-change: transform;
+    /* Removed aggressive will-change/contain to prevent GPU flickering on some devices */
 }
 
 /* Section Styling (Rounded & Card-like) */
@@ -191,14 +227,10 @@ main {
     margin: var(--space-8) auto;
     max-width: var(--max-width);
     border-radius: 2.5rem;
-    /* Distinct rounded corners */
     position: relative;
-    /* Distinct rounded corners */
-    position: relative;
+    /* Removed 'contain: content' - can cause issues with scroll triggers/reveals */
     overflow: hidden;
     transition: transform 0.3s ease;
-
-
 }
 
 /* Alternate Backgrounds for "Card" feel */
@@ -2375,6 +2407,55 @@ main {
 }
 
 /* Mobile Adjustments */
+/* --- Tech Stack (New Grid Layout) --- */
+.skills-section {
+    padding: 6rem 0;
+}
+
+.skills-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4rem;
+    /* Wide aligned spacing */
+    max-width: 1000px;
+    margin: 4rem auto 0;
+    text-align: left;
+}
+
+.skills-col h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 2rem;
+    padding-left: 1.5rem;
+    border-left: 3px solid var(--text-accent);
+    /* Purple Accent Line */
+    line-height: 1.2;
+}
+
+.skill-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.skill-item {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    padding: 0.75rem 0;
+    padding-left: 1.5rem;
+    /* Align with header text */
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.2s ease;
+    display: block;
+}
+
+.skill-item:hover {
+    color: var(--text-primary);
+    transform: translateX(5px);
+}
+
+/* Mobile Adjustments */
 @media (max-width: 768px) {
     .hub-container {
         flex-direction: column;
@@ -2393,6 +2474,12 @@ main {
     .faq-grid {
         grid-template-columns: 1fr;
     }
+
+    /* Stack Tech Skills */
+    .skills-container {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
 }
 
 /* --- Global Responsive Optimizations --- */
@@ -2408,7 +2495,19 @@ main {
     .hero-content {
         order: 1;
         /* Visual first */
-        margin-bottom: 3rem;
+        margin: 0 auto 3rem auto;
+        /* Center the block horizontally */
+        max-width: 100%;
+        /* Allow full width centering */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        /* Robust centering */
+    }
+
+    .hero-visual {
+        margin: 0 auto;
+        /* Ensure visual is also centered */
     }
 
     .hub-lines {
@@ -2422,6 +2521,32 @@ main {
         --space-16: 3rem;
         /* Reduce section padding */
         --space-8: 1.5rem;
+    }
+
+    /* Fix Dynamic Island Alignment (Tablet/Mobile) */
+    .nav-wrapper {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        left: 0;
+        right: 0;
+        padding: 0 1rem;
+    }
+
+    .nav-pill {
+        width: auto;
+        min-width: 320px;
+        /* Ensure space for content */
+        max-width: 100%;
+        justify-content: space-between;
+        padding: 0.75rem 1.5rem;
+    }
+
+    /* Hero Spacing */
+    .hero {
+        padding-top: 9rem;
+        /* Clear the floating nav */
+        padding-bottom: 4rem;
     }
 
     /* Grids to Stack */
@@ -2444,6 +2569,17 @@ main {
     h2 {
         font-size: 2rem !important;
     }
+
+    /* Center Hero Actions */
+    .hero-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    /* Why Us / Hub Section */
 
     /* Why Us / Hub Section */
     .why-us-section {

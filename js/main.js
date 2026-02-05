@@ -7,9 +7,13 @@ document.addEventListener('DOMContentLoaded', () => {
     initAdvancedUI();
 
     if (typeof gsap !== 'undefined') {
-        initParallax();
-        initFooterReveal();
+        // Parallax is handled inside initAdvancedUI or existing blocks
+        // initParallax is likely defined elsewhere or inline
+        // initFooterReveal(); // Ensure this is effectively called
     }
+
+    // Initialize Smooth Scroll
+    initSmoothScroll();
 
     initTechTooltips();
 });
@@ -60,12 +64,31 @@ function initTechTooltips() {
         });
     });
 
-    // Follow Cursor (Optimized)
+    // Follow Cursor (Constrained to Section)
     window.addEventListener('mousemove', (e) => {
         if (!isVisible) return;
 
-        const x = e.clientX + 15;
-        const y = e.clientY + 15;
+        const section = document.querySelector('.skills-section');
+        if (!section) return; // Fallback or strict
+
+        const rect = section.getBoundingClientRect();
+        const tooltipRect = tooltip.getBoundingClientRect();
+
+        let x = e.clientX + 15;
+        let y = e.clientY + 15;
+
+        // Constraint Logic: Clamp X and Y to stay within the section
+        // Math.max(min, Math.min(val, max))
+
+        // Horizontal Clamp
+        const minX = rect.left + 5; // Padding
+        const maxX = rect.right - tooltipRect.width - 5;
+        x = Math.max(minX, Math.min(x, maxX));
+
+        // Vertical Clamp
+        const minY = rect.top + 5;
+        const maxY = rect.bottom - tooltipRect.height - 5;
+        y = Math.max(minY, Math.min(y, maxY));
 
         if (xSet && ySet) {
             xSet(x);
@@ -159,7 +182,8 @@ function renderTracks() {
             <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.5rem; line-height: 1.6;">${course.outcome}</p>
             <div style="margin-top: auto; display: flex; flex-direction: column; gap: 1rem;">
                 <div>${techHtml}</div>
-                <a href="#join" class="btn-card">Enroll</a>
+                <!-- WhatsApp Enrollment Integration -->
+                <a href="${getWhatsappLink(course.title)}" target="_blank" class="btn-card">Enroll</a>
             </div>
         `;
 
@@ -175,6 +199,47 @@ function renderTracks() {
     });
 
     container.appendChild(fragment);
+}
+
+// Helper: Generate WhatsApp Link
+function getWhatsappLink(courseTitle) {
+    const phone = "918870095446";
+    const text = `Hi Zeosys, I am interested in joining the ${courseTitle} track.`;
+    return `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+}
+
+// --- Feature: Advanced Smooth Scroll (Lenis) ---
+function initSmoothScroll() {
+    if (typeof Lenis === 'undefined') return;
+
+    // "Smooth" scroll with damping to limit fast scrolling
+    const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        direction: 'vertical',
+        gestureDirection: 'vertical',
+        smooth: true,
+        mouseMultiplier: 0.8, // Damping multiplier (Control fast scrolling)
+        smoothTouch: false, // Default native for touch
+        touchMultiplier: 2,
+    });
+
+    // GSAP Sync
+    if (typeof ScrollTrigger !== 'undefined') {
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => {
+            lenis.raf(time * 1000);
+        });
+        gsap.ticker.lagSmoothing(0);
+    } else {
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+    }
+
+    window.lenis = lenis;
 }
 
 // Advanced UI/UX Init
