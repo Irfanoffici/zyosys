@@ -871,45 +871,6 @@ footer {
     }
 }
 
-/* --- Low-End Hardware Overrides (JS Detected) --- */
-.is-low-end .container,
-.is-low-end .nav-container,
-.is-low-end .tech-card-dark,
-.is-low-end .showcase-card,
-.is-low-end .btn-card,
-.is-low-end .testimonial-card,
-.is-low-end .faq-item {
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    background: #0a0a0adc !important;
-    /* Solid fallback */
-    box-shadow: none !important;
-    border: 1px solid #333 !important;
-}
-
-.is-low-end .ambient-orb,
-.is-low-end .circuit-chip::before,
-.is-low-end .circuit-chip::after,
-.is-low-end .chip-lines-bottom::after {
-    display: none !important;
-}
-
-.is-low-end * {
-    animation: none !important;
-    /* Allow cheap transitions for feedback, disable expensive ones */
-    transition-property: opacity, transform, color, background-color !important;
-    transition-duration: 0.2s !important;
-    background-image: none !important;
-    /* Remove gradients/patterns */
-}
-
-/* Re-add necessary backgrounds specifically */
-.is-low-end .btn-primary,
-.is-low-end .circuit-chip {
-    background: var(--text-accent) !important;
-    color: white !important;
-}
-
 /* --- Ultra-Low Resolution (240x320) Optimizations --- */
 @media (max-width: 340px) {
     :root {

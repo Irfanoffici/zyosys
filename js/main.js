@@ -1,48 +1,19 @@
-const isLowEnd = checkLowEndDevice();
-
 document.addEventListener('DOMContentLoaded', () => {
-    if (isLowEnd) {
-        document.documentElement.classList.add('is-low-end');
-        console.log('Low-end device detected: Enabling performance mode.');
-    }
-
     initTheme();
     initDraggableToggle();
     renderTracks();
 
-    // Only init heavy UI on high-end devices
-    if (!isLowEnd) {
-        initAdvancedUI();
-        initShowcaseTilt();
-        initSmoothScroll();
-        initScrollAnimations();
-    } else {
-        // Fallback for scroll animations on low-end
-        document.querySelectorAll('.reveal').forEach(el => el.style.opacity = '1');
-    }
+    // Always init comprehensive UI
+    initAdvancedUI();
+    initShowcaseTilt();
+    initSmoothScroll();
+    initScrollAnimations();
 
     initTechTooltips();
     initNewsletter();
 });
 
-function checkLowEndDevice() {
-    // 1. Check logical cores ( <= 4 usually means older/budget mobile)
-    if (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) return true;
-
-    // 2. Check device memory ( <= 4GB RAM)
-    if (navigator.deviceMemory && navigator.deviceMemory <= 4) return true;
-
-    // 3. Check data saver mode
-    if (navigator.connection && navigator.connection.saveData) return true;
-
-    // 4. Check network speed (effectiveType: 'slow-2g', '2g', '3g')
-    if (navigator.connection && ['slow-2g', '2g', '3g'].includes(navigator.connection.effectiveType)) return true;
-
-    // 5. Check user preference
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return true;
-
-    return false;
-}
+// Hardware detection removed - Uniform experience for all devices
 function initNewsletter() {
     const input = document.querySelector('.newsletter-input');
     const btn = document.querySelector('.newsletter-btn');
@@ -372,9 +343,6 @@ function renderTracks() {
     initSpotlightEffect();
 }
 function initSpotlightEffect() {
-    // Heavy effect: disable on low-end devices
-    if (checkLowEndDevice()) return;
-
     const container = document.getElementById('tracks-container');
     if (!container) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -395,7 +363,8 @@ function getWhatsappLink(courseTitle) {
     return `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
 }
 function initShowcaseTilt() {
-    if (window.matchMedia('(hover: none)').matches || window.innerWidth <= 900 || checkLowEndDevice()) return;
+    // Standard responsive check only
+    if (window.matchMedia('(hover: none)').matches || window.innerWidth <= 900) return;
     const cards = document.querySelectorAll('.showcase-card');
     cards.forEach(card => {
         let isHovering = false;
@@ -488,9 +457,8 @@ function initAdvancedUI() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const target = parseInt(entry.target.getAttribute('data-target'));
-                // duplicate decl removed
-                // Skip animation if low-end device or reduced motion
-                if (checkLowEndDevice()) {
+                // Standard Reduced Motion check
+                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
                     entry.target.innerText = target.toLocaleString() + (target < 100 ? '%' : '+');
                 } else {
                     animateCount(entry.target, target);
@@ -527,7 +495,7 @@ function initAdvancedUI() {
         }
     }
     const orbs = document.querySelectorAll('.ambient-orb');
-    if (checkLowEndDevice()) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         orbs.forEach(orb => {
