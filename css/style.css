@@ -1335,7 +1335,7 @@ footer .orb-f2 {
 
 .showcase-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
     gap: 2rem;
     max-width: 1200px;
     margin: 0 auto;
@@ -2078,7 +2078,7 @@ main {
 
 .testimonials-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
     margin-top: 1rem;
 }
@@ -2516,11 +2516,7 @@ main {
     text-align: left;
 }
 
-@media (max-width: 900px) {
-    .skills-container {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
+/* Removed rigid skills-container media query in favor of auto-fit */
 
 .skills-col h3 {
     font-size: 1.5rem;
