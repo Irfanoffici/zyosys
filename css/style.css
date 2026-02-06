@@ -1,10 +1,10 @@
 :root {
-    --space-1: 0.25rem;
-    --space-2: 0.5rem;
-    --space-4: 1rem;
-    --space-8: 2rem;
-    --space-12: 3rem;
-    --space-16: 4rem;
+    --space-1: clamp(0.25rem, 0.5vw, 0.35rem);
+    --space-2: clamp(0.5rem, 1vw, 0.75rem);
+    --space-4: clamp(1rem, 2vw, 1.5rem);
+    --space-8: clamp(2rem, 4vw, 3rem);
+    --space-12: clamp(3rem, 6vw, 4.5rem);
+    --space-16: clamp(4rem, 8vw, 6rem);
     --bg-body: #000000;
     --bg-surface: #0a0a0a;
     --bg-surface-hover: #111111;
@@ -288,7 +288,7 @@ main {
 }
 
 h1 {
-    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-size: clamp(2.5rem, 5vw + 1rem, 5rem);
     font-weight: 800;
     line-height: 1.1;
     letter-spacing: -0.03em;
@@ -296,19 +296,19 @@ h1 {
 }
 
 h2 {
-    font-size: clamp(2rem, 4vw, 3rem);
+    font-size: clamp(2rem, 4vw, 3.5rem);
     font-weight: 700;
     letter-spacing: -0.02em;
     margin-bottom: var(--space-2);
 }
 
 h3 {
-    font-size: clamp(1.2rem, 3vw, 1.75rem);
+    font-size: clamp(1.2rem, 2.5vw, 1.75rem);
     font-weight: 600;
 }
 
 h4 {
-    font-size: clamp(1rem, 2vw, 1.25rem);
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
     font-weight: 600;
 }
 
@@ -1335,7 +1335,7 @@ footer .orb-f2 {
 
 .showcase-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 2rem;
     max-width: 1200px;
     margin: 0 auto;
@@ -1642,15 +1642,12 @@ footer .orb-f2 {
     transform: translateY(-2px);
 }
 
-@media (max-width: 1100px) {
-    .showcase-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 1.5rem;
-    }
-}
+/* auto-fit handles 2-column layout naturally now */
+/* Removed explicit Tablet Override */
 
 @media (max-width: 700px) {
     .showcase-grid {
+        /* On very narrow screens, force single column if minmax prevents it */
         grid-template-columns: 1fr;
         gap: 1.5rem;
     }
@@ -2078,7 +2075,7 @@ main {
 
 .testimonials-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
     margin-top: 1rem;
 }
@@ -2516,7 +2513,11 @@ main {
     text-align: left;
 }
 
-/* Removed rigid skills-container media query in favor of auto-fit */
+@media (max-width: 900px) {
+    .skills-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
 
 .skills-col h3 {
     font-size: 1.5rem;

@@ -4,7 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
     renderTracks();
     initAdvancedUI();
     initShowcaseTilt();
-
+    if (typeof gsap !== 'undefined') {
+    }
     initSmoothScroll();
     initScrollAnimations();
     initTechTooltips();
@@ -506,11 +507,13 @@ function initAdvancedUI() {
             gsap.fromTo(footerBg,
                 {
                     yPercent: -50,
-                    opacity: 1
+                    opacity: 1,
+                    filter: "blur(20px) brightness(0.5)"
                 },
                 {
                     yPercent: 0,
                     opacity: 1,
+                    filter: "blur(0px) brightness(1)",
                     ease: "power2.out",
                     scrollTrigger: {
                         trigger: spacer,
