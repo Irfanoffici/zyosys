@@ -504,6 +504,16 @@ function initAdvancedUI() {
             if (!footerBg || !spacer) return;
             const h = footerBg.offsetHeight;
             spacer.style.height = `${h}px`;
+
+            // Potato Mode: Disable heavy parallax/blur on laptops & mobile
+            if (window.innerWidth <= 1366) {
+                if (gsap.getTweensOf(footerBg).length) {
+                    gsap.killTweensOf(footerBg);
+                    gsap.set(footerBg, { clearProps: "all" });
+                }
+                return;
+            }
+
             gsap.fromTo(footerBg,
                 {
                     yPercent: -50,
