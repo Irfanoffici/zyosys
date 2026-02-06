@@ -1,16 +1,45 @@
+const isLowEnd = checkLowEndDevice();
+
 document.addEventListener('DOMContentLoaded', () => {
+    if (isLowEnd) {
+        document.documentElement.classList.add('is-low-end');
+        console.log('Low-end device detected: Enabling performance mode.');
+    }
+
     initTheme();
     initDraggableToggle();
     renderTracks();
-    initAdvancedUI();
-    initShowcaseTilt();
-    if (typeof gsap !== 'undefined') {
+
+    // Only init heavy UI on high-end devices
+    if (!isLowEnd) {
+        initAdvancedUI();
+        initShowcaseTilt();
+        initSmoothScroll();
+        initScrollAnimations();
+    } else {
+        // Fallback for scroll animations on low-end
+        document.querySelectorAll('.reveal').forEach(el => el.style.opacity = '1');
     }
-    initSmoothScroll();
-    initScrollAnimations();
+
     initTechTooltips();
     initNewsletter();
 });
+
+function checkLowEndDevice() {
+    // 1. Check logical cores ( <= 4 usually means older/budget mobile)
+    if (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) return true;
+
+    // 2. Check device memory ( <= 4GB RAM)
+    if (navigator.deviceMemory && navigator.deviceMemory <= 4) return true;
+
+    // 3. Check data saver mode
+    if (navigator.connection && navigator.connection.saveData) return true;
+
+    // 4. Check user preference
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return true;
+
+    return false;
+}
 function initNewsletter() {
     const input = document.querySelector('.newsletter-input');
     const btn = document.querySelector('.newsletter-btn');
@@ -320,6 +349,7 @@ function renderTracks() {
 function initSpotlightEffect() {
     const container = document.getElementById('tracks-container');
     if (!container) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     container.addEventListener('mousemove', (e) => {
         const cards = document.querySelectorAll('.spotlight-card');
         cards.forEach(card => {
@@ -337,7 +367,7 @@ function getWhatsappLink(courseTitle) {
     return `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
 }
 function initShowcaseTilt() {
-    if (window.matchMedia('(hover: none)').matches || window.innerWidth <= 900) return;
+    if (window.matchMedia('(hover: none)').matches || window.innerWidth <= 900 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const cards = document.querySelectorAll('.showcase-card');
     cards.forEach(card => {
         let isHovering = false;
@@ -430,7 +460,12 @@ function initAdvancedUI() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const target = parseInt(entry.target.getAttribute('data-target'));
-                animateCount(entry.target, target);
+                // Skip animation if reduced motion is preferred
+                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                    entry.target.innerText = target.toLocaleString() + (target < 100 ? '%' : '+');
+                } else {
+                    animateCount(entry.target, target);
+                }
                 observer.unobserve(entry.target);
             }
         });
@@ -463,6 +498,8 @@ function initAdvancedUI() {
         }
     }
     const orbs = document.querySelectorAll('.ambient-orb');
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         orbs.forEach(orb => {
             const speed = parseFloat(orb.getAttribute('data-speed') || 0.05);
