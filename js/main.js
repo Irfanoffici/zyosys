@@ -302,16 +302,26 @@ function renderTracks() {
 function initSpotlightEffect() {
     const container = document.getElementById('tracks-container');
     if (!container) return;
+
+    // Performance: Throttle mouse events using requestAnimationFrame
+    let ticking = false;
+
     container.addEventListener('mousemove', (e) => {
-        const cards = document.querySelectorAll('.spotlight-card');
-        cards.forEach(card => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            card.style.setProperty('--mouse-x', `${x}px`);
-            card.style.setProperty('--mouse-y', `${y}px`);
-        });
-    });
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                const cards = document.querySelectorAll('.spotlight-card');
+                cards.forEach(card => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    card.style.setProperty('--mouse-x', `${x}px`);
+                    card.style.setProperty('--mouse-y', `${y}px`);
+                });
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }, { passive: true }); // Passive listener for scrolling performance
 }
 function getWhatsappLink(courseTitle) {
     const phone = "918870095446";
@@ -348,34 +358,10 @@ function initShowcaseTilt() {
     });
 }
 function initSmoothScroll() {
-    // Disable smooth scroll on mobile for native feel/performance
-    if (window.innerWidth <= 768) return;
-
-    if (typeof Lenis === 'undefined') return;
-    const lenis = new Lenis({
-        duration: 1.2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        direction: 'vertical',
-        gestureDirection: 'vertical',
-        smooth: true,
-        mouseMultiplier: 0.8,
-        smoothTouch: false,
-        touchMultiplier: 2,
-    });
-    if (typeof ScrollTrigger !== 'undefined') {
-        lenis.on('scroll', ScrollTrigger.update);
-        gsap.ticker.add((time) => {
-            lenis.raf(time * 1000);
-        });
-        gsap.ticker.lagSmoothing(0);
-    } else {
-        function raf(time) {
-            lenis.raf(time);
-            requestAnimationFrame(raf);
-        }
-        requestAnimationFrame(raf);
-    }
-    window.lenis = lenis;
+    // We are using native CSS smooth scrolling for maximum performance and battery efficiency per user request.
+    // This function is kept empty or for any future minimal polyfills if absolutely needed.
+    // Ensure <html> has scroll-behavior: smooth in CSS.
+    document.documentElement.style.scrollBehavior = 'smooth';
 }
 function initScrollAnimations() {
     const targets = document.querySelectorAll('section:not(.hero), .feature-card, .stat-item, .hub-container, .tech-card-dark, .showcase-card, .testimonial-card, .faq-item');
@@ -399,11 +385,18 @@ function initAdvancedUI() {
         const progressBar = document.getElementById('scroll-progress');
         if (progressBar) {
             let ticking = false;
+            let docHeight = document.documentElement.scrollHeight - window.innerHeight;
+
+            // Re-calculate docHeight on resize to avoid layout thrashing on scroll
+            window.addEventListener('resize', () => {
+                docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            }, { passive: true });
+
             window.addEventListener('scroll', () => {
                 if (!ticking) {
                     window.requestAnimationFrame(() => {
                         const scrollTop = window.scrollY;
-                        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                        // Avoid calculating docHeight here
                         const scrollPercent = (scrollTop / docHeight) * 100;
                         progressBar.style.height = `${scrollPercent}%`;
                         ticking = false;
