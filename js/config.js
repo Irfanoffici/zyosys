@@ -1,4 +1,3 @@
-
 const ZYOSYS_CONFIG = {
     brand: {
         name: "Zyosys",
@@ -50,6 +49,5 @@ const ZYOSYS_CONFIG = {
         }
     ],
     features: [
-        // Features list if we want to make that dynamic too
     ]
 };

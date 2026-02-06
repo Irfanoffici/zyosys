@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,16 +8,12 @@
         content="Premium tech training for the next generation of software engineers. Master scalable systems, code reviews, and product shipping.">
     <meta name="keywords" content="coding bootcamp, software engineering, system design, react, next.js, career growth">
     <meta name="author" content="Zyosys">
-
-    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://zyosys.com/">
     <meta property="og:title" content="Zyosys | Engineering Your Future">
     <meta property="og:description"
         content="Premium tech training for the next generation of software engineers. Master scalable systems.">
     <meta property="og:image" content="https://zyosys.com/og-image.jpg">
-
-    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://zyosys.com/">
     <meta name="twitter:title" content="Zyosys | Engineering Your Future">
@@ -28,8 +23,6 @@
     <link rel="canonical" href="https://zyosys.com/">
     <link rel="manifest" href="/manifest.json">
     <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
-
-    <!-- Schema.org JSON-LD -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -49,47 +42,31 @@
       }
     }
     </script>
-
-    <!-- Resource Hints -->
     <link rel="stylesheet" href="css/style.css">
-
-    <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <!-- GSAP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 </head>
-
 <body>
-    <!-- Ambient Accent Animation -->
     <div class="ambient-background">
         <div class="accent-orb"></div>
         <div class="accent-orb"></div>
         <div class="accent-orb"></div>
     </div>
-
-    <!-- Top Announcement Bar -->
     <div class="top-bar">
         <span>🚀 New Cohort Starting Soon: <a
                 href="https://wa.me/918870095446?text=Hi%20Zyosys,%20I%20am%20interested%20in%20joining%20the%20new%20cohort."
                 target="_blank" style="color: white; text-decoration: underline;"><strong>Apply Now</strong></a></span>
     </div>
-
-
-
-    <!-- Theme Toggle -->
     <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Dark Mode" title="Toggle Theme">
         <svg class="theme-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
         </svg>
     </button>
-
-    <!-- Navigation -->
     <div class="nav-wrapper">
         <nav class="nav-pill" aria-label="Main Navigation">
             <a href="#" class="nav-logo">Zyosys.</a>
@@ -100,35 +77,24 @@
                         target="_blank" style="color: var(--text-accent);" aria-label="Apply to Zyosys">Apply &rarr;</a>
                 </li>
             </ul>
-
-            <!-- Mobile/Notch Theme Toggle -->
             <button class="theme-toggle-nav" id="theme-toggle-nav" aria-label="Toggle Dark Mode">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
                     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                 </svg>
             </button>
-
         </nav>
     </div>
-
-    <!-- Background FX -->
     <div class="bg-grid" aria-hidden="true"></div>
     <div class="cursor-dot" data-cursor-dot aria-hidden="true"></div>
     <div class="cursor-outline" data-cursor-outline aria-hidden="true"></div>
-
-    <!-- Ambient Background -->
     <div class="ambient-orb orb-1" data-speed="0.05" aria-hidden="true"></div>
     <div class="ambient-orb orb-2" data-speed="0.08" aria-hidden="true"></div>
     <div class="ambient-orb orb-3" data-speed="0.02" aria-hidden="true"></div>
-
-    <!-- Scroll Guide -->
     <div class="scroll-guide" aria-hidden="true">
         <div class="scroll-guide-progress" id="scroll-progress"></div>
     </div>
-
     <main class="container">
-        <!-- Hero Section -->
         <section class="hero section">
             <div class="hero-content">
                 <h1>Master the <br><span class="text-gradient">Art of Engineering.</span></h1>
@@ -144,8 +110,6 @@
                         Curriculum</a>
                 </div>
             </div>
-
-            <!-- Detailed Hero SVG Illustration -->
             <div class="hero-visual" aria-hidden="true">
                 <svg viewBox="0 0 600 450" xmlns="http://www.w3.org/2000/svg" loading="lazy" decoding="async">
                     <defs>
@@ -154,32 +118,22 @@
                             <feComposite in="SourceGraphic" in2="blur" operator="over" />
                         </filter>
                     </defs>
-
-                    <!-- Background Glow -->
                     <circle cx="300" cy="225" r="150" fill="var(--text-accent)" opacity="0.1" filter="url(#glow)" />
-
-                    <!-- Floating Code Window (Main) -->
                     <g transform="translate(50, 50)">
                         <rect x="0" y="0" width="400" height="280" rx="12" fill="var(--bg-surface)"
                             stroke="var(--border)" stroke-width="1.5" />
-                        <!-- Window Dots -->
                         <circle cx="20" cy="20" r="4" fill="#ef4444" opacity="0.8" />
                         <circle cx="35" cy="20" r="4" fill="#eab308" opacity="0.8" />
                         <circle cx="50" cy="20" r="4" fill="#22c55e" opacity="0.8" />
-                        <!-- Code Lines -->
                         <rect x="25" y="60" width="100" height="8" rx="2" fill="var(--text-accent)" opacity="0.6" />
                         <rect x="25" y="80" width="200" height="8" rx="2" fill="var(--text-secondary)" opacity="0.3" />
                         <rect x="25" y="100" width="180" height="8" rx="2" fill="var(--text-secondary)" opacity="0.3" />
                         <rect x="40" y="120" width="220" height="8" rx="2" fill="var(--text-secondary)" opacity="0.3" />
                         <rect x="25" y="140" width="150" height="8" rx="2" fill="var(--text-secondary)" opacity="0.3" />
-
-                        <!-- Animated Cursor -->
                         <rect x="180" y="140" width="2" height="12" fill="var(--text-primary)">
                             <animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite" />
                         </rect>
                     </g>
-
-                    <!-- Floating Widgets (Learning Path) -->
                     <g transform="translate(380, 240)">
                         <rect x="0" y="0" width="140" height="100" rx="12" fill="var(--bg-surface)"
                             stroke="var(--border)" stroke-width="1.5"
@@ -190,7 +144,6 @@
                         <text x="20" y="40" fill="var(--text-primary)" font-size="24" font-weight="bold">95%</text>
                         <text x="20" y="60" fill="var(--text-secondary)" font-size="10">Placement Rate</text>
                     </g>
-
                     <g transform="translate(20, 260)">
                         <rect x="0" y="0" width="120" height="80" rx="12" fill="var(--bg-surface)"
                             stroke="var(--border)" stroke-width="1.5"
@@ -204,8 +157,6 @@
                 </svg>
             </div>
         </section>
-
-        <!-- Stats -->
         <section class="stats-grid section">
             <div class="stat-item">
                 <h2>95%</h2>
@@ -220,13 +171,9 @@
                 <p>Verified Engineers</p>
             </div>
         </section>
-
-        <!-- Partner Logos (Moved Up for Credibility) -->
         <section class="section" style="padding: 2rem 0 4rem 0; opacity: 0.8;">
-            <!-- Infinite Marquee Wrapper -->
             <div class="logo-marquee">
                 <div class="logo-marquee-content">
-                    <!-- Original Set -->
                     <div class="trust-logo" title="WebScale">
                         <svg viewBox="0 0 40 40" fill="currentColor">
                             <path d="M20 5 L35 30 L5 30 Z" opacity="0.8" />
@@ -268,8 +215,6 @@
                         </svg>
                         <span>DigitalWay</span>
                     </div>
-
-                    <!-- Duplicate Set for Infinite Loop -->
                     <div class="trust-logo" title="WebScale">
                         <svg viewBox="0 0 40 40" fill="currentColor">
                             <path d="M20 5 L35 30 L5 30 Z" opacity="0.8" />
@@ -314,8 +259,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- Why Us Section (Hub & Spoke) -->
         <section id="methodology" class="section why-us-section"
             style="position: relative; overflow: hidden; padding: 6rem 0;">
             <div class="hub-container">
@@ -327,7 +270,6 @@
                         <div class="spoke-icon">⚙️</div>
                     </div>
                 </div>
-                <!-- Center Hub -->
                 <div class="hub-center">
                     <div class="hub-lock-icon">🚀</div>
                     <h2 class="text-gradient">Beyond<br>Tutorials.</h2>
@@ -346,7 +288,6 @@
                         <div class="spoke-icon">🔑</div>
                     </div>
                 </div>
-                <!-- SVG Lines Background -->
                 <svg class="hub-lines" viewBox="0 0 1200 400" preserveAspectRatio="none">
                     <path class="line-path left-top" d="M300,100 C450,100 450,200 600,200" />
                     <path class="line-path left-bottom" d="M300,300 C450,300 450,200 600,200" />
@@ -355,15 +296,12 @@
                 </svg>
             </div>
         </section>
-
-        <!-- Feature Cards (Benefits) -->
         <section class="section">
             <div class="grid-cols-3">
                 <div class="feature-card">
                     <div class="feature-header">
                         <span class="badge-yellow">CAREER</span>
                         <div class="feature-icon">
-                            <!-- Target/Arrow Icon -->
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <circle cx="12" cy="12" r="10" stroke-opacity="0.2" />
                                 <circle cx="12" cy="12" r="6" stroke="var(--text-accent)" />
@@ -379,7 +317,6 @@
                     <div class="feature-header">
                         <span class="badge-yellow">BUILD</span>
                         <div class="feature-icon">
-                            <!-- Code/Git Icon -->
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M16 18L22 12L16 6" stroke="var(--text-accent)" stroke-linecap="round"
                                     stroke-linejoin="round" />
@@ -397,7 +334,6 @@
                     <div class="feature-header">
                         <span class="badge-yellow">NETWORK</span>
                         <div class="feature-icon">
-                            <!-- User/Group Icon -->
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <circle cx="9" cy="7" r="4" stroke="var(--text-accent)" />
                                 <path d="M17 21V19C17 16.7909 15.2091 15 13 15H5C2.79086 15 1 16.7909 1 19V21"
@@ -415,19 +351,14 @@
                 </div>
             </div>
         </section>
-
-        <!-- Tracks Grid (Product) -->
         <section id="tracks" class="section">
             <div style="margin-bottom: 3rem;">
                 <h2 class="text-gradient">Engineering Tracks</h2>
                 <p style="color: var(--text-secondary);">Select your specialization and start building.</p>
             </div>
             <div id="tracks-container" class="grid-cols-3">
-                <!-- Rendered by JS -->
             </div>
         </section>
-
-        <!-- Tech Stack (Skills) -->
         <section class="section skills-section">
             <h2 style="color: var(--text-primary); font-weight: 700;">Tech Stack</h2>
             <div class="skills-container">
@@ -481,8 +412,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- Powered By Section (Technical Depth) -->
         <section class="section powered-by-section">
             <h2 class="text-gradient" style="font-size: 2.5rem; margin-bottom: 4rem;">Built on a foundation of fast,
                 <br> production-grade tooling
@@ -499,7 +428,6 @@
                 <div class="circuit-grid">
                     <a href="https://react.dev" target="_blank" rel="noopener noreferrer" class="tech-card-dark">
                         <div class="tech-icon-large">
-                            <!-- React Logo -->
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="48"
                                 height="48" style="color: #61DAFB;">
                                 <circle cx="12" cy="12" r="3" fill="currentColor" fill-opacity="0.2" />
@@ -519,7 +447,6 @@
                     </a>
                     <a href="https://vitejs.dev" target="_blank" rel="noopener noreferrer" class="tech-card-dark">
                         <div class="tech-icon-large">
-                            <!-- Vite/Turbo Bolt -->
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="48"
                                 height="48" style="color: #FFD21E;">
                                 <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="currentColor" fill-opacity="0.2"
@@ -531,7 +458,6 @@
                     </a>
                     <a href="https://aws.amazon.com" target="_blank" rel="noopener noreferrer" class="tech-card-dark">
                         <div class="tech-icon-large">
-                            <!-- AWS Cloud -->
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="48"
                                 height="48" style="color: #FF9900;">
                                 <path
@@ -546,8 +472,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- Showcase Section (Proof) -->
         <section class="section showcase-section">
             <h2 class="text-gradient" style="font-size: 3rem; margin-bottom: 3rem; line-height: 1.1;">The portfolio of
                 choice <br> when it matters</h2>
@@ -560,7 +484,6 @@
                                 <span style="font-size: 2.5rem; margin-bottom: 1rem; display: block;">🎙️</span>
                                 <h3>Audible Clone</h3>
                                 <p style="font-size: 0.9rem; opacity: 0.7;">Next.js Audio Streaming</p>
-                                <!-- Micro-Animation: Audio Bars -->
                                 <div class="audio-visualizer">
                                     <div class="bar"></div>
                                     <div class="bar"></div>
@@ -573,11 +496,9 @@
                     </div>
                     <div class="showcase-meta"><span>Audio Engine</span><span>Next.js</span></div>
                 </div>
-
                 <div class="showcase-card" data-tilt>
                     <div class="showcase-preview" style="background: linear-gradient(135deg, #0f172a, #1e293b);">
                         <div class="mock-simple">
-                            <!-- Micro-Animation: Animated Chart -->
                             <div class="chart-loader">
                                 <div class="chart-bar"></div>
                                 <div class="chart-bar"></div>
@@ -590,11 +511,9 @@
                         <div class="meta-tags"><span class="chip">Postgres</span><span class="chip">D3.js</span></div>
                     </div>
                 </div>
-
                 <div class="showcase-card" data-tilt>
                     <div class="showcase-preview" style="background: linear-gradient(135deg, #2e1065, #4c1d95);">
                         <div class="mock-simple">
-                            <!-- Micro-Animation: Floating Item -->
                             <div class="floating-shoe">
                                 <span
                                     style="font-size: 3rem; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));">👟</span>
@@ -606,7 +525,6 @@
                         <div class="meta-tags"><span class="chip">Redux</span><span class="chip">Stripe</span></div>
                     </div>
                 </div>
-
                 <div class="showcase-card large" data-tilt>
                     <div class="showcase-preview" style="background: linear-gradient(45deg, #171717, #262626);">
                         <div class="mock-browser">
@@ -629,14 +547,10 @@
                     Projects</a>
             </div>
         </section>
-
-        <!-- Testimonials (Social Proof) -->
         <section class="section" style="text-align: center;">
             <h2 class="text-gradient" style="margin-bottom: 3rem;">What Our <span
                     style="color: #7c3aed;">Students</span> Say</h2>
-            <!-- Bento Grid Testimonials -->
             <div class="testimonial-bento-grid">
-                <!-- Large Card 1 (Netflix) -->
                 <div class="testimonial-card large reveal">
                     <div class="test-header">
                         <div class="avatar-circle" style="background: linear-gradient(135deg, #ef4444, #b91c1c);">SJ
@@ -652,8 +566,6 @@
                             learned here every single day in production."</p>
                     </div>
                 </div>
-
-                <!-- Small Card 1 (Amazon) -->
                 <div class="testimonial-card reveal">
                     <div class="test-header">
                         <div class="avatar-circle" style="background: linear-gradient(135deg, #f59e0b, #d97706);">MR
@@ -664,8 +576,6 @@
                     </div>
                     <p>"Failed interviews for 2 years. After Zyosys, cracked Amazon and Uber. Life changing."</p>
                 </div>
-
-                <!-- Small Card 2 (Stripe) -->
                 <div class="testimonial-card reveal">
                     <div class="test-header">
                         <div class="avatar-circle" style="background: linear-gradient(135deg, #6366f1, #4338ca);">AL
@@ -676,8 +586,6 @@
                     </div>
                     <p>"My mentor reviewed my PRs line-by-line. You don't get this level of detail elsewhere."</p>
                 </div>
-
-                <!-- Large Card 2 (Uber) -->
                 <div class="testimonial-card large reveal">
                     <div class="test-header">
                         <div class="avatar-circle" style="background: linear-gradient(135deg, #000000, #333333);">DK
@@ -695,15 +603,12 @@
                 </div>
             </div>
         </section>
-
-        <!-- FAQ Section -->
         <section class="section faq-section">
             <div style="text-align: center; margin-bottom: 4rem;">
                 <span
                     style="color: var(--text-accent); font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em;">FAQ</span>
                 <h2 class="text-gradient" style="margin-top: 0.5rem;">Have a Question?</h2>
             </div>
-
             <div class="faq-grid">
                 <div class="faq-col">
                     <details class="faq-item">
@@ -738,27 +643,20 @@
                 </div>
             </div>
         </section>
-
     </main>
-    <!-- Parallax Footer Wrapper (Spacer) -->
     <section id="footer-parallax" style="opacity: 0; pointer-events: none;">
-        <!-- This section reserves space in the DOM -->
     </section>
-
-    <!-- Fixed Footer Container (Visual) -->
     <footer class="footer-bg">
         <div class="footer-orb orb-f1"></div>
         <div class="footer-orb orb-f2"></div>
         <div class="container footer-container">
             <div class="footer-top">
                 <div class="footer-brand">
-                    <!-- Legacy Brand -->
                     <h2
                         style="font-size: 3.5rem; color: var(--text-primary); margin-bottom: 0.5rem; font-weight: 800; letter-spacing: -0.05em;">
                         Zyosys.</h2>
                     <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.25rem; font-weight: 500;">
                         Learn. Lead. Level up.</p>
-
                     <div class="newsletter-form">
                         <input type="email" placeholder="email@domain.com" class="newsletter-input"
                             aria-label="Email address for newsletter" name="email" autocomplete="email">
@@ -807,14 +705,9 @@
             </div>
         </div>
     </footer>
-
     </footer>
-
-    <!-- Smooth Scroll (Lenis) -->
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
-    <!-- Core Logic -->
     <script src="js/config.js"></script>
     <script src="js/main.js"></script>
 </body>
-
 </html>

@@ -1,102 +1,56 @@
-/* Fresh Start: Performance & Grid System */
-
-
 :root {
-    /* Spacing System */
     --space-1: 0.25rem;
     --space-2: 0.5rem;
     --space-4: 1rem;
     --space-8: 2rem;
     --space-12: 3rem;
     --space-16: 4rem;
-
-    /* Colors (True Pitch Black Theme) */
     --bg-body: #000000;
-    /* Pure Black */
     --bg-surface: #0a0a0a;
-    /* Deepest Gray for distinct cards */
     --bg-surface-hover: #111111;
-
     --text-primary: #ffffff;
-    /* Pure White for max contrast */
     --text-secondary: #a1a1aa;
-    /* Zinc 400 - Better Contrast */
     --text-accent: #7c3aed;
-    /* Electric Violet */
-
     --border: rgba(255, 255, 255, 0.08);
     --border-hover: rgba(124, 58, 237, 0.5);
-
-    /* Nav Specific */
     --nav-bg: rgba(0, 0, 0, 0.8);
     --nav-border: rgba(255, 255, 255, 0.05);
-
-    /* Grid */
     --max-width: 1200px;
     --radius: 12px;
-
-    /* Glass & Footer Defaults (Dark) */
     --bg-glass: rgba(10, 10, 10, 0.85);
     --bg-footer: radial-gradient(circle at 50% 100%, #1a1a2e 0%, #000000 100%);
     --shadow-container: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     --border-glass: rgba(255, 255, 255, 0.03);
 }
-
 [data-theme="light"] {
-    /* Pro Light Theme Palette (High Contrast) */
     --bg-body: #f4f4f5;
-    /* Light Grey Background */
     --bg-surface: #ffffff;
-    /* White Cards (Pop against grey) */
     --bg-card: #ffffff;
     --bg-surface-hover: #fafafa;
-
     --text-primary: #18181b;
-    /* Zinc 900 */
     --text-secondary: #3f3f46;
-    /* Zinc 700 - Better Contrast */
     --text-accent: #7c3aed;
-    /* Violet */
-
     --border: rgba(0, 0, 0, 0.08);
     --border-hover: rgba(124, 58, 237, 0.25);
-
-    /* Nav Specific Light */
     --nav-bg: rgba(255, 255, 255, 0.9);
     --nav-border: rgba(0, 0, 0, 0.05);
-
-    /* Light Mode Card Shadows (Premium Soft Lift) */
     --shadow-card: 0 20px 40px -10px rgba(0, 0, 0, 0.08), 0 10px 20px -5px rgba(0, 0, 0, 0.04);
-
-    /* Light Mode Glass & Footer */
     --bg-glass: rgba(255, 255, 255, 0.85);
     --bg-footer: radial-gradient(circle at 50% 100%, #e0e7ff 0%, #f4f4f5 100%);
     --shadow-container: 0 40px 80px -20px rgba(0, 0, 0, 0.15);
     --border-glass: rgba(0, 0, 0, 0.05);
 }
-
-
-
-/* ... existing code ... */
-
-/* Footer Brand Color Fix */
 .footer-brand h2 {
     font-size: 3.5rem;
     color: var(--text-primary);
-    /* Adapted for Theme */
     margin-bottom: 0.5rem;
     font-weight: 800;
     letter-spacing: -0.05em;
     position: relative;
     display: inline-block;
 }
-
-/* ... existing code ... */
-
-/* Tech Cards Update */
 .tech-card-dark {
     background-color: var(--bg-surface);
-    /* White in Light Mode */
     border: 1px solid var(--border);
     border-radius: 12px;
     padding: 2rem;
@@ -108,64 +62,46 @@
     align-items: flex-start;
     height: 100%;
 }
-
 html {
-    /* scroll-behavior: smooth;  <-- REMOVED for Lenis JS Scroll */
     overflow-x: hidden;
-    /* Prevent horizontal scroll globally */
 }
-
 html.lenis,
 html.lenis body {
     height: auto;
 }
-
 .lenis.lenis-smooth {
     scroll-behavior: auto !important;
 }
-
 .lenis.lenis-smooth [data-lenis-prevent] {
     overscroll-behavior: contain;
 }
-
 .lenis.lenis-stopped {
     overflow: hidden;
 }
-
 .lenis.lenis-scrolling iframe {
     pointer-events: none;
 }
-
-/* Accessibility: Robust Focus Indicator */
 :focus-visible {
     outline: 2px solid var(--text-accent);
     outline-offset: 4px;
 }
-
-/* Reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-
 body {
     background-color: transparent;
-    /* Allow Fixed Footer to show through spacer */
     color: var(--text-primary);
     font-family: 'Inter', sans-serif;
     line-height: 1.5;
     transition: background-color 0.3s ease, color 0.3s ease;
-    /* Double safety */
-    /* Double safety */
     position: relative;
     z-index: 1;
     text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
-
-/* Ambient Accent Animation */
 .ambient-background {
     position: fixed;
     top: 0;
@@ -176,28 +112,20 @@ body {
     z-index: -1;
     pointer-events: none;
     background: var(--bg-body);
-    /* Base layer */
 }
-
 .accent-orb {
     position: absolute;
     border-radius: 50%;
     background: radial-gradient(circle, var(--text-accent), transparent 70%);
     filter: blur(80px);
-    /* Soft glow */
     opacity: 0.15;
-    /* Subtle in dark mode */
     animation: drift 20s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
     transform-origin: center;
 }
-
 [data-theme="light"] .accent-orb {
     opacity: 0.1;
-    /* Even softer in light mode */
     filter: blur(100px);
 }
-
-/* Orb 1: Top Left-ish */
 .accent-orb:nth-child(1) {
     top: -10%;
     left: -10%;
@@ -205,10 +133,7 @@ body {
     height: 60vw;
     animation-duration: 25s;
     background: radial-gradient(circle, #7c3aed, transparent 70%);
-    /* Violet */
 }
-
-/* Orb 2: Bottom Right-ish */
 .accent-orb:nth-child(2) {
     bottom: -10%;
     right: -10%;
@@ -217,10 +142,7 @@ body {
     animation-duration: 30s;
     animation-delay: -5s;
     background: radial-gradient(circle, #3b82f6, transparent 70%);
-    /* Blue */
 }
-
-/* Orb 3: Middle Floating */
 .accent-orb:nth-child(3) {
     top: 40%;
     left: 30%;
@@ -230,67 +152,46 @@ body {
     animation-duration: 18s;
     animation-delay: -10s;
     background: radial-gradient(circle, #ec4899, transparent 70%);
-    /* Pink hint */
 }
-
 @keyframes drift {
     0% {
         transform: translate(0, 0) scale(1);
     }
-
     100% {
         transform: translate(100px, 50px) scale(1.1);
     }
 }
-
-/* Scroll Animations */
 .reveal {
     opacity: 0;
     transform: translateY(30px);
     transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
 }
-
 .reveal.active {
     opacity: 1;
     transform: translateY(0);
 }
-
-/* Staggered delays for children if needed manually, but removing auto-stagger classes */
-
 main {
     position: relative;
     z-index: 2;
-    /* Ensure it covers footer */
     background-color: var(--bg-body);
-    /* Mask the fixed footer */
     width: 100%;
 }
-
-/* --- Layout Engine --- */
 .container {
     width: 100%;
     max-width: var(--max-width);
     margin: 0 auto;
     padding: 0 clamp(1rem, 5vw, var(--space-4));
-
-    /* Premium Glass Effect */
     background: var(--bg-glass);
     backdrop-filter: blur(80px);
-    /* Increased blur */
     -webkit-backdrop-filter: blur(80px);
     border-left: 1px solid var(--border-glass);
     border-right: 1px solid var(--border-glass);
-
     position: relative;
     z-index: 10;
     border-radius: 0 0 2rem 2rem;
-    /* Smooth bottom edge */
     box-shadow: var(--shadow-container);
     margin-bottom: 400px;
-    /* Space for footer reveal */
 }
-
-/* Parallax Elements */
 .parallax-layer {
     position: absolute;
     top: 0;
@@ -299,28 +200,20 @@ main {
     height: 100%;
     pointer-events: none;
     z-index: -1;
-    /* Removed aggressive will-change/contain to prevent GPU flickering on some devices */
 }
-
-/* Section Styling (Rounded & Card-like) */
 .section {
     padding: clamp(var(--space-8), 8vw, var(--space-16)) clamp(var(--space-4), 5vw, var(--space-8));
     margin: var(--space-8) auto;
     max-width: var(--max-width);
     border-radius: 2.5rem;
     position: relative;
-    /* Removed 'contain: content' - can cause issues with scroll triggers/reveals */
     overflow: hidden;
     transition: transform 0.3s ease;
 }
-
-/* Alternate Backgrounds for "Card" feel */
 .section:nth-child(even) {
     background: var(--bg-surface);
     border: 1px solid var(--border);
 }
-
-/* --- Typography --- */
 h1 {
     font-size: clamp(2.5rem, 5vw, 4.5rem);
     font-weight: 800;
@@ -328,37 +221,28 @@ h1 {
     letter-spacing: -0.03em;
     margin-bottom: var(--space-4);
 }
-
 h2 {
     font-size: clamp(2rem, 4vw, 3rem);
     font-weight: 700;
     letter-spacing: -0.02em;
     margin-bottom: var(--space-2);
 }
-
 h3 {
     font-size: clamp(1.2rem, 3vw, 1.75rem);
     font-weight: 600;
 }
-
 h4 {
     font-size: clamp(1rem, 2vw, 1.25rem);
     font-weight: 600;
 }
-
 .text-gradient {
     background: linear-gradient(to right, var(--text-primary), var(--text-secondary));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
 }
-
-/* --- Components --- */
-
-/* Nav Theme Toggle (Default Hidden on Desktop) */
 .theme-toggle-nav {
     display: none;
-    /* Hidden by default */
     align-items: center;
     justify-content: center;
     width: 36px;
@@ -371,28 +255,22 @@ h4 {
     transition: all 0.2s ease;
     margin-left: 1rem;
 }
-
 .theme-toggle-nav:hover {
     background: rgba(255, 255, 255, 0.1);
     transform: rotate(15deg);
     border-color: var(--text-accent);
 }
-
 .theme-toggle-nav svg {
     width: 18px;
     height: 18px;
 }
-
 [data-theme="light"] .theme-toggle-nav {
     background: rgba(0, 0, 0, 0.05);
     border-color: rgba(0, 0, 0, 0.1);
 }
-
 [data-theme="light"] .theme-toggle-nav:hover {
     background: rgba(0, 0, 0, 0.1);
 }
-
-/* Single Theme Toggle (Minimal) */
 .theme-toggle {
     position: fixed;
     top: 2rem;
@@ -408,50 +286,38 @@ h4 {
     align-items: center;
     justify-content: center;
     cursor: grab;
-    /* Indicates draggable */
     z-index: 1000;
     transition: background-color 0.3s, border-color 0.3s, transform 0.1s;
-    /* Reduced transform lag */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     touch-action: none;
-    /* Prevent scrolling while dragging */
     user-select: none;
 }
-
 .theme-toggle:active {
     cursor: grabbing;
     transform: scale(0.95);
 }
-
 .theme-toggle:hover {
     background: rgba(255, 255, 255, 0.1);
     transform: rotate(15deg) scale(1.05);
     border-color: var(--text-accent);
 }
-
 .theme-toggle:active {
     transform: scale(0.95);
 }
-
 .theme-toggle svg {
     width: 20px;
     height: 20px;
     fill: none;
-    /* Default to outline for moon */
     transition: all 0.3s ease;
 }
-
 [data-theme="light"] .theme-toggle {
     background: rgba(0, 0, 0, 0.05);
     border-color: rgba(0, 0, 0, 0.1);
     color: var(--text-primary);
 }
-
 [data-theme="light"] .theme-toggle:hover {
     background: rgba(0, 0, 0, 0.1);
 }
-
-/* Dynamic Tech Tooltip */
 .tech-tooltip {
     position: fixed;
     top: 0;
@@ -464,37 +330,26 @@ h4 {
     font-size: 0.85rem;
     font-weight: 500;
     pointer-events: none;
-    /* Let clicks pass through if needed, but we handle click on item */
     opacity: 0;
     transform: scale(0.95);
     transition: opacity 0.2s ease, transform 0.2s ease;
-
-    /* Performance: Hardware Acceleration */
     will-change: transform;
     transform: translateZ(0);
-
-    /* Glass & Soft Shadow */
     backdrop-filter: blur(12px);
     border: 1px solid var(--border);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     max-width: 250px;
     line-height: 1.4;
 }
-
 @media (hover: none) and (pointer: coarse) {
     .tech-tooltip {
         display: none !important;
     }
 }
-
 .tech-tooltip.visible {
     opacity: 1;
     transform: scale(1);
 }
-
-
-
-/* Top Bar */
 .top-bar {
     position: fixed;
     top: 0;
@@ -510,15 +365,11 @@ h4 {
     font-weight: 500;
     z-index: 1001;
     display: none;
-    /* Above everything */
     will-change: transform;
 }
-
-/* New Navbar (Wider, Professional) */
 .nav-wrapper {
     position: fixed;
     top: 3.5rem;
-    /* Adjusted for Top Bar (2.25rem bar + 1.25rem gap) */
     max-width: 900px;
     margin: 0 auto;
     left: 0;
@@ -526,19 +377,15 @@ h4 {
     z-index: 100;
     padding: 0 var(--space-4);
 }
-
 .footer-brand {
     flex: 2;
     min-width: 300px;
     text-align: left;
-    /* Keep text left aligned */
 }
-
 .nav-pill {
     padding: 0.75rem 2rem;
     border-radius: 99px;
     background: var(--nav-bg);
-    /* Glass feel */
     backdrop-filter: blur(24px);
     border: 1px solid var(--nav-border);
     display: flex;
@@ -548,68 +395,41 @@ h4 {
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
     transition: background-color 0.3s, border-color 0.3s, padding 0.3s, border-radius 0.3s;
 }
-
-/* Immersive Floating Nav (Dynamic Island) */
 @media (max-width: 900px) {
     .nav-wrapper {
         top: 12px;
-        /* Float below top edge */
         padding: 0;
         max-width: 100%;
         display: flex;
         justify-content: center;
-        /* Center the island */
     }
-
     .nav-pill {
         padding: 0.75rem 1.75rem;
-        /* Dynamic Island Shape */
         border-radius: 99px;
-        /* Pill Shape */
         border-top: 1px solid rgba(255, 255, 255, 0.1);
-        /* Restore border */
-
         width: fit-content;
-        /* Dynamic Width */
         min-width: 320px;
-        /* Minimum functional width */
         max-width: 90vw;
-        /* Safety Margin */
         margin: 0 auto;
-
         justify-content: space-between;
         background: rgba(var(--nav-bg-rgb), 0.85);
-        /* Slightly more opaque */
         backdrop-filter: blur(20px);
-        /* Premium Blur */
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-        /* Deep shadow */
-
-        /* Apple-style Spring Animation */
         transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
-
     .nav-logo {
         font-size: 1.1rem;
     }
-
-    /* Hide text links, keep CTA only for clean "App-like" feel */
     .nav-links li:not(:last-child) {
         display: none;
     }
-
-    /* Toggle Visibility Swap */
     .theme-toggle {
         display: none !important;
-        /* Hide fixed toggle */
     }
-
     .theme-toggle-nav {
         display: flex;
-        /* Show nav toggle */
     }
 }
-
 .nav-logo {
     font-weight: 800;
     font-size: 1.25rem;
@@ -617,7 +437,6 @@ h4 {
     color: var(--text-primary);
     letter-spacing: -0.02em;
 }
-
 .nav-links {
     display: flex;
     gap: var(--space-8);
@@ -625,7 +444,6 @@ h4 {
     margin: 0;
     padding: 0;
 }
-
 .nav-links a {
     text-decoration: none;
     color: var(--text-secondary);
@@ -633,11 +451,9 @@ h4 {
     font-weight: 500;
     transition: color 0.2s;
 }
-
 .nav-links a:hover {
     color: var(--text-primary);
 }
-
 .btn-primary {
     background: var(--text-primary);
     color: var(--bg-body);
@@ -648,13 +464,10 @@ h4 {
     font-size: 0.95rem;
     transition: transform 0.2s, box-shadow 0.2s;
 }
-
 .btn-primary:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
-
-/* Hero */
 .hero {
     min-height: 90vh;
     display: grid;
@@ -662,26 +475,21 @@ h4 {
     place-items: center;
     text-align: center;
     padding-top: 10rem;
-    /* Increased to clear floating nav */
     background: transparent !important;
     border: none !important;
 }
-
 .hero-visual {
     width: 100%;
     max-width: 650px;
     height: auto;
     margin-top: var(--space-8);
 }
-
-/* Stats (Inside the rounded container) */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     gap: var(--space-8);
     text-align: center;
 }
-
 .stat-item h2 {
     font-size: 3.5rem;
     font-weight: 800;
@@ -689,7 +497,6 @@ h4 {
     margin: 0;
     letter-spacing: -0.05em;
 }
-
 .stat-item p {
     font-size: 0.85rem;
     text-transform: uppercase;
@@ -697,15 +504,12 @@ h4 {
     color: var(--text-secondary);
     font-weight: 600;
 }
-
-/* Methodology Grid (Refined) */
 .methodology-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: var(--space-8);
     margin-top: var(--space-8);
 }
-
 .method-card {
     background: var(--bg-body);
     border: 1px solid var(--border);
@@ -713,34 +517,26 @@ h4 {
     padding: var(--space-8);
     transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s;
 }
-
 .method-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
     border-color: var(--text-accent);
 }
-
 .method-card h3 {
     font-size: 1.25rem;
     margin-bottom: 0.75rem;
     color: var(--text-primary);
 }
-
 .method-card p {
     font-size: 0.95rem;
     color: var(--text-secondary);
     line-height: 1.6;
 }
-
-/* Authenticity Section (Polished) */
 .authenticity-section {
     text-align: center;
     background: transparent !important;
-    /* Override even child rule if needed */
     border: none !important;
 }
-
-/* Partner Logos - Premium & Minimalist */
 .trust-logos {
     display: flex;
     justify-content: center;
@@ -749,7 +545,6 @@ h4 {
     flex-wrap: wrap;
     padding: 0 1rem;
 }
-
 .trust-logo {
     display: flex;
     align-items: center;
@@ -759,7 +554,6 @@ h4 {
     transition: opacity 0.3s ease, color 0.3s ease, transform 0.3s ease;
     cursor: default;
 }
-
 .trust-logo svg {
     width: 32px;
     height: 32px;
@@ -767,50 +561,33 @@ h4 {
     filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0));
     transition: all 0.3s ease;
 }
-
 .trust-logo span {
     font-weight: 600;
     font-size: 1.1rem;
     letter-spacing: -0.02em;
 }
-
 .trust-logo:hover {
     opacity: 1;
     color: var(--text-primary);
     transform: scale(1.05);
 }
-
-/* --- Premium Cards & Buttons (Reference Style) --- */
-
-/* Comfort Layout - Responsive Grids */
-/* Immersive Grid (Miniature Desktop Feel) */
 .grid-cols-3 {
     display: grid;
-    /* Allow smaller items to preserve side-by-side grid on mobile */
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: var(--space-8);
 }
-
 @media (max-width: 600px) {
     .grid-cols-3 {
-        /* On very small screens, allow even smaller items to keep 2-col visual if possible, or stack cleanly */
         grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
         gap: 1.5rem;
     }
-
-    /* Stats grid specific */
     .stats-grid {
         grid-template-columns: repeat(2, 1fr) !important;
-        /* Force 2x2 grid */
     }
-
     .stat-item:last-child {
         grid-column: span 2;
-        /* Center the odd one out */
     }
 }
-
-/* Reference Card Style */
 .card {
     background: var(--bg-surface);
     border: 1px solid var(--border);
@@ -820,9 +597,7 @@ h4 {
     flex-direction: column;
     transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     height: 100%;
-    /* Uniform height */
 }
-
 .card h3 {
     font-size: 1.5rem;
     font-weight: 800;
@@ -830,53 +605,41 @@ h4 {
     margin-bottom: 0.5rem;
     letter-spacing: -0.02em;
 }
-
 .card:hover {
     transform: translateY(-8px);
     border-color: var(--text-accent);
     box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.3);
 }
-
-/* Chip Styling (Refined) */
 .chip {
     display: inline-block;
     font-size: 0.75rem;
     font-weight: 600;
     padding: 0.35rem 0.85rem;
     background: rgba(139, 92, 246, 0.1);
-    /* Subtle tint */
     border: 1px solid rgba(139, 92, 246, 0.2);
     border-radius: 99px;
     margin-right: 0.5rem;
     margin-top: 0.5rem;
     color: var(--text-accent);
 }
-
-/* Premium Solid Button (Full Width, Gradient) */
 .btn-card {
     display: block;
     width: 100%;
     padding: 0.85rem 0;
     margin-top: 1.5rem;
-
     background: linear-gradient(135deg, var(--text-accent) 0%, #3b82f6 100%);
     color: #ffffff !important;
-    /* Force white text */
-
     text-align: center;
     text-decoration: none;
     font-weight: 700;
     font-size: 1rem;
     border-radius: 0.75rem;
     border: none;
-
     box-shadow: 0 4px 6px rgba(139, 92, 246, 0.25);
     transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s;
     position: relative;
     overflow: hidden;
 }
-
-/* Shine Hover Effect */
 .btn-card::after {
     content: "";
     position: absolute;
@@ -888,17 +651,13 @@ h4 {
     transition: 0.5s;
     transform: translateX(-100%);
 }
-
 .btn-card:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 15px rgba(139, 92, 246, 0.4);
 }
-
 .btn-card:hover::after {
     transform: translateX(100%);
 }
-
-/* Footer Links */
 .footer-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -908,7 +667,6 @@ h4 {
     margin: 0 auto;
     margin-bottom: var(--space-8);
 }
-
 .footer-col h4 {
     color: var(--text-primary);
     margin-bottom: 1.5rem;
@@ -917,36 +675,29 @@ h4 {
     letter-spacing: 0.1em;
     opacity: 0.8;
 }
-
 .footer-col ul {
     list-style: none;
     padding: 0;
 }
-
 .footer-col li {
     margin-bottom: 0.75rem;
 }
-
 .footer-col a {
     color: var(--text-secondary);
     text-decoration: none;
     font-size: 0.95rem;
     transition: color 0.2s;
 }
-
 .footer-col a:hover {
     color: var(--text-primary);
 }
-
 footer {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
     height: 400px;
-    /* Fixed height for reveal */
     z-index: -10;
-    /* Behind main content */
     border-top: 1px solid var(--border);
     padding: var(--space-16) 0;
     color: var(--text-secondary);
@@ -955,13 +706,9 @@ footer {
     display: flex;
     flex-direction: column;
     justify-content: center;
-
-    /* Footer Design */
     background: var(--bg-footer);
     overflow: hidden;
 }
-
-/* Footer Blur Overlay for "Flowing" Effect */
 footer::before {
     content: '';
     position: absolute;
@@ -974,21 +721,16 @@ footer::before {
     pointer-events: none;
     filter: blur(10px);
 }
-
-/* Footer Ambient Orbs - Base Style */
 .ambient-orb {
     position: absolute;
     border-radius: 50%;
     filter: blur(80px);
-    /* Heavy blur */
     z-index: 0;
     pointer-events: none;
     opacity: 0.6;
-    /* New Breathing */
     will-change: transform;
     transform: translateZ(0);
 }
-
 footer .orb-f1 {
     width: 300px;
     height: 300px;
@@ -996,7 +738,6 @@ footer .orb-f1 {
     bottom: -100px;
     left: -50px;
 }
-
 footer .orb-f2 {
     width: 200px;
     height: 200px;
@@ -1005,76 +746,29 @@ footer .orb-f2 {
     right: -50px;
     animation-delay: 2s;
 }
-
-/* Responsive */
 @media (min-width: 768px) {
     .hero {
         grid-template-columns: 1fr 1fr;
         text-align: left;
     }
-
     .hero-content {
         order: 1;
     }
 }
-
-/* --- Advanced UI/UX Effects --- */
-
-/* 1. Custom Scrollbar */
 ::-webkit-scrollbar {
     width: 8px;
 }
-
 ::-webkit-scrollbar-track {
     background: var(--bg-body);
 }
-
 ::-webkit-scrollbar-thumb {
     background: var(--border-hover);
     border-radius: 99px;
     border: 2px solid var(--bg-body);
-    /* Padding effect */
 }
-
 ::-webkit-scrollbar-thumb:hover {
     background: var(--text-accent);
 }
-
-/* 2.
-.cursor-dot,
-.cursor-outline {
-    position: fixed;
-    top: 0;
-    left: 0;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    z-index: 9999;
-    pointer-events: none;
-    display: none;
-}
-
-.cursor-dot {
-    width: 8px;
-    height: 8px;
-    background-color: var(--text-accent);
-}
-
-.cursor-outline {
-    width: 40px;
-    height: 40px;
-    border: 1px solid rgba(139, 92, 246, 0.5);
-    transition: width 0.2s, height 0.2s, background-color 0.2s;
-}
-
-@media (pointer: fine) {
-
-    .cursor-dot,
-    .cursor-outline {
-        display: block;
-    }
-} */
-
-/* 3. Background Grid Pattern */
 .bg-grid {
     position: fixed;
     top: 0;
@@ -1089,14 +783,10 @@ footer .orb-f2 {
     pointer-events: none;
     z-index: -2;
 }
-
-/* 4. Skills Grid (Exact Reference Match) */
 .skills-section {
     padding: var(--space-16) 0;
     text-align: left;
-    /* Force left align */
 }
-
 .skills-section h2 {
     font-size: 2.5rem;
     margin-bottom: 3rem;
@@ -1106,49 +796,35 @@ footer .orb-f2 {
     margin-right: auto;
     width: 100%;
 }
-
 .skills-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 4rem;
-    /* Wider gap */
     max-width: 1000px;
     margin: 0 auto;
 }
-
-/* Align headers perfectly with list items */
 .skills-col h3 {
     margin-left: 0;
     padding-left: 1rem;
-    /* Clean padding */
     border-left: 3px solid #7c3aed;
-    /* The guide line */
     display: flex;
     align-items: center;
-    /* Removed height: 100% which was causing layout breakage */
 }
-
 .skill-list {
     list-style: none;
     margin: 0;
     padding: 0;
     padding-left: calc(1rem + 3px);
-    /* Match h4 padding + border width exactly */
 }
-
 .skill-item {
     font-size: 1.25rem;
     color: #9ca3af;
-    /* Gray-400 */
     padding: 0.5rem 0;
-    /* Compact spacing */
     cursor: default;
     transition: color 0.2s ease, text-shadow 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
     border-radius: 0;
     font-weight: 400;
 }
-
-/* Reference Animation: Clear Bright White, Strong Glow, No Movement */
 .skill-item:hover {
     color: #ffffff;
     text-shadow:
@@ -1157,38 +833,25 @@ footer .orb-f2 {
     transform: none;
     opacity: 1;
 }
-
-/* Remove old tooltip styles */
 .skill-tooltip {
     display: none !important;
 }
-
-/* Workshops Section - Reduced Size */
 .workshops-section {
     padding: var(--space-8) var(--space-4) !important;
-    /* Reduced vertical padding */
     max-width: 900px;
-    /* Constrain width */
 }
-
-/* Compact Workshops Cards */
 .card-compact {
     padding: 1rem !important;
-    /* Tighter padding */
     min-height: 0;
-    /* Allow shrinking */
 }
-
 .card-compact h3 {
     margin: 0.25rem 0 0.5rem 0;
     font-size: 1.1rem;
 }
-
 .card-compact p {
     font-size: 0.85rem;
     margin-bottom: 0.75rem;
 }
-
 .card-compact .btn-card {
     padding: 0.4rem 0.8rem;
     font-size: 0.8rem;
@@ -1196,14 +859,11 @@ footer .orb-f2 {
     display: inline-block;
     margin-top: 0;
 }
-
 .card-compact .chip {
     font-size: 0.65rem;
     padding: 0.2rem 0.6rem;
     margin-bottom: 0.5rem;
 }
-
-/* Scroll Guide (Left Side) */
 .scroll-guide {
     position: fixed;
     top: 50%;
@@ -1217,8 +877,6 @@ footer .orb-f2 {
     border-radius: 99px;
     display: none;
 }
-
-/* Ambient Background Animations */
 .ambient-orb {
     position: fixed;
     width: 800px;
@@ -1228,20 +886,17 @@ footer .orb-f2 {
     pointer-events: none;
     z-index: -1;
 }
-
 .orb-1 {
     top: -30%;
     left: -20%;
     animation-delay: 0s;
 }
-
 .orb-2 {
     bottom: -30%;
     right: -20%;
     background: radial-gradient(circle, rgba(59, 130, 246, 0.06) 0%, transparent 70%);
     animation-delay: -5s;
 }
-
 .orb-3 {
     top: 50%;
     left: 50%;
@@ -1251,13 +906,10 @@ footer .orb-f2 {
     background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
     animation-delay: -10s;
 }
-
-/* More Blurs */
 .hero-content {
     position: relative;
     z-index: 2;
 }
-
 .hero::after {
     content: '';
     position: absolute;
@@ -1271,9 +923,6 @@ footer .orb-f2 {
     z-index: -1;
     pointer-events: none;
 }
-
-
-/* --- Powered By Section/* --- Circuit Section --- */
 .powered-by-section {
     position: relative;
     padding-top: 4rem;
@@ -1281,15 +930,12 @@ footer .orb-f2 {
     overflow: hidden;
     text-align: center;
 }
-
 .circuit-container {
     padding-top: 3rem;
     position: relative;
     max-width: 1000px;
     margin: 0 auto;
 }
-
-/* Central Chip Pill */
 .circuit-chip {
     background: var(--bg-surface);
     padding: 0.75rem 2rem;
@@ -1299,25 +945,20 @@ footer .orb-f2 {
     margin-bottom: 5rem;
     z-index: 2;
     border: 1px solid var(--border);
-    /* Neon Pulse Animation */
     box-shadow: 0 0 10px rgba(139, 92, 246, 0.2);
     animation: neonPulse 3s infinite ease-in-out;
 }
-
 @keyframes neonPulse {
-
     0%,
     100% {
         box-shadow: 0 0 10px rgba(139, 92, 246, 0.2), 0 0 2px rgba(139, 92, 246, 0.1);
         border-color: var(--border);
     }
-
     50% {
         box-shadow: 0 0 25px rgba(139, 92, 246, 0.5), 0 0 5px rgba(139, 92, 246, 0.3);
         border-color: rgba(139, 92, 246, 0.5);
     }
 }
-
 .circuit-chip span {
     background: var(--bg-surface);
     background-clip: text;
@@ -1329,42 +970,31 @@ footer .orb-f2 {
     font-size: 0.75rem;
     text-transform: uppercase;
 }
-
-/* Animations */
 @keyframes flowDown {
     0% {
         background-position: 0 -100px;
     }
-
     100% {
         background-position: 0 100%;
     }
 }
-
 @keyframes flowHorizontal {
     0% {
         background-position: -100px 0;
     }
-
     100% {
         background-position: 100% 0;
     }
 }
-
 @keyframes floatIcon {
-
     0%,
     100% {
         transform: translateY(0);
     }
-
     50% {
         transform: translateY(-5px);
     }
 }
-
-/* Connectivity Lines */
-/* 1. Vertical Line from Chip */
 .chip-lines-bottom {
     position: absolute;
     bottom: -5rem;
@@ -1375,8 +1005,6 @@ footer .orb-f2 {
     background: var(--border);
     overflow: hidden;
 }
-
-/* Animated Signal */
 .chip-lines-bottom::after {
     content: '';
     position: absolute;
@@ -1389,8 +1017,6 @@ footer .orb-f2 {
     background-repeat: no-repeat;
     animation: flowDown 3s linear infinite;
 }
-
-/* 2. Horizontal Bus Bar */
 .circuit-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -1398,7 +1024,6 @@ footer .orb-f2 {
     position: relative;
     margin-top: 0;
 }
-
 .circuit-grid::before {
     content: '';
     position: absolute;
@@ -1408,8 +1033,6 @@ footer .orb-f2 {
     height: 1px;
     background: var(--border);
 }
-
-/* Horizontal Signal */
 .circuit-grid::after {
     content: '';
     position: absolute;
@@ -1423,12 +1046,8 @@ footer .orb-f2 {
     animation: flowHorizontal 4s linear infinite;
     z-index: 1;
 }
-
-/* 3. Tech Cards (Themed & Glassy) */
 .tech-card-dark {
-    /* Glassmorphism */
     background: var(--bg-glass);
-    /* Use variable for theme support */
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid var(--border);
@@ -1442,20 +1061,15 @@ footer .orb-f2 {
     align-items: flex-start;
     height: 100%;
     overflow: hidden;
-    /* For pulse effect */
-    /* Link Styles */
     text-decoration: none;
     color: inherit;
     cursor: pointer;
 }
-
 .tech-card-dark:hover {
     border-color: var(--text-accent);
     transform: translateY(-5px);
     box-shadow: 0 10px 30px -10px rgba(124, 58, 237, 0.3), inset 0 0 20px rgba(124, 58, 237, 0.1);
 }
-
-/* Inner Glow on Hover (Before Pseudo) */
 .tech-card-dark:hover::before {
     content: '';
     position: absolute;
@@ -1464,12 +1078,7 @@ footer .orb-f2 {
     pointer-events: none;
     z-index: 0;
 }
-
-/* Vertical Line to Card */
 .tech-card-dark::before {
-    /* Revert to line style if not hover, wait... multiple ::before conflict. */
-    /* Use specific class logic or separate element if needed, but for now let's keep the line external or distinct */
-    /* Renaming this pseudo for the line connection to avoid conflict with hover glow */
     content: '';
     position: absolute;
     top: -2rem;
@@ -1479,7 +1088,6 @@ footer .orb-f2 {
     background: var(--border);
     z-index: 1;
 }
-
 .tech-card-dark::after {
     content: '';
     position: absolute;
@@ -1494,9 +1102,7 @@ footer .orb-f2 {
     animation-delay: 0.5s;
     opacity: 0.5;
 }
-
 .tech-icon-large {
-    /* SVG Container sizing */
     width: 48px;
     height: 48px;
     margin-bottom: 1.5rem;
@@ -1504,13 +1110,10 @@ footer .orb-f2 {
     position: relative;
     z-index: 2;
 }
-
 .tech-card-dark:hover .tech-icon-large {
-    /* Bounce/Float effect */
     animation: floatIcon 2s ease-in-out infinite;
     filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
 }
-
 .tech-card-dark h3 {
     font-size: 1.1rem;
     font-weight: 600;
@@ -1520,56 +1123,41 @@ footer .orb-f2 {
     align-items: center;
     gap: 6px;
 }
-
 .tech-card-dark p {
     font-size: 0.9rem;
     color: var(--text-secondary);
     line-height: 1.6;
     margin: 0;
 }
-
-/* --- Showcase Section (Portfolio) --- */
 .showcase-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    /* 3 Columns for flexible layout */
     gap: 2rem;
     max-width: 1200px;
     margin: 0 auto;
 }
-
 .showcase-card {
     border-radius: 16px;
     overflow: hidden;
     position: relative;
-    /* Removed transform from transition to eliminate lag */
     transition: box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), border-color 0.4s;
     border: 1px solid rgba(255, 255, 255, 0.05);
     background: var(--bg-surface);
     transform-style: preserve-3d;
     perspective: 1000px;
     will-change: transform;
-    /* Hint to browser */
 }
-
-/* Smooth return to center */
 .showcase-card.animate-reset {
     transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.4s, border-color 0.4s;
 }
-
-/* Wide cards span 2 columns */
 .showcase-card.large {
     grid-column: span 2;
 }
-
-/* Hover State */
 .showcase-card:hover {
     border-color: rgba(255, 255, 255, 0.2);
     box-shadow: 0 40px 60px -20px rgba(0, 0, 0, 0.7);
     z-index: 10;
 }
-
-/* Glare Effect */
 .showcase-card::after {
     content: "";
     position: absolute;
@@ -1582,28 +1170,19 @@ footer .orb-f2 {
     opacity: 0;
     transition: opacity 0.3s;
     transform: translateZ(1px);
-    /* Sit on top */
 }
-
 .showcase-card:hover::after {
     opacity: 1;
 }
-
 .showcase-preview {
     height: 320px;
-    /* Slightly Taller */
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
     width: 100%;
     transform: translateZ(20px);
-    /* Parallax Depth */
 }
-
-/* --- Micro Animations --- */
-
-/* 1. Audio Visualizer (Audible) */
 .audio-visualizer {
     display: flex;
     align-items: flex-end;
@@ -1612,51 +1191,41 @@ footer .orb-f2 {
     height: 30px;
     margin-top: 1.5rem;
 }
-
 .audio-visualizer .bar {
     width: 6px;
     background: #ef4444;
     border-radius: 4px;
     animation: eqBar 1s ease-in-out infinite;
 }
-
 .audio-visualizer .bar:nth-child(2) {
     animation-delay: 0.1s;
     height: 60%;
     background: #f59e0b;
 }
-
 .audio-visualizer .bar:nth-child(3) {
     animation-delay: 0.2s;
     height: 80%;
     background: #10b981;
 }
-
 .audio-visualizer .bar:nth-child(4) {
     animation-delay: 0.3s;
     height: 50%;
     background: #3b82f6;
 }
-
 .audio-visualizer .bar:nth-child(5) {
     animation-delay: 0.4s;
     height: 70%;
     background: #8b5cf6;
 }
-
 @keyframes eqBar {
-
     0%,
     100% {
         height: 20%;
     }
-
     50% {
         height: 100%;
     }
 }
-
-/* 2. Chart Loader (Analytics) */
 .chart-loader {
     display: flex;
     align-items: flex-end;
@@ -1665,7 +1234,6 @@ footer .orb-f2 {
     margin-bottom: 1rem;
     justify-content: center;
 }
-
 .chart-bar {
     width: 12px;
     background: linear-gradient(to top, #3b82f6, #60a5fa);
@@ -1673,50 +1241,38 @@ footer .orb-f2 {
     animation: growBar 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
     transform-origin: bottom;
 }
-
 .chart-bar:nth-child(2) {
     animation-delay: 0.2s;
     height: 80%;
     background: linear-gradient(to top, #8b5cf6, #a78bfa);
 }
-
 .chart-bar:nth-child(3) {
     animation-delay: 0.4s;
     height: 60%;
     background: linear-gradient(to top, #ec4899, #f472b6);
 }
-
 @keyframes growBar {
-
     0%,
     100% {
         transform: scaleY(0.3);
     }
-
     50% {
         transform: scaleY(1);
     }
 }
-
-/* 3. Floating Shoe (Nike) */
 .floating-shoe {
     animation: floatItem 3s ease-in-out infinite;
     margin-bottom: 1rem;
 }
-
 @keyframes floatItem {
-
     0%,
     100% {
         transform: translateY(0) rotate(0deg);
     }
-
     50% {
         transform: translateY(-15px) rotate(5deg);
     }
 }
-
-/* 4. Cursor Blink (Notion) */
 .cursor-blink {
     display: inline-block;
     width: 2px;
@@ -1724,42 +1280,32 @@ footer .orb-f2 {
     animation: blink 1s step-end infinite;
     margin-left: 2px;
 }
-
 @keyframes blink {
-
     0%,
     100% {
         opacity: 1;
     }
-
     50% {
         opacity: 0;
     }
 }
-
 .showcase-preview {
     height: 300px;
-    /* Taller for better visual */
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
     width: 100%;
 }
-
-/* Simple Cards Content */
 .mock-simple {
     text-align: center;
     color: white;
 }
-
 .mock-simple h3 {
     margin-top: 1rem;
     font-weight: 600;
     font-size: 1.1rem;
 }
-
-/* Mock Graphics (Browser Window) */
 .mock-browser {
     width: 85%;
     height: 75%;
@@ -1772,8 +1318,6 @@ footer .orb-f2 {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     position: relative;
 }
-
-/* Browser Dots */
 .mock-dots {
     display: flex;
     gap: 8px;
@@ -1782,26 +1326,21 @@ footer .orb-f2 {
     top: 1.5rem;
     left: 1.5rem;
 }
-
 .mock-dots span {
     width: 10px;
     height: 10px;
     border-radius: 50%;
     background: #333;
 }
-
 .mock-dots span:nth-child(1) {
     background: #ef4444;
 }
-
 .mock-dots span:nth-child(2) {
     background: #f59e0b;
 }
-
 .mock-dots span:nth-child(3) {
     background: #10b981;
 }
-
 .mock-content {
     text-align: center;
     color: white;
@@ -1812,18 +1351,14 @@ footer .orb-f2 {
     justify-content: center;
     height: 100%;
 }
-
 .mock-content h3 {
     font-size: 1.25rem;
     margin: 1rem 0 0.5rem 0;
 }
-
 .mock-content p {
     color: #888;
     font-size: 0.9rem;
 }
-
-/* Tags at bottom of wide cards */
 .showcase-meta {
     position: absolute;
     bottom: 1.5rem;
@@ -1831,7 +1366,6 @@ footer .orb-f2 {
     display: flex;
     gap: 0.75rem;
 }
-
 .showcase-meta span {
     background: rgba(255, 255, 255, 0.08);
     color: #ccc;
@@ -1841,7 +1375,6 @@ footer .orb-f2 {
     font-weight: 500;
     border: 1px solid rgba(255, 255, 255, 0.05);
 }
-
 .btn-showcase {
     background: var(--text-primary);
     color: var(--bg-body);
@@ -1852,85 +1385,61 @@ footer .orb-f2 {
     transition: background-color 0.2s, transform 0.2s, color 0.2s;
     display: inline-block;
 }
-
 .btn-showcase:hover {
     background: var(--text-accent);
     color: white;
     transform: translateY(-2px);
 }
-
 @media (max-width: 900px) {
     .showcase-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;
     }
-
     .showcase-card.large {
         grid-column: span 1;
     }
-
-    /* Mobile Card Optimizations */
     .showcase-card {
         min-height: 250px;
         transform: none !important;
         will-change: auto;
-        /* Save memory */
     }
-
     .showcase-card:hover {
-        /* Reduce paint cost on scroll/touch */
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         transform: none;
     }
-
     .showcase-card::after {
         opacity: 0.1 !important;
     }
-
     .showcase-preview {
         height: 250px;
     }
-
     .circuit-grid::before,
     .tech-card-dark::before {
         display: none;
     }
-
-    /* Disable 3D tilt styles */
     .showcase-card {
         transform-style: flat;
         perspective: none;
     }
-
     .split-layout {
         display: flex;
         flex-direction: column;
         gap: 2rem;
         text-align: center;
     }
-
     .hero {
         text-align: center;
         padding-top: 8rem;
     }
-
     .hero-content h1 {
-        /* Fluid typography */
         font-size: clamp(2.5rem, 8vw, 3.5rem);
     }
 }
-
-/* Performance Optimizations for Below Fold */
 .footer-bg,
 .testimonials-grid {
     content-visibility: auto;
-    /* Skips rendering when off-screen */
     contain-intrinsic-size: 1px 500px;
-    /* Estimated height to prevent scroll jump */
 }
-
-
-
 .mission-card {
     background: var(--bg-surface);
     padding: 1.5rem;
@@ -1938,13 +1447,11 @@ footer .orb-f2 {
     border: 1px solid var(--border);
     margin-top: 2rem;
 }
-
 .feature-item {
     display: flex;
     gap: 1.5rem;
     margin-bottom: 2rem;
 }
-
 .feature-icon {
     font-size: 1.5rem;
     color: var(--text-accent);
@@ -1957,20 +1464,16 @@ footer .orb-f2 {
     border-radius: 12px;
     flex-shrink: 0;
 }
-
 .feature-item h3 {
     font-size: 1.1rem;
     margin-bottom: 0.5rem;
     color: var(--text-primary);
 }
-
 .feature-item p {
     font-size: 0.9rem;
     color: var(--text-secondary);
     line-height: 1.6;
 }
-
-/* Feature Cards (Badged) */
 .feature-card {
     background: var(--bg-surface);
     border: 1px solid var(--border);
@@ -1978,19 +1481,16 @@ footer .orb-f2 {
     padding: 2rem;
     transition: transform 0.3s;
 }
-
 .feature-card:hover {
     transform: translateY(-5px);
     border-color: #f59e0b;
 }
-
 .feature-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1.5rem;
 }
-
 .badge-yellow {
     background: #f59e0b;
     color: black;
@@ -2001,18 +1501,14 @@ footer .orb-f2 {
     text-transform: uppercase;
     letter-spacing: 0.1em;
 }
-
 .feature-emoji {
     font-size: 1.5rem;
 }
-
-/* Testimonials */
 .testimonials-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1.5rem;
 }
-
 .testimonial-card {
     background: var(--bg-surface);
     border: 1px solid var(--border);
@@ -2020,14 +1516,12 @@ footer .orb-f2 {
     padding: 1.5rem;
     text-align: left;
 }
-
 .test-header {
     display: flex;
     align-items: center;
     gap: 1rem;
     margin-bottom: 1rem;
 }
-
 .avatar-circle {
     width: 48px;
     height: 48px;
@@ -2039,77 +1533,53 @@ footer .orb-f2 {
     font-weight: 700;
     font-size: 1rem;
 }
-
 .test-info h3 {
     font-size: 1rem;
     margin: 0;
     color: var(--text-primary);
 }
-
 .test-info span {
     font-size: 0.8rem;
     color: var(--text-secondary);
 }
-
-/* --- Advanced Footer (Liquid Glass Reveal) --- */
-
-/* 1. Reveal Mechanic */
 body {
     background: var(--bg-body);
     min-height: 100vh;
 }
-
 html {
     background: var(--bg-body);
-    /* Follows theme, not hardcoded black */
     scroll-behavior: smooth;
     transition: background 0.3s ease;
 }
-
-
-
 main {
     position: relative;
     z-index: 10;
     background: var(--bg-body);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-    /* Shadow to separate from footer */
-    /* No margin-bottom here, regulated by spacer in HTML/JS */
     will-change: transform;
 }
-
-/* Spacer is invisible but takes up space */
 #footer-parallax {
     width: 100%;
-    /* Height set by JS or auto if content flowed */
 }
-
-/* On mobile, disable reveal */
 @media (max-width: 768px) {
     main {
         margin-bottom: 0 !important;
         border-radius: 0;
         animation: none;
     }
-
     main::after {
         display: none;
     }
-
     footer {
         position: relative !important;
         z-index: 1 !important;
         background: var(--bg-body);
         height: auto !important;
     }
-
     .footer-container {
         padding-top: 4rem;
     }
 }
-
-/* 2. Glassy Footer Styling */
-/* The Fixed Visual Footer */
 .footer-bg {
     position: fixed;
     bottom: 0;
@@ -2118,24 +1588,15 @@ main {
     height: auto;
     min-height: 400px;
     z-index: -1;
-    /* Behind main content */
-
     background: var(--bg-footer);
     display: flex;
     display: flex;
     flex-direction: column;
     justify-content: center;
     overflow: hidden;
-
-    /* Memory: Only promote to layer when needed. Opacity/Filter are cheap. */
     will-change: transform, opacity;
     transform: translateZ(0);
 }
-
-
-/* Footer Content Animation */
-
-
 .footer-container {
     padding: 2rem 4rem;
     max-width: 1400px;
@@ -2145,36 +1606,19 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: center;
-
-    /* Glass Effect */
     background: rgba(var(--bg-body), 0.01);
-    /* Needs rgb conversion or simple trick */
-    /* Using simple transparent for now */
     background: transparent;
-
     border-top: 1px solid var(--border);
 }
-
-
-
-
-
-
-
-
-/* Stagger Animations */
 .footer-top {
     animation-delay: 0.1s;
 }
-
 .footer-links-group {
     animation-delay: 0.2s;
 }
-
 .footer-bottom {
     animation-delay: 0.3s;
 }
-
 .footer-top {
     display: grid;
     grid-template-columns: 1.5fr 1fr;
@@ -2182,18 +1626,15 @@ main {
     margin-bottom: 3rem;
     align-items: start;
 }
-
 .footer-brand {
     text-align: left;
 }
-
 .newsletter-form {
     display: flex;
     gap: 1rem;
     margin-top: 2rem;
     max-width: 400px;
 }
-
 .newsletter-input {
     background: var(--bg-surface) !important;
     border: 1px solid var(--border) !important;
@@ -2206,13 +1647,11 @@ main {
     transition: all 0.3s;
     font-size: 1rem;
 }
-
 .newsletter-input:focus {
     background: var(--bg-surface-hover) !important;
     border-color: var(--text-accent) !important;
     box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.2);
 }
-
 .newsletter-btn {
     background: var(--text-primary);
     border: none;
@@ -2225,24 +1664,20 @@ main {
     cursor: pointer;
     transition: transform 0.2s;
 }
-
 .newsletter-btn:hover {
     transform: scale(1.05);
 }
-
 .footer-links-group {
     display: flex;
     gap: 4rem;
     justify-content: flex-end;
     text-align: left;
 }
-
 .footer-col-simple {
     display: flex;
     flex-direction: column;
     gap: 1rem;
 }
-
 .footer-col-simple a {
     color: var(--text-secondary);
     text-decoration: none;
@@ -2251,19 +1686,16 @@ main {
     position: relative;
     padding-left: 0;
 }
-
 .footer-col-simple a:hover {
     color: var(--text-accent);
     padding-left: 10px;
 }
-
 .footer-col-simple a:hover::before {
     content: '>';
     position: absolute;
     left: 0;
     color: var(--text-accent);
 }
-
 .footer-bottom {
     border-top: 1px solid var(--border);
     padding-top: 2rem;
@@ -2272,22 +1704,17 @@ main {
     align-items: center;
     color: var(--text-secondary);
 }
-
 .social-icons {
     display: flex;
     gap: 1.5rem;
 }
-
 .social-icons a {
     color: var(--text-secondary);
     transition: color 0.2s;
 }
-
 .social-icons a:hover {
     color: var(--text-primary);
 }
-
-/* --- Features Section (Reference Style) --- */
 .feature-card {
     background: var(--bg-surface);
     border: 1px solid var(--border);
@@ -2300,12 +1727,10 @@ main {
     height: 100%;
     position: relative;
 }
-
 .feature-card:hover {
     border-color: var(--border-hover);
     transform: translateY(-4px);
 }
-
 .feature-header {
     display: flex;
     justify-content: space-between;
@@ -2313,8 +1738,6 @@ main {
     width: 100%;
     margin-bottom: 2rem;
 }
-
-/* Feature Badge */
 .badge-yellow {
     background: rgba(124, 58, 237, 0.1);
     color: var(--text-accent);
@@ -2326,33 +1749,27 @@ main {
     letter-spacing: 0.1em;
     text-transform: uppercase;
 }
-
 .feature-emoji {
     font-size: 1.5rem;
 }
-
 .feature-card h3 {
     font-size: 1.25rem;
     color: var(--text-primary);
     margin-bottom: 0.75rem;
     font-weight: 600;
 }
-
 .feature-card p {
     color: var(--text-secondary);
     font-size: 0.95rem;
     line-height: 1.6;
     margin: 0;
 }
-
-/* --- Testimonials Section (Reference Style) --- */
 .testimonials-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
     margin-top: 1rem;
 }
-
 .testimonial-card {
     background: var(--bg-surface);
     border: 1px solid var(--border);
@@ -2362,18 +1779,15 @@ main {
     transition: border-color 0.3s;
     height: 100%;
 }
-
 .testimonial-card:hover {
     border-color: var(--border-hover);
 }
-
 .test-header {
     display: flex;
     align-items: center;
     gap: 1rem;
     margin-bottom: 1.5rem;
 }
-
 .avatar-circle {
     width: 48px;
     height: 48px;
@@ -2386,7 +1800,6 @@ main {
     font-size: 0.9rem;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
-
 .test-info h4 {
     color: var(--text-primary);
     font-size: 1rem;
@@ -2394,13 +1807,11 @@ main {
     margin: 0;
     line-height: 1.2;
 }
-
 .test-info span {
     color: var(--text-secondary);
     font-size: 0.8rem;
     font-weight: 500;
 }
-
 .testimonial-card p {
     color: var(--text-secondary);
     font-size: 1rem;
@@ -2408,68 +1819,53 @@ main {
     font-style: italic;
     margin: 0;
 }
-
-/* 2. Glitch Animation for "Zyosys." */
 @keyframes glitch-skew {
     0% {
         transform: skew(0deg);
     }
-
     10% {
         transform: skew(-2deg);
     }
-
     20% {
         transform: skew(2deg);
     }
-
     30% {
         transform: skew(0deg);
     }
-
     100% {
         transform: skew(0deg);
     }
 }
-
 @keyframes glitch-anim {
     0% {
         clip-path: inset(10% 0 80% 0);
         transform: translate(-2px, 1px);
     }
-
     20% {
         clip-path: inset(80% 0 1% 0);
         transform: translate(2px, -1px);
     }
-
     40% {
         clip-path: inset(40% 0 50% 0);
         transform: translate(-2px, 2px);
     }
-
     60% {
         clip-path: inset(10% 0 30% 0);
         transform: translate(2px, -2px);
     }
-
     80% {
         clip-path: inset(10% 0 80% 0);
         transform: translate(-1px, 1px);
     }
-
     100% {
         clip-path: inset(0 0 0 0);
         transform: translate(0, 0);
     }
 }
-
 .footer-brand h2 {
     position: relative;
     display: inline-block;
 }
-
-/* Hover Glitch Trigger */
 .footer-brand:hover h2::before,
 .footer-brand:hover h2::after {
     content: 'Zyosys.';
@@ -2482,45 +1878,34 @@ main {
     overflow: hidden;
     color: white;
 }
-
 .footer-brand:hover h2::before {
     left: -2px;
     text-shadow: 2px 0 red;
     animation: glitch-anim 2s infinite linear alternate-reverse;
 }
-
 .footer-brand:hover h2::after {
     left: 2px;
     text-shadow: -2px 0 blue;
     animation: glitch-anim 3s infinite linear alternate-reverse;
 }
-
 .footer-brand:hover h2 {
     animation: glitch-skew 1s infinite cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
-
-
-/* 3. System Status Pulse */
 @keyframes systemPulse {
-
     0%,
     100% {
         opacity: 0.3;
     }
-
     50% {
         opacity: 0.8;
         color: #10b981;
         text-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
     }
 }
-
 .footer-bottom p[style*="monospace"] {
     animation: systemPulse 3s infinite ease-in-out;
     letter-spacing: 0.1em;
 }
-
-/* 4. Link Interactions */
 .footer-col-simple a {
     color: var(--text-primary);
     text-decoration: none;
@@ -2530,14 +1915,11 @@ main {
     position: relative;
     padding-left: 0;
 }
-
 .footer-col-simple a:hover {
     color: white;
     padding-left: 10px;
-    /* Slide right */
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
-
 .footer-col-simple a::before {
     content: '>';
     position: absolute;
@@ -2546,14 +1928,10 @@ main {
     transition: all 0.3s;
     color: var(--text-accent);
 }
-
 .footer-col-simple a:hover::before {
     opacity: 1;
     left: 0;
 }
-
-/* --- Why Us Section (Hub & Spoke) --- */
-/* --- Why Us Section (Hub & Spoke) --- */
 .why-us-section {
     position: relative;
     padding: 8rem 0;
@@ -2561,71 +1939,57 @@ main {
     background: radial-gradient(circle at center, rgba(124, 58, 237, 0.05), transparent 60%);
     overflow: hidden;
 }
-
 .hub-container {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 4rem;
-    /* Explicit gap instead of space-between */
     max-width: 1200px;
     margin: 0 auto;
     position: relative;
     z-index: 2;
 }
-
 .hub-center {
     position: relative;
     z-index: 10;
     padding: 3rem;
     background: var(--bg-glass);
-    /* Adaptive Glass */
     backdrop-filter: blur(12px);
     border: 1px solid var(--border);
     border-radius: 24px;
     max-width: 500px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
     animation: hubPulse 4s ease-in-out infinite;
-    /* Breathing Glow */
 }
-
 @keyframes hubPulse {
-
     0%,
     100% {
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
         border-color: var(--border);
     }
-
     50% {
         box-shadow: 0 20px 60px rgba(124, 58, 237, 0.25);
         border-color: var(--text-accent);
     }
 }
-
 .hub-center h2 {
     color: var(--text-primary);
     font-size: 3rem;
     margin-bottom: 1rem;
     line-height: 1.1;
 }
-
 .hub-lock-icon {
     font-size: 3rem;
     margin-bottom: 1.5rem;
     display: inline-block;
     filter: drop-shadow(0 0 20px var(--text-accent));
-    /* Theme Purple Glow */
 }
-
 .spoke-side {
     display: flex;
     flex-direction: column;
     gap: 12rem;
-    /* Increased vertical spacing */
     z-index: 5;
 }
-
 .spoke-item {
     width: 72px;
     height: 72px;
@@ -2640,47 +2004,35 @@ main {
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     animation: floatSpoke 6s ease-in-out infinite;
 }
-
-/* Staggered Floating */
 .spoke-side .spoke-item:nth-child(1) {
     animation-delay: 0s;
 }
-
 .spoke-side .spoke-item:nth-child(2) {
     animation-delay: 1.5s;
 }
-
 .spoke-side.right .spoke-item:nth-child(1) {
     animation-delay: 0.75s;
 }
-
 .spoke-side.right .spoke-item:nth-child(2) {
     animation-delay: 2.25s;
 }
-
 @keyframes floatSpoke {
-
     0%,
     100% {
         transform: translateY(0);
     }
-
     50% {
         transform: translateY(-12px);
     }
 }
-
 .spoke-item:hover {
     transform: scale(1.15);
     border-color: var(--text-accent);
     box-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
 }
-
 .spoke-icon {
     font-size: 1.75rem;
 }
-
-/* SVG Lines */
 .hub-lines {
     position: absolute;
     top: 50%;
@@ -2689,11 +2041,9 @@ main {
     width: 100%;
     max-width: 1000px;
     height: 600px;
-    /* Taller to accommodate spoke spacing */
     pointer-events: none;
     z-index: 1;
 }
-
 .line-path {
     fill: none;
     stroke: var(--border);
@@ -2701,22 +2051,16 @@ main {
     opacity: 0.3;
     stroke-dasharray: 10;
     animation: dashFlow 8s linear infinite;
-    /* Faster Flow */
     filter: drop-shadow(0 0 5px var(--text-accent));
-    /* Glowing Lines */
 }
-
 @keyframes dashFlow {
     to {
         stroke-dashoffset: 1000;
     }
 }
-
-/* --- FAQ Section --- */
 .faq-section {
     padding: 6rem 0;
 }
-
 .faq-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -2724,7 +2068,6 @@ main {
     max-width: 1000px;
     margin: 0 auto;
 }
-
 .faq-item {
     background: var(--bg-surface);
     border: 1px solid var(--border);
@@ -2734,7 +2077,6 @@ main {
     cursor: pointer;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
-
 .faq-item:hover {
     border-color: var(--text-accent);
     transform: scale(1.015);
@@ -2742,11 +2084,9 @@ main {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     z-index: 10;
 }
-
 .faq-item[open] {
     border-color: var(--text-accent);
 }
-
 .faq-item summary {
     font-weight: 600;
     color: var(--text-primary);
@@ -2757,11 +2097,9 @@ main {
     font-size: 1.05rem;
     outline: none;
 }
-
 .faq-item summary::-webkit-details-marker {
     display: none;
 }
-
 .faq-item summary::after {
     content: '+';
     position: absolute;
@@ -2772,12 +2110,10 @@ main {
     color: var(--text-secondary);
     transition: transform 0.3s;
 }
-
 .faq-item[open] summary::after {
     transform: translateY(-50%) rotate(45deg);
     color: var(--text-accent);
 }
-
 .faq-item p {
     color: var(--text-secondary);
     margin-top: 0;
@@ -2785,30 +2121,22 @@ main {
     font-size: 0.95rem;
     padding: 0 1.5rem 1.5rem 1.5rem;
 }
-
-/* --- Minimal CTA Section --- */
 .cta-minimal {
     text-align: center;
     padding: 8rem 0;
     background: radial-gradient(circle at center, var(--bg-surface), transparent 70%);
 }
-
-/* Mobile Adjustments */
-/* --- Tech Stack (New Grid Layout) --- */
 .skills-section {
     padding: 6rem 0;
 }
-
 .skills-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 4rem;
-    /* Wide aligned spacing */
     max-width: 1000px;
     margin: 4rem auto 0;
     text-align: left;
 }
-
 .skills-col h3 {
     font-size: 1.5rem;
     font-weight: 700;
@@ -2816,101 +2144,72 @@ main {
     margin-bottom: 2rem;
     padding-left: 1.5rem;
     border-left: 3px solid var(--text-accent);
-    /* Purple Accent Line */
     line-height: 1.2;
 }
-
 .skill-list {
     list-style: none;
     padding: 0;
     margin: 0;
 }
-
 .skill-item {
     font-size: 1.1rem;
     color: var(--text-secondary);
     padding: 0.75rem 0;
     padding-left: 1.5rem;
-    /* Align with header text */
     cursor: pointer;
     transition: color 0.3s ease, transform 0.2s ease;
     display: block;
 }
-
 .skill-item:hover {
     color: var(--text-primary);
     transform: translateX(5px);
 }
-
-/* Mobile Adjustments */
 @media (max-width: 768px) {
     .hub-container {
         flex-direction: column;
         gap: 2rem;
     }
-
     .spoke-side {
         flex-direction: row;
         gap: 2rem;
     }
-
     .hub-lines {
         display: none;
     }
-
     .faq-grid {
         grid-template-columns: 1fr;
     }
-
-    /* Stack Tech Skills */
     .skills-container {
         grid-template-columns: 1fr;
         gap: 3rem;
     }
 }
-
-/* --- Global Responsive Optimizations --- */
-
-/* 1. Tablet & Mobile Layouts */
 @media (max-width: 1024px) {
     .hero {
         grid-template-columns: 1fr;
         text-align: center;
         padding-top: 6rem;
     }
-
     .hero-content {
         order: 1;
-        /* Visual first */
         margin: 0 auto 3rem auto;
-        /* Center the block horizontally */
         max-width: 100%;
-        /* Allow full width centering */
         display: flex;
         flex-direction: column;
         align-items: center;
-        /* Robust centering */
     }
-
     .hero-visual {
         margin: 0 auto;
-        /* Ensure visual is also centered */
     }
-
     .hub-lines {
         opacity: 0.2;
     }
 }
-
-/* 2. Mobile Specific (< 768px) */
 @media (max-width: 768px) {
     :root {
         --space-16: 3rem;
-        /* Reduce section padding */
         --space-8: 1.5rem;
     }
-
-    /* Fix Dynamic Island Alignment (Tablet/Mobile) */
     .nav-wrapper {
         width: 100%;
         display: flex;
@@ -2919,24 +2218,17 @@ main {
         right: 1.5rem;
         padding: 0 1rem;
     }
-
     .nav-pill {
         width: auto;
         min-width: 320px;
-        /* Ensure space for content */
         max-width: 100%;
         justify-content: space-between;
         padding: 0.75rem 1.5rem;
     }
-
-    /* Hero Spacing */
     .hero {
         padding-top: 9rem;
-        /* Clear the floating nav */
         padding-bottom: 4rem;
     }
-
-    /* Grids to Stack */
     .grid-cols-3,
     .testimonials-grid,
     .skills-container,
@@ -2946,18 +2238,12 @@ main {
         grid-template-columns: 1fr !important;
         gap: 2rem;
     }
-
-    /* Typography Scaling */
     h1 {
         font-size: 2.5rem;
-        /* Smaller Hero */
     }
-
     h2 {
         font-size: 2rem !important;
     }
-
-    /* Center Hero Actions */
     .hero-actions {
         display: flex;
         gap: 1rem;
@@ -2965,199 +2251,138 @@ main {
         align-items: center;
         width: 100%;
     }
-
-    /* Why Us / Hub Section */
-
-    /* Why Us / Hub Section */
     .why-us-section {
         padding: 4rem 0;
     }
-
     .hub-container {
         flex-direction: column;
         gap: 3rem;
     }
-
     .spoke-side {
         flex-direction: row;
-        /* Horizontal icons on mobile */
         gap: 1.5rem;
         justify-content: center;
     }
-
     .hub-center {
         padding: 2rem 1rem;
         max-width: 100%;
     }
-
     .hub-lines {
         display: none;
-        /* Too complex for mobile stack */
     }
-
-    /* Navigation */
     .nav-pill {
         padding: 0.75rem 1rem;
-        /* Tighter padding */
     }
-
     .nav-links {
         gap: 1rem;
     }
-
     .nav-links li:not(:last-child) {
         display: none;
-        /* Hide links, keep CTA */
     }
-
-    /* Footer */
     .footer-top {
         display: flex;
-        /* Override grid */
         flex-direction: column;
         text-align: center;
         gap: 3rem;
     }
-
     .footer-brand,
     .footer-links-group {
         text-align: center;
         width: 100%;
         justify-content: center;
     }
-
     .newsletter-form {
         margin: 2rem auto 0 auto;
     }
-
     .footer-container {
         padding: 2rem 1.5rem;
     }
-
     .footer-brand h2 {
         display: block;
         text-align: center;
     }
 }
-
-/* 3. Ultra-Narrow (< 375px) "Single Vertical Lean Line" */
 @media (max-width: 375px) {
     .container {
         padding: 0 1rem;
         overflow-x: hidden;
-        /* Prevent horizontal scroll */
     }
-
     h1 {
         font-size: 1.75rem;
-        /* Smaller to prevent cut-off */
         word-wrap: break-word;
-        /* Ensure wrapping */
     }
-
     .btn-primary {
         padding: 0.6rem 1rem;
         font-size: 0.85rem;
         width: 100%;
-        /* Full width buttons */
         display: block;
         text-align: center;
         margin-bottom: 0.5rem;
     }
-
-    /* Stack buttons in hero */
     .hero-content div[style*="display: flex"] {
         flex-direction: column;
         width: 100%;
         gap: 0.5rem !important;
     }
-
     .hero-content a {
         width: 100%;
         display: block;
         text-align: center;
     }
-
     .trust-logos {
         gap: 1.5rem;
     }
-
     .spoke-item {
         width: 48px;
         height: 48px;
     }
-
     .spoke-icon {
         font-size: 1rem;
     }
-
     .nav-logo {
         font-size: 1rem;
     }
-
-    /* Hero Visual Scale Down */
     .hero-visual svg {
         width: 100%;
         height: auto;
         transform: scale(0.9);
     }
-
-    /* Fix Footer Bottom Overlap */
     .footer-bottom {
         flex-direction: column;
         gap: 1.5rem;
     }
-
     .footer-links-group {
         flex-direction: column;
         gap: 1.5rem;
     }
-
     .footer-col-simple {
         text-align: center;
     }
-
-    /* Ensure Notch Stays Attached (Small Mobile Override) */
-    /* Update: Dynamic Island should float even on small screens */
     .nav-wrapper {
         top: 10px;
-        /* Slightly tighter top */
         padding: 0 10px;
-        /* Safety side padding */
     }
-
     .nav-pill {
         min-width: 280px;
-        /* Slightly smaller island minimum */
     }
-
-    /* Fixed toggle is hidden, so this is irrelevant, but keep safe */
     .theme-controls {
         display: none;
     }
-
     .hero {
         padding-top: 7rem;
-        /* More breathing room */
         overflow: hidden;
-        /* Clip SVG overflow */
     }
 }
-
-/* Scroll Animations */
 .reveal {
     opacity: 0;
     transform: translateY(30px);
     transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
     will-change: opacity, transform;
 }
-
 .reveal.active {
     opacity: 1;
     transform: translateY(0);
 }
-
-/* --- Partner Logos Marquee --- */
 .logo-marquee {
     width: 100%;
     overflow: hidden;
@@ -3165,7 +2390,6 @@ main {
     mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
     -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
 }
-
 .logo-marquee-content {
     display: flex;
     white-space: nowrap;
@@ -3174,7 +2398,6 @@ main {
     width: max-content;
     will-change: transform;
 }
-
 .trust-logo {
     display: flex;
     align-items: center;
@@ -3188,34 +2411,26 @@ main {
     opacity: 0.6;
     transition: all 0.3s;
 }
-
 .trust-logo:hover {
     filter: grayscale(0);
     opacity: 1;
     color: var(--text-primary);
 }
-
 .trust-logo svg {
     width: 24px;
     height: 24px;
 }
-
 @keyframes scroll-logos {
     0% {
         transform: translateX(0);
     }
-
     100% {
         transform: translateX(-50%);
     }
 }
-
-/* Pause on hover for accessibility */
 .logo-marquee:hover .logo-marquee-content {
     animation-play-state: paused;
 }
-
-/* --- Engineering Track Cards (Glow & Icons) --- */
 .card {
     background: var(--bg-surface);
     border: 1px solid var(--border);
@@ -3223,20 +2438,16 @@ main {
     padding: 2rem;
     position: relative;
     overflow: hidden;
-    /* Vital for glow containment */
     transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     display: flex;
     flex-direction: column;
     height: 100%;
 }
-
 .card:hover {
     border-color: var(--text-accent);
     transform: translateY(-5px);
     box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
 }
-
-/* Glow Effect Overlay */
 .card::before {
     content: '';
     position: absolute;
@@ -3244,7 +2455,6 @@ main {
     left: 0;
     right: 0;
     bottom: 0;
-    /* Radial Gradient tracking mouse variables */
     background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
             rgba(124, 58, 237, 0.15),
             transparent 40%);
@@ -3253,36 +2463,26 @@ main {
     pointer-events: none;
     z-index: 0;
 }
-
 .card:hover::before {
     opacity: 1;
 }
-
-/* Content Z-Index to sit above glow */
 .card>* {
     position: relative;
     z-index: 1;
 }
-
-/* Track Icons */
 .card-icon-wrapper {
     margin-bottom: 1.5rem;
 }
-
 .track-icon {
     width: 48px;
     height: 48px;
     color: var(--text-secondary);
     transition: color 0.3s ease, transform 0.3s ease;
 }
-
 .card:hover .track-icon {
     color: var(--text-accent);
     transform: scale(1.1);
 }
-
-/* --- Showcase Wireframes & Metrics --- */
-/* Browser Header */
 .mock-header {
     display: flex;
     align-items: center;
@@ -3291,7 +2491,6 @@ main {
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     width: 100%;
 }
-
 .mock-address {
     background: rgba(255, 255, 255, 0.05);
     border-radius: 4px;
@@ -3303,8 +2502,6 @@ main {
     text-align: center;
     font-family: monospace;
 }
-
-/* Skeleton UI Base */
 .wireframe-ui {
     position: relative;
     width: 100%;
@@ -3313,40 +2510,34 @@ main {
     display: flex;
     gap: 1rem;
 }
-
 .wf-sidebar {
     width: 20%;
     height: 80%;
     background: rgba(255, 255, 255, 0.05);
     border-radius: 4px;
 }
-
 .wf-main {
     flex: 1;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
 }
-
 .wf-hero {
     width: 100%;
     height: 30%;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 4px;
 }
-
 .wf-row {
     display: flex;
     gap: 0.5rem;
     height: 40%;
 }
-
 .wf-box {
     flex: 1;
     background: rgba(255, 255, 255, 0.05);
     border-radius: 4px;
 }
-
 .wf-icon-overlay {
     position: absolute;
     bottom: 1rem;
@@ -3354,8 +2545,6 @@ main {
     font-size: 2.5rem;
     filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
 }
-
-/* Doc/Notion UI */
 .wf-doc {
     width: 80%;
     margin: 0 auto;
@@ -3363,33 +2552,27 @@ main {
     flex-direction: column;
     gap: 0.5rem;
 }
-
 .wf-line {
     height: 8px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 2px;
     width: 100%;
 }
-
 .wf-line.title {
     height: 12px;
     width: 60%;
     background: rgba(255, 255, 255, 0.2);
     margin-bottom: 0.5rem;
 }
-
 .wf-line.short {
     width: 40%;
 }
-
 .wf-img {
     height: 60px;
     background: rgba(255, 255, 255, 0.05);
     border-radius: 4px;
     margin: 0.5rem 0;
 }
-
-/* Mini Charts */
 .chart-mini {
     display: flex;
     align-items: flex-end;
@@ -3397,15 +2580,12 @@ main {
     height: 60px;
     width: 80px;
 }
-
 .bar {
     width: 100%;
     background: var(--text-accent);
     border-radius: 2px 2px 0 0;
     opacity: 0.7;
 }
-
-/* Mini Product */
 .product-card-mini {
     width: 60px;
     height: 80px;
@@ -3413,7 +2593,6 @@ main {
     border-radius: 4px;
     padding: 6px;
 }
-
 .prod-img {
     width: 100%;
     height: 40px;
@@ -3421,34 +2600,28 @@ main {
     border-radius: 2px;
     margin-bottom: 4px;
 }
-
 .prod-line {
     width: 80%;
     height: 4px;
     background: rgba(255, 255, 255, 0.1);
     margin-bottom: 4px;
 }
-
 .prod-btn {
     width: 100%;
     height: 8px;
     background: var(--text-accent);
     border-radius: 2px;
 }
-
-/* Badges & Meta */
 .showcase-meta-row {
     padding: 1.5rem;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
 }
-
 .meta-right {
     display: flex;
     gap: 0.5rem;
 }
-
 .badge-glass {
     font-size: 0.75rem;
     padding: 0.25rem 0.75rem;
@@ -3457,7 +2630,6 @@ main {
     border: 1px solid rgba(255, 255, 255, 0.1);
     color: var(--text-secondary);
 }
-
 .badge-live {
     font-size: 0.75rem;
     padding: 0.25rem 0.75rem;
@@ -3467,32 +2639,22 @@ main {
     border: 1px solid rgba(16, 185, 129, 0.2);
     font-weight: 600;
 }
-
 .showcase-meta-compact {
     padding: 1.5rem;
     text-align: center;
 }
-
 .meta-tags {
     display: flex;
     justify-content: center;
     gap: 0.5rem;
     margin-top: 0.5rem;
 }
-
-/* --- Spotlight Glow Effect & Icons (Added) --- */
-
-/* Spotlight Glow Effect */
 .spotlight-card {
     position: relative;
     overflow: hidden;
-    /* Ensure glow doesn't spill out */
     background: var(--bg-surface);
-    /* Ensure solid background for content */
     z-index: 1;
 }
-
-/* The Glow Overlay */
 .spotlight-card::before {
     content: "";
     position: absolute;
@@ -3502,14 +2664,10 @@ main {
     width: 100%;
     background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(124, 58, 237, 0.15), transparent 40%);
     opacity: 1;
-    /* Always visible, gradient moves */
     transition: opacity 0.5s;
     pointer-events: none;
     z-index: -1;
-    /* Behind text but over bg */
 }
-
-/* Card Icon Styling */
 .card-icon svg {
     width: 100%;
     height: 100%;
@@ -3517,39 +2675,29 @@ main {
     filter: drop-shadow(0 4px 12px rgba(124, 58, 237, 0.3));
     transition: transform 0.3s ease;
 }
-
 .spotlight-card:hover .card-icon svg {
     transform: scale(1.1);
     stroke: var(--text-accent);
 }
-
-/* Tech Tooltip (Fixed Positioning) */
 .tech-tooltip {
     position: fixed;
     top: 0;
     left: 0;
     background: var(--bg-surface-hover);
-    /* Theme aware background */
     border: 1px solid var(--border);
     padding: 0.5rem 1rem;
     border-radius: 6px;
     font-size: 0.85rem;
     color: var(--text-primary);
-    /* Theme aware color */
     pointer-events: none;
     z-index: 9999;
     box-shadow: var(--shadow-card);
     opacity: 0;
     transition: opacity 0.2s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
     transform: scale(0.9);
-    /* Start slightly smaller */
     max-width: 250px;
     will-change: transform;
 }
-
 .tech-tooltip.visible {
     opacity: 1;
-    /* Transformation is handled by JS translate, but we can animate scale via a child or just rely on opacity for simplicity to avoid conflict with JS translate */
-    /* Wait, if JS controls transform (translate), we can't easily animate scale on the same element without conflict or complex logic. */
-    /* Better approach: Use opacity only for now to ensure position is rock solid, OR use a wrapper. NOT modifying transform here to avoid conflict with JS x/y setter. */
 }
