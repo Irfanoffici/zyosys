@@ -21,14 +21,14 @@ function initNewsletter() {
             const email = input.value.trim();
             if (!email || !/\S+@\S+\.\S+/.test(email)) {
                 input.focus();
-                input.style.borderColor = '#ef4444'; 
+                input.style.borderColor = '#ef4444';
                 return;
             }
-            btn.innerHTML = '<span class="loader"></span>'; 
+            btn.innerHTML = '<span class="loader"></span>';            btn.style.opacity = '0.7';
             btn.style.opacity = '0.7';
-            btn.style.pointerEvents = 'none'; 
-            input.disabled = true; 
-            input.style.borderColor = ''; 
+            btn.style.pointerEvents = 'none';
+            input.disabled = true;
+            input.style.borderColor = '';
             try {
                 const response = await fetch('https://formspree.io/f/mojnakzj', {
                     method: 'POST',
@@ -40,26 +40,30 @@ function initNewsletter() {
                 });
                 if (response.ok) {
                     btn.innerHTML = '✓';
-                    btn.style.background = '#10b981'; 
+                    btn.style.background = '#10b981';
                     btn.style.color = 'white';
                     btn.style.opacity = '1';
-                    input.value = ''; 
+                    input.value = '';
                     input.placeholder = 'Subscribed!';
                 } else {
                     throw new Error('Formspree submission failed');
                 }
             } catch (error) {
                 console.error(error);
-                btn.innerHTML = '❌'; 
+            } catch (error) {
+                console.error(error);
+                btn.innerHTML = '❌';
                 btn.style.background = '#ef4444';
             } finally {
                 setTimeout(() => {
                     btn.innerHTML = originalContent;
-                    btn.style.background = ''; 
-                    btn.style.color = '';      
+                    btn.innerHTML = originalContent;
+                    btn.style.background = '';
+                    btn.style.color = '';
                     btn.style.pointerEvents = 'all';
                     input.disabled = false;
-                    input.placeholder = 'email@domain.com'; 
+                    input.disabled = false;
+                    input.placeholder = 'email@domain.com';
                 }, 3000);
             }
         };
@@ -94,7 +98,9 @@ function initTechTooltips() {
         const winW = window.innerWidth;
         const winH = window.innerHeight;
         const tipRect = tooltip.getBoundingClientRect();
-        const tipW = tipRect.width || 200; 
+        const winH = window.innerHeight;
+        const tipRect = tooltip.getBoundingClientRect();
+        const tipW = tipRect.width || 200;
         const tipH = tipRect.height || 50;
         let finalX = x + offsetX;
         let finalY = y + offsetY;
@@ -209,7 +215,9 @@ function initDraggableToggle() {
         if (e.type === 'mousedown' && e.button !== 0) return;
         isDragging = true;
         hasMoved = false;
-        el.style.transition = 'none'; 
+        isDragging = true;
+        hasMoved = false;
+        el.style.transition = 'none';
         el.dataset.isDragging = 'false'; 
         const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
         const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
@@ -225,7 +233,9 @@ function initDraggableToggle() {
     };
     const onMouseMove = (e) => {
         if (!isDragging) return;
-        e.preventDefault(); 
+    const onMouseMove = (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
         const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
         const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
         const dx = clientX - startX;
@@ -267,7 +277,10 @@ function renderTracks() {
     const fragment = document.createDocumentFragment();
     ZYOSYS_CONFIG.courses.forEach(course => {
         const card = document.createElement('div');
-        card.className = 'card spotlight-card'; 
+    ZYOSYS_CONFIG.courses.forEach(course => {
+        const card = document.createElement('div');
+        card.className = 'card spotlight-card';
+        const techHtml = course.tech.map(t =>
         const techHtml = course.tech.map(t =>
             `<span class="chip" title="${t.desc}">${t.name}</span>`
         ).join('');
@@ -355,8 +368,10 @@ function initSmoothScroll() {
         direction: 'vertical',
         gestureDirection: 'vertical',
         smooth: true,
-        mouseMultiplier: 0.8, 
-        smoothTouch: false, 
+        smooth: true,
+        mouseMultiplier: 0.8,
+        smoothTouch: false,
+        touchMultiplier: 2, 
         touchMultiplier: 2,
     });
     if (typeof ScrollTrigger !== 'undefined') {
@@ -431,8 +446,11 @@ function initAdvancedUI() {
             });
         } else {
             let current = 0;
-            const duration = 2000; 
-            const step = target / (duration / 16); 
+        } else {
+            let current = 0;
+            const duration = 2000;
+            const step = target / (duration / 16);
+            const timer = setInterval(() => { 
             const timer = setInterval(() => {
                 current += step;
                 if (current >= target) {
@@ -455,7 +473,9 @@ function initAdvancedUI() {
                     trigger: document.body,
                     start: "top top",
                     end: "bottom bottom",
-                    scrub: 0 
+                    start: "top top",
+                    end: "bottom bottom",
+                    scrub: 0
                 }
             });
         });
@@ -487,13 +507,17 @@ function initAdvancedUI() {
             gsap.fromTo(footerBg,
                 {
                     yPercent: -50,
-                    opacity: 1,       
-                    filter: "blur(20px) brightness(0.5)" 
+                {
+                    yPercent: -50,
+                    opacity: 1,
+                    filter: "blur(20px) brightness(0.5)"
                 },
                 {
                     yPercent: 0,
                     opacity: 1,
-                    filter: "blur(0px) brightness(1)",   
+                    yPercent: 0,
+                    opacity: 1,
+                    filter: "blur(0px) brightness(1)",
                     ease: "power2.out",
                     scrollTrigger: {
                         trigger: spacer,
