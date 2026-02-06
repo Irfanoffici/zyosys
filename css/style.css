@@ -839,9 +839,7 @@ footer {
     bottom: 0;
     left: 0;
     width: 100%;
-    /* Removed fixed height 400px to allow scaling */
-    min-height: 400px;
-    height: auto;
+    height: 400px;
     z-index: -10;
     border-top: 1px solid var(--border);
     padding: var(--space-16) 0;
@@ -1911,23 +1909,15 @@ main {
 }
 
 .footer-top {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
     gap: 4rem;
     margin-bottom: 3rem;
     align-items: start;
-    justify-content: space-between;
 }
 
 .footer-brand {
     text-align: left;
-    flex: 1 1 300px;
-    min-width: 300px;
-}
-
-.footer-links-group {
-    flex: 1 1 400px;
-    justify-content: flex-end;
 }
 
 .newsletter-form {
