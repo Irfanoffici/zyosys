@@ -1,5 +1,5 @@
 /* Fresh Start: Performance & Grid System */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
 
 :root {
     /* Spacing System */
@@ -165,16 +165,97 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* Optimize Fonts: Block display ensures no text is shown until font is ready */
-/* This prevents the "Flash of Unstyled Text" (FOUT) flicker of swapping fonts */
-@font-face {
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 100 900;
-    font-display: block;
-    /* Stable loading, no swap flicker */
-    src: url(https://fonts.gstatic.com/s/inter/v13/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7W0Q5nw.woff2) format('woff2');
+/* Ambient Accent Animation */
+.ambient-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+    pointer-events: none;
+    background: var(--bg-body);
+    /* Base layer */
 }
+
+.accent-orb {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--text-accent), transparent 70%);
+    filter: blur(80px);
+    /* Soft glow */
+    opacity: 0.15;
+    /* Subtle in dark mode */
+    animation: drift 20s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center;
+}
+
+[data-theme="light"] .accent-orb {
+    opacity: 0.1;
+    /* Even softer in light mode */
+    filter: blur(100px);
+}
+
+/* Orb 1: Top Left-ish */
+.accent-orb:nth-child(1) {
+    top: -10%;
+    left: -10%;
+    width: 60vw;
+    height: 60vw;
+    animation-duration: 25s;
+    background: radial-gradient(circle, #7c3aed, transparent 70%);
+    /* Violet */
+}
+
+/* Orb 2: Bottom Right-ish */
+.accent-orb:nth-child(2) {
+    bottom: -10%;
+    right: -10%;
+    width: 70vw;
+    height: 70vw;
+    animation-duration: 30s;
+    animation-delay: -5s;
+    background: radial-gradient(circle, #3b82f6, transparent 70%);
+    /* Blue */
+}
+
+/* Orb 3: Middle Floating */
+.accent-orb:nth-child(3) {
+    top: 40%;
+    left: 30%;
+    width: 40vw;
+    height: 40vw;
+    opacity: 0.08;
+    animation-duration: 18s;
+    animation-delay: -10s;
+    background: radial-gradient(circle, #ec4899, transparent 70%);
+    /* Pink hint */
+}
+
+@keyframes drift {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    100% {
+        transform: translate(100px, 50px) scale(1.1);
+    }
+}
+
+/* Scroll Animations */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Staggered delays for children if needed manually, but removing auto-stagger classes */
 
 main {
     position: relative;

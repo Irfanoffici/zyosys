@@ -55,6 +55,9 @@
 
     <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- GSAP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
@@ -62,6 +65,13 @@
 </head>
 
 <body>
+    <!-- Ambient Accent Animation -->
+    <div class="ambient-background">
+        <div class="accent-orb"></div>
+        <div class="accent-orb"></div>
+        <div class="accent-orb"></div>
+    </div>
+
     <!-- Top Announcement Bar -->
     <div class="top-bar">
         <span>🚀 New Cohort Starting Soon: <a
@@ -802,9 +812,9 @@
 
     <!-- Smooth Scroll (Lenis) -->
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
-
-    <script src="js/config.js" defer></script>
-    <script src="js/main.js" defer></script>
+    <!-- Core Logic -->
+    <script src="js/config.js"></script>
+    <script src="js/main.js"></script>
 </body>
 
 </html>

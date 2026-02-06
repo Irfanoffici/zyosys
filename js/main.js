@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initTechTooltips();
     initNewsletter();
+
 });
 
 // --- Feature: Footer Newsletter (Async Simulation) ---
@@ -70,7 +71,7 @@ function initNewsletter() {
                     input.placeholder = 'Subscribed!';
 
                     // Console Success
-                    console.log(`[Newsletter] Sent to Formspree: ${email}`);
+                    // console.log(`[Newsletter] Sent to Formspree: ${email}`);
                 } else {
                     throw new Error('Formspree submission failed');
                 }
@@ -104,8 +105,6 @@ function initNewsletter() {
     }
 }
 
-// --- Feature: Dynamic Tech Tooltips ---
-// --- Feature: Dynamic Tech Tooltips (Optimized) ---
 // --- Feature: Dynamic Tech Tooltips (Optimized) ---
 function initTechTooltips() {
     const skills = document.querySelectorAll('.skill-item');
@@ -210,8 +209,8 @@ function initTechTooltips() {
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('/sw.js')
-            .then(reg => console.log('SW Registered'))
-            .catch(err => console.log('SW Failed', err));
+            .then(reg => { /* SW Registered */ })
+            .catch(err => { /* SW Failed */ });
     });
 }
 
@@ -338,7 +337,6 @@ function getWhatsappLink(courseTitle) {
     return `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
 }
 
-// --- Feature: 3D Tilt Effect (Showcase) ---
 // --- Feature: 3D Tilt Effect (Showcase) ---
 function initShowcaseTilt() {
     // Disable on touch devices or small screens for performance & usability
@@ -509,7 +507,6 @@ function initAdvancedUI() {
         }
     }
 
-    // 3. Parallax Effect (Orbs)
     // 3. Parallax Effect (Orbs) - Optimized with GSAP ScrollTrigger
     const orbs = document.querySelectorAll('.ambient-orb');
 
@@ -529,7 +526,6 @@ function initAdvancedUI() {
             });
         });
     } else {
-        // Fallback
         // Fallback (Optimized)
         let ticking = false;
         window.addEventListener('scroll', () => {
