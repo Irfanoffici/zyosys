@@ -2,18 +2,15 @@ document.addEventListener('DOMContentLoaded', () => {
     initTheme();
     initDraggableToggle();
     renderTracks();
-
-    // Always init comprehensive UI
     initAdvancedUI();
     initShowcaseTilt();
+    if (typeof gsap !== 'undefined') {
+    }
     initSmoothScroll();
     initScrollAnimations();
-
     initTechTooltips();
     initNewsletter();
 });
-
-// Hardware detection removed - Uniform experience for all devices
 function initNewsletter() {
     const input = document.querySelector('.newsletter-input');
     const btn = document.querySelector('.newsletter-btn');
@@ -52,7 +49,7 @@ function initNewsletter() {
                     throw new Error('Formspree submission failed');
                 }
             } catch (error) {
-                console.error(error);
+                // Silent error handling for production
                 btn.innerHTML = '❌';
                 btn.style.background = '#ef4444';
             } finally {
@@ -84,79 +81,57 @@ function initTechTooltips() {
         tooltip.className = 'tech-tooltip';
         document.body.appendChild(tooltip);
     }
-
-    // Cache window dimensions to avoid excessive reads during mousemove
-    let winW = window.innerWidth;
-    let winH = window.innerHeight;
-    window.addEventListener('resize', () => {
-        winW = window.innerWidth;
-        winH = window.innerHeight;
-    }, { passive: true });
-
+    let xSet, ySet;
     let isVisible = false;
-    let currentDesc = '';
-
-    // Throttle position updates
-    let mouseX = 0, mouseY = 0;
-    let isTicking = false;
-
-    const updateTooltipPos = () => {
-        if (!isVisible) return;
-
+    if (typeof gsap !== 'undefined') {
+        xSet = gsap.quickSetter(tooltip, "x", "px");
+        ySet = gsap.quickSetter(tooltip, "y", "px");
+    }
+    const updatePosition = (x, y) => {
         const offsetX = 15;
         const offsetY = 15;
         const pad = 10;
-
-        // Use cached tip dimensions if possible, or read once
-        // For dynamic content, we might need to read this, but let's assume fixed size for perf or read rarely
-        // Actually, reading offsetWidth/Height is essential if content changes, but let's do it safely
-        const tipW = tooltip.offsetWidth || 200;
-        const tipH = tooltip.offsetHeight || 50;
-
-        let finalX = mouseX + offsetX;
-        let finalY = mouseY + offsetY;
-
+        const winW = window.innerWidth;
+        const winH = window.innerHeight;
+        const tipRect = tooltip.getBoundingClientRect();
+        const tipW = tipRect.width || 200;
+        const tipH = tipRect.height || 50;
+        let finalX = x + offsetX;
+        let finalY = y + offsetY;
         if (finalX + tipW > winW - pad) {
-            finalX = mouseX - tipW - offsetX;
+            finalX = x - tipW - offsetX;
         }
         if (finalY + tipH > winH - pad) {
-            finalY = mouseY - tipH - offsetY;
+            finalY = y - tipH - offsetY;
         }
-
-        tooltip.style.transform = `translate3d(${finalX}px, ${finalY}px, 0)`;
-        isTicking = false;
+        if (xSet && ySet) {
+            xSet(finalX);
+            ySet(finalY);
+        } else {
+            tooltip.style.transform = `translate(${finalX}px, ${finalY}px)`;
+        }
     };
-
     skills.forEach(skill => {
         skill.addEventListener('mouseenter', (e) => {
-            currentDesc = skill.getAttribute('data-desc');
-            if (currentDesc) {
-                tooltip.textContent = currentDesc;
-                isVisible = true;
-                tooltip.classList.add('visible');
-                // Initial update
-                mouseX = e.clientX;
-                mouseY = e.clientY;
-                requestAnimationFrame(updateTooltipPos);
+            const desc = skill.getAttribute('data-desc');
+            if (desc) {
+                tooltip.textContent = desc;
+                updatePosition(e.clientX, e.clientY);
+                requestAnimationFrame(() => {
+                    tooltip.classList.add('visible');
+                    isVisible = true;
+                });
             }
         });
-
         skill.addEventListener('mouseleave', () => {
             tooltip.classList.remove('visible');
             isVisible = false;
         });
-
         skill.addEventListener('mousemove', (e) => {
             if (isVisible) {
-                mouseX = e.clientX;
-                mouseY = e.clientY;
-                if (!isTicking) {
-                    requestAnimationFrame(updateTooltipPos);
-                    isTicking = true;
-                }
+                updatePosition(e.clientX, e.clientY);
             }
         });
-
         skill.addEventListener('click', () => {
             const url = skill.getAttribute('data-url');
             if (url) {
@@ -225,21 +200,10 @@ function initDraggableToggle() {
         const maxY = window.innerHeight - el.offsetHeight;
         const clampX = Math.min(Math.max(0, x), maxX);
         const clampY = Math.min(Math.max(0, y), maxY);
-        // Use transform for positioning to avoid layout thrashing
-        el.style.transform = `translate3d(${clampX}px, ${clampY}px, 0)`;
-        el.style.left = '0';
-        el.style.top = '0';
-        // Store current position for drag calculations
-        el.dataset.posX = clampX;
-        el.dataset.posY = clampY;
-    } else {
-        // Initialize default position
-        const rect = el.getBoundingClientRect();
-        el.dataset.posX = rect.left;
-        el.dataset.posY = rect.top;
-        el.style.left = '0';
-        el.style.top = '0';
-        el.style.transform = `translate3d(${rect.left}px, ${rect.top}px, 0)`;
+        el.style.left = `${clampX}px`;
+        el.style.top = `${clampY}px`;
+        el.style.bottom = 'auto';
+        el.style.right = 'auto';
     }
     const onMouseDown = (e) => {
         if (e.type === 'mousedown' && e.button !== 0) return;
@@ -251,14 +215,9 @@ function initDraggableToggle() {
         const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
         startX = clientX;
         startY = clientY;
-        // Get current transform values or default to computed style
-        const transform = new WebKitCSSMatrix(window.getComputedStyle(el).transform);
-        initialLeft = transform.m41;
-        initialTop = transform.m42;
-
-        // Update stored position
-        el.dataset.posX = initialLeft;
-        el.dataset.posY = initialTop;
+        const rect = el.getBoundingClientRect();
+        initialLeft = rect.left;
+        initialTop = rect.top;
         document.addEventListener('mousemove', onMouseMove);
         document.addEventListener('mouseup', onMouseUp);
         document.addEventListener('touchmove', onMouseMove, { passive: false });
@@ -281,17 +240,15 @@ function initDraggableToggle() {
         const maxTop = window.innerHeight - el.offsetHeight;
         newLeft = Math.min(Math.max(0, newLeft), maxLeft);
         newTop = Math.min(Math.max(0, newTop), maxTop);
-
-        el.style.transform = `translate3d(${newLeft}px, ${newTop}px, 0)`;
-        el.dataset.posX = newLeft;
-        el.dataset.posY = newTop;
+        el.style.left = `${newLeft}px`;
+        el.style.top = `${newTop}px`;
     };
     const onMouseUp = () => {
         if (!isDragging) return;
         isDragging = false;
         el.style.transition = '';
         const rect = el.getBoundingClientRect();
-        const pos = { x: parseFloat(el.dataset.posX), y: parseFloat(el.dataset.posY) };
+        const pos = { x: rect.left, y: rect.top };
         localStorage.setItem('themeTogglePos', JSON.stringify(pos));
         document.removeEventListener('mousemove', onMouseMove);
         document.removeEventListener('mouseup', onMouseUp);
@@ -345,7 +302,6 @@ function renderTracks() {
 function initSpotlightEffect() {
     const container = document.getElementById('tracks-container');
     if (!container) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     container.addEventListener('mousemove', (e) => {
         const cards = document.querySelectorAll('.spotlight-card');
         cards.forEach(card => {
@@ -363,7 +319,6 @@ function getWhatsappLink(courseTitle) {
     return `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
 }
 function initShowcaseTilt() {
-    // Standard responsive check only
     if (window.matchMedia('(hover: none)').matches || window.innerWidth <= 900) return;
     const cards = document.querySelectorAll('.showcase-card');
     cards.forEach(card => {
@@ -457,12 +412,7 @@ function initAdvancedUI() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const target = parseInt(entry.target.getAttribute('data-target'));
-                // Standard Reduced Motion check
-                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                    entry.target.innerText = target.toLocaleString() + (target < 100 ? '%' : '+');
-                } else {
-                    animateCount(entry.target, target);
-                }
+                animateCount(entry.target, target);
                 observer.unobserve(entry.target);
             }
         });
@@ -495,8 +445,6 @@ function initAdvancedUI() {
         }
     }
     const orbs = document.querySelectorAll('.ambient-orb');
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         orbs.forEach(orb => {
             const speed = parseFloat(orb.getAttribute('data-speed') || 0.05);
@@ -540,7 +488,7 @@ function initAdvancedUI() {
                 {
                     yPercent: -50,
                     opacity: 1,
-                    filter: "blur(20px) brightness(0.5)" // Restored blur effect
+                    filter: "blur(20px) brightness(0.5)"
                 },
                 {
                     yPercent: 0,

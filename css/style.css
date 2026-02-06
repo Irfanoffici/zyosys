@@ -18,12 +18,9 @@
     --max-width: 1200px;
     --radius: 12px;
     --bg-glass: rgba(10, 10, 10, 0.85);
-    /* Restored transparency */
     --bg-footer: radial-gradient(circle at 50% 100%, #1a1a2e 0%, #000000 100%);
     --shadow-container: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     --border-glass: rgba(255, 255, 255, 0.03);
-    --blur-strength: 80px;
-    /* Restored blur strength */
 }
 
 [data-theme="light"] {
@@ -40,12 +37,9 @@
     --nav-border: rgba(0, 0, 0, 0.05);
     --shadow-card: 0 20px 40px -10px rgba(0, 0, 0, 0.08), 0 10px 20px -5px rgba(0, 0, 0, 0.04);
     --bg-glass: rgba(255, 255, 255, 0.85);
-    /* Restored transparency */
     --bg-footer: radial-gradient(circle at 50% 100%, #e0e7ff 0%, #f4f4f5 100%);
     --shadow-container: 0 40px 80px -20px rgba(0, 0, 0, 0.15);
     --border-glass: rgba(0, 0, 0, 0.05);
-    --blur-strength: 80px;
-    /* Restored blur strength */
 }
 
 .footer-brand h2 {
@@ -66,7 +60,6 @@
     text-align: left;
     position: relative;
     transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-    will-change: transform;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -141,15 +134,14 @@ body {
     filter: blur(80px);
     opacity: 0.15;
     animation: drift 20s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center;
     will-change: transform;
-    /* Force GPU acceleration */
-    transform: translateZ(0);
+    transform: translate3d(0, 0, 0);
 }
 
 [data-theme="light"] .accent-orb {
     opacity: 0.1;
-    filter: blur(100px);
-    /* Restored original blur */
+    filter: blur(80px);
 }
 
 .accent-orb:nth-child(1) {
@@ -194,8 +186,9 @@ body {
 
 .reveal {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(30px) translateZ(0);
     transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+    will-change: opacity, transform;
 }
 
 .reveal.active {
@@ -216,17 +209,14 @@ main {
     margin: 0 auto;
     padding: 0 clamp(1rem, 5vw, var(--space-4));
     background: var(--bg-glass);
-    backdrop-filter: blur(var(--blur-strength));
-    -webkit-backdrop-filter: blur(var(--blur-strength));
+    backdrop-filter: blur(80px);
+    -webkit-backdrop-filter: blur(80px);
     border-left: 1px solid var(--border-glass);
     border-right: 1px solid var(--border-glass);
     position: relative;
     z-index: 10;
     border-radius: 0 0 2rem 2rem;
     box-shadow: var(--shadow-container);
-    /* Safari Fix for backdrop-filter overflow */
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
     margin-bottom: 400px;
 }
 
@@ -248,9 +238,6 @@ main {
     position: relative;
     overflow: hidden;
     transition: transform 0.3s ease;
-    will-change: transform;
-    contain: content;
-    /* Performance: skip rendering off-screen sections */
 }
 
 .section:nth-child(even) {
@@ -345,7 +332,6 @@ h4 {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     touch-action: none;
     user-select: none;
-    will-change: transform;
 }
 
 .theme-toggle:active {
@@ -395,7 +381,7 @@ h4 {
     opacity: 0;
     transform: scale(0.95);
     transition: opacity 0.2s ease, transform 0.2s ease;
-    will-change: transform, opacity;
+    will-change: transform;
     transform: translateZ(0);
     backdrop-filter: blur(12px);
     border: 1px solid var(--border);
@@ -462,8 +448,6 @@ h4 {
     width: 100%;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
     transition: background-color 0.3s, border-color 0.3s, padding 0.3s, border-radius 0.3s;
-    /* Safari fix */
-    -webkit-transform: translate3d(0, 0, 0);
 }
 
 @media (max-width: 900px) {
@@ -817,7 +801,6 @@ footer {
     z-index: -10;
     border-top: 1px solid var(--border);
     padding: var(--space-16) 0;
-    contain: content;
     color: var(--text-secondary);
     text-align: center;
     font-size: 0.9rem;
@@ -826,154 +809,6 @@ footer {
     justify-content: center;
     background: var(--bg-footer);
     overflow: hidden;
-}
-
-/* --- Low-End / Mobile Optimizations --- */
-
-@media (prefers-reduced-motion: reduce) {
-
-    .accent-orb,
-    .reveal,
-    .showcase-card,
-    .btn-primary,
-    .theme-toggle {
-        animation: none !important;
-        transition: none !important;
-        transform: none !important;
-    }
-
-    .accent-orb {
-        /* Dim orbs significantly */
-        opacity: 0.05;
-    }
-
-    * {
-        scroll-behavior: auto !important;
-    }
-}
-
-@media (max-width: 768px) {
-    .accent-orb {
-        /* Cheaper blur on mobile */
-        filter: blur(40px) !important;
-        opacity: 0.1 !important;
-    }
-
-    .container {
-        /* Cheaper glass on mobile */
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-    }
-
-    .card:hover {
-        transform: none !important;
-        /* Disable hover lifts on touch */
-    }
-}
-
-/* --- Ultra-Low Resolution (240x320) Optimizations --- */
-@media (max-width: 340px) {
-    :root {
-        --space-16: 2rem;
-        --space-8: 1.5rem;
-    }
-
-    body {
-        font-size: 0.85rem;
-        padding-bottom: 0;
-    }
-
-    h1,
-    .hero-title {
-        font-size: 1.75rem !important;
-        /* Drastic reduction */
-        line-height: 1.2;
-    }
-
-    h2 {
-        font-size: 1.25rem !important;
-    }
-
-    .container {
-        padding: 0 0.5rem;
-        /* Minimize padding */
-    }
-
-    .nav-container {
-        padding: 0.5rem;
-    }
-
-    .nav-brand {
-        font-size: 1.1rem;
-    }
-
-    .btn-primary,
-    .btn-secondary,
-    .btn-card {
-        width: 100%;
-        /* Full width buttons for easier tapping */
-        justify-content: center;
-        margin-bottom: 0.5rem;
-    }
-
-    .circuit-chip {
-        padding: 0.5rem 1rem;
-        font-size: 0.65rem;
-        margin-bottom: 2rem;
-    }
-
-    .footer-brand h2 {
-        font-size: 1.5rem;
-    }
-
-    /* Hide decorative/non-essential elements to save space */
-    /* Polish: Restore scaled-down orbs for quality */
-    .ambient-orb {
-        display: block !important;
-        width: 150px;
-        height: 150px;
-        filter: blur(40px);
-        /* Tighter blur for small screen */
-        opacity: 0.5;
-    }
-
-    /* Hide less critical decoration */
-    .chip-lines-bottom,
-    .scroll-guide {
-        display: none !important;
-    }
-
-    footer {
-        height: auto !important;
-        /* Flexible height */
-        padding-bottom: 4rem;
-        position: relative;
-    }
-
-    footer::before {
-        height: 50px;
-        /* Smaller blur strip */
-        top: -25px;
-    }
-
-    .hero {
-        min-height: auto;
-        padding-top: 5rem;
-        padding-bottom: 3rem;
-    }
-
-    /* Force single column everything */
-    .showcase-grid,
-    .skills-container,
-    .circuit-grid,
-    .features-grid {
-        grid-template-columns: 1fr !important;
-        gap: 1.5rem;
-    }
-
-    .showcase-card.large {
-        grid-column: span 1 !important;
-    }
 }
 
 footer::before {
