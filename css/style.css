@@ -131,17 +131,26 @@ body {
     position: absolute;
     border-radius: 50%;
     background: radial-gradient(circle, var(--text-accent), transparent 70%);
-    filter: blur(80px);
-    opacity: 0.15;
-    animation: drift 20s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+    filter: blur(40px);
+    /* Reduced blur for mobile */
+    opacity: 0.1;
     transform-origin: center;
     will-change: transform;
     transform: translate3d(0, 0, 0);
+    /* No animation by default on mobile */
+}
+
+@media (min-width: 1024px) {
+    .accent-orb {
+        filter: blur(80px);
+        opacity: 0.15;
+        animation: drift 20s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+    }
 }
 
 [data-theme="light"] .accent-orb {
     opacity: 0.1;
-    filter: blur(80px);
+    filter: blur(40px);
 }
 
 .accent-orb:nth-child(1) {
@@ -208,9 +217,8 @@ main {
     max-width: var(--max-width);
     margin: 0 auto;
     padding: 0 clamp(1rem, 5vw, var(--space-4));
-    background: var(--bg-glass);
-    backdrop-filter: blur(80px);
-    -webkit-backdrop-filter: blur(80px);
+    background: var(--bg-surface);
+    /* Solid background for low-end */
     border-left: 1px solid var(--border-glass);
     border-right: 1px solid var(--border-glass);
     position: relative;
@@ -218,6 +226,14 @@ main {
     border-radius: 0 0 2rem 2rem;
     box-shadow: var(--shadow-container);
     margin-bottom: 400px;
+}
+
+@media (min-width: 1024px) {
+    .container {
+        background: var(--bg-glass);
+        backdrop-filter: blur(80px);
+        -webkit-backdrop-filter: blur(80px);
+    }
 }
 
 .parallax-layer {

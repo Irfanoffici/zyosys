@@ -319,7 +319,7 @@ function getWhatsappLink(courseTitle) {
     return `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
 }
 function initShowcaseTilt() {
-    if (window.matchMedia('(hover: none)').matches || window.innerWidth <= 900) return;
+    if (window.matchMedia('(hover: none)').matches || window.innerWidth <= 1024) return;
     const cards = document.querySelectorAll('.showcase-card');
     cards.forEach(card => {
         let isHovering = false;
@@ -348,6 +348,9 @@ function initShowcaseTilt() {
     });
 }
 function initSmoothScroll() {
+    // Disable smooth scroll on mobile for native feel/performance
+    if (window.innerWidth <= 768) return;
+
     if (typeof Lenis === 'undefined') return;
     const lenis = new Lenis({
         duration: 1.2,
@@ -391,22 +394,26 @@ function initScrollAnimations() {
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 }
 function initAdvancedUI() {
-    const progressBar = document.getElementById('scroll-progress');
-    if (progressBar) {
-        let ticking = false;
-        window.addEventListener('scroll', () => {
-            if (!ticking) {
-                window.requestAnimationFrame(() => {
-                    const scrollTop = window.scrollY;
-                    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-                    const scrollPercent = (scrollTop / docHeight) * 100;
-                    progressBar.style.height = `${scrollPercent}%`;
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        }, { passive: true });
+    // Disable scroll progress on mobile
+    if (window.innerWidth > 768) {
+        const progressBar = document.getElementById('scroll-progress');
+        if (progressBar) {
+            let ticking = false;
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        const scrollTop = window.scrollY;
+                        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                        const scrollPercent = (scrollTop / docHeight) * 100;
+                        progressBar.style.height = `${scrollPercent}%`;
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            }, { passive: true });
+        }
     }
+
     const metrics = document.querySelectorAll('.metric-number');
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -418,6 +425,7 @@ function initAdvancedUI() {
         });
     }, { threshold: 0.5 });
     metrics.forEach(metric => observer.observe(metric));
+
     function animateCount(el, target) {
         let obj = { val: 0 };
         if (typeof gsap !== 'undefined') {
@@ -444,38 +452,27 @@ function initAdvancedUI() {
             }, 16);
         }
     }
-    const orbs = document.querySelectorAll('.ambient-orb');
-    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-        orbs.forEach(orb => {
-            const speed = parseFloat(orb.getAttribute('data-speed') || 0.05);
-            gsap.to(orb, {
-                y: (i, target) => - (document.documentElement.scrollHeight * speed),
-                ease: "none",
-                scrollTrigger: {
-                    trigger: document.body,
-                    start: "top top",
-                    end: "bottom bottom",
-                    scrub: 0
-                }
-            });
-        });
-    } else {
-        let ticking = false;
-        window.addEventListener('scroll', () => {
-            if (!ticking) {
-                window.requestAnimationFrame(() => {
-                    const scrolled = window.scrollY;
-                    orbs.forEach(orb => {
-                        const speed = orb.getAttribute('data-speed') || 0.05;
-                        const yPos = -(scrolled * speed);
-                        orb.style.transform = `translateY(${yPos}px)`;
-                    });
-                    ticking = false;
+
+    // Only enable orb parallax on desktop/non-reduced-motion
+    if (window.innerWidth > 1024 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const orbs = document.querySelectorAll('.ambient-orb');
+        if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+            orbs.forEach(orb => {
+                const speed = parseFloat(orb.getAttribute('data-speed') || 0.05);
+                gsap.to(orb, {
+                    y: (i, target) => - (document.documentElement.scrollHeight * speed),
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: document.body,
+                        start: "top top",
+                        end: "bottom bottom",
+                        scrub: 0
+                    }
                 });
-                ticking = true;
-            }
-        }, { passive: true });
+            });
+        }
     }
+
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         gsap.registerPlugin(ScrollTrigger);
         const footerBg = document.querySelector('.footer-bg');
