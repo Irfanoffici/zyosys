@@ -110,57 +110,79 @@ function initTechTooltips() {
         tooltip.className = 'tech-tooltip';
         document.body.appendChild(tooltip);
     }
-    let xSet, ySet;
+
+    // Cache window dimensions to avoid excessive reads during mousemove
+    let winW = window.innerWidth;
+    let winH = window.innerHeight;
+    window.addEventListener('resize', () => {
+        winW = window.innerWidth;
+        winH = window.innerHeight;
+    }, { passive: true });
+
     let isVisible = false;
-    if (typeof gsap !== 'undefined') {
-        xSet = gsap.quickSetter(tooltip, "x", "px");
-        ySet = gsap.quickSetter(tooltip, "y", "px");
-    }
-    const updatePosition = (x, y) => {
+    let currentDesc = '';
+
+    // Throttle position updates
+    let mouseX = 0, mouseY = 0;
+    let isTicking = false;
+
+    const updateTooltipPos = () => {
+        if (!isVisible) return;
+
         const offsetX = 15;
         const offsetY = 15;
         const pad = 10;
-        const winW = window.innerWidth;
-        const winH = window.innerHeight;
-        const tipRect = tooltip.getBoundingClientRect();
-        const tipW = tipRect.width || 200;
-        const tipH = tipRect.height || 50;
-        let finalX = x + offsetX;
-        let finalY = y + offsetY;
+
+        // Use cached tip dimensions if possible, or read once
+        // For dynamic content, we might need to read this, but let's assume fixed size for perf or read rarely
+        // Actually, reading offsetWidth/Height is essential if content changes, but let's do it safely
+        const tipW = tooltip.offsetWidth || 200;
+        const tipH = tooltip.offsetHeight || 50;
+
+        let finalX = mouseX + offsetX;
+        let finalY = mouseY + offsetY;
+
         if (finalX + tipW > winW - pad) {
-            finalX = x - tipW - offsetX;
+            finalX = mouseX - tipW - offsetX;
         }
         if (finalY + tipH > winH - pad) {
-            finalY = y - tipH - offsetY;
+            finalY = mouseY - tipH - offsetY;
         }
-        if (xSet && ySet) {
-            xSet(finalX);
-            ySet(finalY);
-        } else {
-            tooltip.style.transform = `translate(${finalX}px, ${finalY}px)`;
-        }
+
+        tooltip.style.transform = `translate3d(${finalX}px, ${finalY}px, 0)`;
+        isTicking = false;
     };
+
     skills.forEach(skill => {
         skill.addEventListener('mouseenter', (e) => {
-            const desc = skill.getAttribute('data-desc');
-            if (desc) {
-                tooltip.textContent = desc;
-                updatePosition(e.clientX, e.clientY);
-                requestAnimationFrame(() => {
-                    tooltip.classList.add('visible');
-                    isVisible = true;
-                });
+            currentDesc = skill.getAttribute('data-desc');
+            if (currentDesc) {
+                tooltip.textContent = currentDesc;
+                isVisible = true;
+                tooltip.classList.add('visible');
+                // Initial update
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                requestAnimationFrame(updateTooltipPos);
             }
         });
+
         skill.addEventListener('mouseleave', () => {
             tooltip.classList.remove('visible');
             isVisible = false;
         });
+
         skill.addEventListener('mousemove', (e) => {
             if (isVisible) {
-                updatePosition(e.clientX, e.clientY);
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                if (!isTicking) {
+                    requestAnimationFrame(updateTooltipPos);
+                    isTicking = true;
+                }
             }
         });
+
         skill.addEventListener('click', () => {
             const url = skill.getAttribute('data-url');
             if (url) {
@@ -347,6 +369,9 @@ function renderTracks() {
     initSpotlightEffect();
 }
 function initSpotlightEffect() {
+    // Heavy effect: disable on low-end devices
+    if (checkLowEndDevice()) return;
+
     const container = document.getElementById('tracks-container');
     if (!container) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;

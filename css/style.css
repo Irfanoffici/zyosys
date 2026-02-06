@@ -896,7 +896,9 @@ footer {
 
 .is-low-end * {
     animation: none !important;
-    transition: none !important;
+    /* Allow cheap transitions for feedback, disable expensive ones */
+    transition-property: opacity, transform, color, background-color !important;
+    transition-duration: 0.2s !important;
     background-image: none !important;
     /* Remove gradients/patterns */
 }
