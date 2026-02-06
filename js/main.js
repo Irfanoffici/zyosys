@@ -35,7 +35,10 @@ function checkLowEndDevice() {
     // 3. Check data saver mode
     if (navigator.connection && navigator.connection.saveData) return true;
 
-    // 4. Check user preference
+    // 4. Check network speed (effectiveType: 'slow-2g', '2g', '3g')
+    if (navigator.connection && ['slow-2g', '2g', '3g'].includes(navigator.connection.effectiveType)) return true;
+
+    // 5. Check user preference
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return true;
 
     return false;
@@ -392,7 +395,7 @@ function getWhatsappLink(courseTitle) {
     return `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
 }
 function initShowcaseTilt() {
-    if (window.matchMedia('(hover: none)').matches || window.innerWidth <= 900 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (window.matchMedia('(hover: none)').matches || window.innerWidth <= 900 || checkLowEndDevice()) return;
     const cards = document.querySelectorAll('.showcase-card');
     cards.forEach(card => {
         let isHovering = false;
@@ -485,8 +488,9 @@ function initAdvancedUI() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const target = parseInt(entry.target.getAttribute('data-target'));
-                // Skip animation if reduced motion is preferred
-                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                // duplicate decl removed
+                // Skip animation if low-end device or reduced motion
+                if (checkLowEndDevice()) {
                     entry.target.innerText = target.toLocaleString() + (target < 100 ? '%' : '+');
                 } else {
                     animateCount(entry.target, target);
@@ -523,7 +527,7 @@ function initAdvancedUI() {
         }
     }
     const orbs = document.querySelectorAll('.ambient-orb');
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (checkLowEndDevice()) return;
 
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         orbs.forEach(orb => {
