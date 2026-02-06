@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollAnimations();
     initTechTooltips();
     initNewsletter();
+    initLazyFooter(); // Add lazy load listener
 });
 function initNewsletter() {
     const input = document.querySelector('.newsletter-input');
@@ -261,6 +262,35 @@ function initDraggableToggle() {
     el.addEventListener('mousedown', onMouseDown);
     el.addEventListener('touchstart', onMouseDown, { passive: false });
 }
+
+function initLazyFooter() {
+    // If desktop (> 1366px), footer is already visible via CSS. No JS needed.
+    if (window.innerWidth > 1366) return;
+
+    // Passive listener to reveal footer at 90% scroll
+    const onScroll = () => {
+        const scrolled = window.scrollY + window.innerHeight;
+        const threshold = document.documentElement.scrollHeight * 0.90;
+
+        if (scrolled >= threshold) {
+            document.body.classList.add('footer-visible');
+
+            // Force GSAP/ScrollTrigger to re-calculate positions now that footer is visible
+            if (typeof ScrollTrigger !== 'undefined') {
+                // Small delay to allow display:block to render layout
+                setTimeout(() => {
+                    ScrollTrigger.refresh();
+                }, 100);
+            }
+
+            // Remove listener immediately - Run Once
+            window.removeEventListener('scroll', onScroll);
+        }
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+}
+
 function renderTracks() {
     const container = document.getElementById('tracks-container');
     if (!container || typeof ZYOSYS_CONFIG === 'undefined') return;

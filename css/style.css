@@ -1833,17 +1833,6 @@ main {
         animation: none;
     }
 
-    main::after {
-        display: none;
-    }
-
-    footer {
-        position: relative !important;
-        z-index: 1 !important;
-        background: var(--bg-body);
-        height: auto !important;
-    }
-
     .footer-container {
         padding-top: 4rem;
     }
