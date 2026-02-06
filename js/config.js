@@ -1,10 +1,10 @@
 
-const ZEOSYS_CONFIG = {
+const ZYOSYS_CONFIG = {
     brand: {
-        name: "Zeosys",
+        name: "Zyosys",
         slogan: "Learn. Lead. Level up.",
         whatsapp: "919876543210",
-        email: "admissions@zeosys.com"
+        email: "admissions@zyosys.com"
     },
     courses: [
         {

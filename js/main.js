@@ -387,11 +387,11 @@ function initDraggableToggle() {
 
 function renderTracks() {
     const container = document.getElementById('tracks-container');
-    if (!container || typeof ZEOSYS_CONFIG === 'undefined') return;
+    if (!container || typeof ZYOSYS_CONFIG === 'undefined') return;
 
     const fragment = document.createDocumentFragment();
 
-    ZEOSYS_CONFIG.courses.forEach(course => {
+    ZYOSYS_CONFIG.courses.forEach(course => {
         const card = document.createElement('div');
         card.className = 'card spotlight-card'; // Added spotlight-card class
 
@@ -460,7 +460,7 @@ function initSpotlightEffect() {
 // Helper: Generate WhatsApp Link
 function getWhatsappLink(courseTitle) {
     const phone = "918870095446";
-    const text = `Hi Zeosys, I am interested in joining the ${courseTitle} track.`;
+    const text = `Hi Zyosys, I am interested in joining the ${courseTitle} track.`;
     return `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
 }
 

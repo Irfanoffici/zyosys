@@ -1,10 +1,10 @@
 # Product Requirements Document (PRD)
-## Zeosys Technologies – Official Website
+## Zyosys Technologies – Official Website
 
 ### 1. Product Overview
-- **Product Name:** Zeosys Technologies – Product Website
+- **Product Name:** Zyosys Technologies – Product Website
 - **Product Type:** Static, single-page, product-grade marketing website
-- **Purpose:** To present Zeosys Technologies as a premium, product-based tech training company and convert visitors into qualified enrolment enquiries through frictionless, human-centric funnels.
+- **Purpose:** To present Zyosys Technologies as a premium, product-based tech training company and convert visitors into qualified enrolment enquiries through frictionless, human-centric funnels.
 
 ### 2. Problem Statement
 Most training institute websites look cluttered, outdated, and fail to inspire trust.
@@ -33,7 +33,7 @@ Build a clean, immersive, single-page website that feels like a modern developer
 ### 6. Functional Requirements
 #### 6.1 Page Structure (Single Page)
 1.  **Hero Section**: Brand statement, Value Prop, CTA.
-2.  **Why Zeosys**: Differentiators, Trust indicators.
+2.  **Why Zyosys**: Differentiators, Trust indicators.
 3.  **Courses**: Loaded from `config.js`. Cards with "Talk to Counselor" / "Enroll" CTAs.
 4.  **Training Process**: Visual timeline of the training journey.
 5.  **Testimonials/Outcomes**: Proof of success.

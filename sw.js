@@ -1,4 +1,4 @@
-const CACHE_NAME = 'zeosys-v2';
+const CACHE_NAME = 'zyosys-v1';
 const ASSETS_CORE = [
     '/',
     '/index.html',

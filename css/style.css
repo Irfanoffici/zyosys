@@ -2409,7 +2409,7 @@ main {
     margin: 0;
 }
 
-/* 2. Glitch Animation for "Zeosys." */
+/* 2. Glitch Animation for "Zyosys." */
 @keyframes glitch-skew {
     0% {
         transform: skew(0deg);
@@ -2472,7 +2472,7 @@ main {
 /* Hover Glitch Trigger */
 .footer-brand:hover h2::before,
 .footer-brand:hover h2::after {
-    content: 'Zeosys.';
+    content: 'Zyosys.';
     position: absolute;
     left: 0;
     top: 0;
