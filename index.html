@@ -126,7 +126,7 @@
                 </p>
                 <div class="hero-actions">
                     <a href="#tracks" class="btn-primary" aria-label="Explore our engineering tracks">Explore Tracks</a>
-                    <a href="#demo" aria-label="View our curriculum"
+                    <a href="#tracks" aria-label="View our curriculum"
                         style="color: var(--text-primary); text-decoration: none; padding: 0.5rem 1rem; font-weight: 500;">View
                         Curriculum</a>
                 </div>
@@ -210,47 +210,94 @@
 
         <!-- Partner Logos (Moved Up for Credibility) -->
         <section class="section" style="padding: 2rem 0 4rem 0; opacity: 0.8;">
-            <div class="trust-logos">
-                <div class="trust-logo" title="WebScale">
-                    <svg viewBox="0 0 40 40" fill="currentColor">
-                        <path d="M20 5 L35 30 L5 30 Z" opacity="0.8" />
-                        <path d="M20 12 L28 26 L12 26 Z" fill="white" />
-                    </svg>
-                    <span>WebScale</span>
-                </div>
-                <div class="trust-logo" title="DataFlow">
-                    <svg viewBox="0 0 40 40" fill="currentColor">
-                        <circle cx="12" cy="20" r="8" opacity="0.6" />
-                        <circle cx="28" cy="20" r="8" opacity="0.9" />
-                    </svg>
-                    <span>DataFlow</span>
-                </div>
-                <div class="trust-logo" title="TechCorp">
-                    <svg viewBox="0 0 40 40" fill="currentColor">
-                        <rect x="10" y="10" width="20" height="20" rx="4" opacity="0.8" />
-                        <rect x="16" y="16" width="8" height="8" fill="white" />
-                    </svg>
-                    <span>TechCorp</span>
-                </div>
-                <div class="trust-logo" title="CloudNine">
-                    <svg viewBox="0 0 40 40" fill="currentColor">
-                        <path d="M10 25 Q10 15 20 15 Q25 10 30 15 Q35 15 35 25 Z" opacity="0.8" />
-                    </svg>
-                    <span>CloudNine</span>
-                </div>
-                <div class="trust-logo" title="AI Nexus">
-                    <svg viewBox="0 0 40 40" fill="currentColor">
-                        <circle cx="20" cy="20" r="12" stroke="currentColor" stroke-width="3" fill="none" />
-                        <circle cx="20" cy="20" r="5" fill="white" />
-                    </svg>
-                    <span>AI Nexus</span>
-                </div>
-                <div class="trust-logo" title="DigitalWay">
-                    <svg viewBox="0 0 40 40" fill="currentColor">
-                        <path d="M10 10 L20 20 L10 30 M20 10 L30 20 L20 30" stroke="currentColor" stroke-width="3"
-                            fill="none" />
-                    </svg>
-                    <span>DigitalWay</span>
+            <!-- Infinite Marquee Wrapper -->
+            <div class="logo-marquee">
+                <div class="logo-marquee-content">
+                    <!-- Original Set -->
+                    <div class="trust-logo" title="WebScale">
+                        <svg viewBox="0 0 40 40" fill="currentColor">
+                            <path d="M20 5 L35 30 L5 30 Z" opacity="0.8" />
+                            <path d="M20 12 L28 26 L12 26 Z" fill="white" />
+                        </svg>
+                        <span>WebScale</span>
+                    </div>
+                    <div class="trust-logo" title="DataFlow">
+                        <svg viewBox="0 0 40 40" fill="currentColor">
+                            <circle cx="12" cy="20" r="8" opacity="0.6" />
+                            <circle cx="28" cy="20" r="8" opacity="0.9" />
+                        </svg>
+                        <span>DataFlow</span>
+                    </div>
+                    <div class="trust-logo" title="TechCorp">
+                        <svg viewBox="0 0 40 40" fill="currentColor">
+                            <rect x="10" y="10" width="20" height="20" rx="4" opacity="0.8" />
+                            <rect x="16" y="16" width="8" height="8" fill="white" />
+                        </svg>
+                        <span>TechCorp</span>
+                    </div>
+                    <div class="trust-logo" title="CloudNine">
+                        <svg viewBox="0 0 40 40" fill="currentColor">
+                            <path d="M10 25 Q10 15 20 15 Q25 10 30 15 Q35 15 35 25 Z" opacity="0.8" />
+                        </svg>
+                        <span>CloudNine</span>
+                    </div>
+                    <div class="trust-logo" title="AI Nexus">
+                        <svg viewBox="0 0 40 40" fill="currentColor">
+                            <circle cx="20" cy="20" r="12" stroke="currentColor" stroke-width="3" fill="none" />
+                            <circle cx="20" cy="20" r="5" fill="white" />
+                        </svg>
+                        <span>AI Nexus</span>
+                    </div>
+                    <div class="trust-logo" title="DigitalWay">
+                        <svg viewBox="0 0 40 40" fill="currentColor">
+                            <path d="M10 10 L20 20 L10 30 M20 10 L30 20 L20 30" stroke="currentColor" stroke-width="3"
+                                fill="none" />
+                        </svg>
+                        <span>DigitalWay</span>
+                    </div>
+
+                    <!-- Duplicate Set for Infinite Loop -->
+                    <div class="trust-logo" title="WebScale">
+                        <svg viewBox="0 0 40 40" fill="currentColor">
+                            <path d="M20 5 L35 30 L5 30 Z" opacity="0.8" />
+                            <path d="M20 12 L28 26 L12 26 Z" fill="white" />
+                        </svg>
+                        <span>WebScale</span>
+                    </div>
+                    <div class="trust-logo" title="DataFlow">
+                        <svg viewBox="0 0 40 40" fill="currentColor">
+                            <circle cx="12" cy="20" r="8" opacity="0.6" />
+                            <circle cx="28" cy="20" r="8" opacity="0.9" />
+                        </svg>
+                        <span>DataFlow</span>
+                    </div>
+                    <div class="trust-logo" title="TechCorp">
+                        <svg viewBox="0 0 40 40" fill="currentColor">
+                            <rect x="10" y="10" width="20" height="20" rx="4" opacity="0.8" />
+                            <rect x="16" y="16" width="8" height="8" fill="white" />
+                        </svg>
+                        <span>TechCorp</span>
+                    </div>
+                    <div class="trust-logo" title="CloudNine">
+                        <svg viewBox="0 0 40 40" fill="currentColor">
+                            <path d="M10 25 Q10 15 20 15 Q25 10 30 15 Q35 15 35 25 Z" opacity="0.8" />
+                        </svg>
+                        <span>CloudNine</span>
+                    </div>
+                    <div class="trust-logo" title="AI Nexus">
+                        <svg viewBox="0 0 40 40" fill="currentColor">
+                            <circle cx="20" cy="20" r="12" stroke="currentColor" stroke-width="3" fill="none" />
+                            <circle cx="20" cy="20" r="5" fill="white" />
+                        </svg>
+                        <span>AI Nexus</span>
+                    </div>
+                    <div class="trust-logo" title="DigitalWay">
+                        <svg viewBox="0 0 40 40" fill="currentColor">
+                            <path d="M10 10 L20 20 L10 30 M20 10 L30 20 L20 30" stroke="currentColor" stroke-width="3"
+                                fill="none" />
+                        </svg>
+                        <span>DigitalWay</span>
+                    </div>
                 </div>
             </div>
         </section>
@@ -269,12 +316,14 @@
                 </div>
                 <!-- Center Hub -->
                 <div class="hub-center">
-                    <div class="hub-lock-icon">🔒</div>
-                    <h2>Unlocking<br>Potential</h2>
-                    <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem;">Discover why
-                        leading engineers choose Zeosys to master their craft at scale.</p>
-                    <a href="https://wa.me/918870095446?text=Hi%20Zeosys,%20I'm%20ready%20to%20start%20learning.%20Tell%20me%20more!"
-                        target="_blank" class="btn-primary">Start Learning</a>
+                    <div class="hub-lock-icon">🚀</div>
+                    <h2 class="text-gradient">Beyond<br>Tutorials.</h2>
+                    <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem;">
+                        Stop copying code. Start <span
+                            style="color: var(--text-primary); font-weight: 600;">architecting systems</span>.
+                        Master the patterns used by Netflix, Uber, and Instagram.
+                    </p>
+                    <a href="https://wa.me/918870095446" target="_blank" class="btn-primary">Build Your Future</a>
                 </div>
                 <div class="spoke-side right">
                     <div class="spoke-item">
@@ -299,27 +348,57 @@
             <div class="grid-cols-3">
                 <div class="feature-card">
                     <div class="feature-header">
-                        <span class="badge-yellow">FEATURE</span>
-                        <span class="feature-emoji">🤖</span>
+                        <span class="badge-yellow">CAREER</span>
+                        <div class="feature-icon">
+                            <!-- Target/Arrow Icon -->
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10" stroke-opacity="0.2" />
+                                <circle cx="12" cy="12" r="6" stroke="var(--text-accent)" />
+                                <circle cx="12" cy="12" r="2" fill="var(--text-accent)" />
+                                <path d="M22 2L12 12" stroke="var(--text-accent)" stroke-linecap="round" />
+                            </svg>
+                        </div>
                     </div>
-                    <h3>AI-Powered Personalization</h3>
-                    <p>Adaptive learning algorithms tailor content to your unique needs and pace.</p>
+                    <h3>Placement Command Center</h3>
+                    <p>Resume crafting, mock interviews, and salary negotiation strategies to get you hired.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-header">
-                        <span class="badge-yellow">FEATURE</span>
-                        <span class="feature-emoji">🛠️</span>
+                        <span class="badge-yellow">BUILD</span>
+                        <div class="feature-icon">
+                            <!-- Code/Git Icon -->
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M16 18L22 12L16 6" stroke="var(--text-accent)" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M8 6L2 12L8 18" stroke="var(--text-accent)" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <line x1="12" y1="2" x2="12" y2="22" stroke="var(--text-secondary)" stroke-opacity="0.5"
+                                    stroke-dasharray="2 2" />
+                            </svg>
+                        </div>
                     </div>
-                    <h3>Project-Based Curriculum</h3>
-                    <p>Build portfolio-worthy projects from day one with expert guidance.</p>
+                    <h3>Production-Grade Projects</h3>
+                    <p>Don't just code. Deploy. Build scalable systems with CI/CD, Docker, and Cloud infrastructure.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-header">
-                        <span class="badge-yellow">FEATURE</span>
-                        <span class="feature-emoji">👨‍💻</span>
+                        <span class="badge-yellow">NETWORK</span>
+                        <div class="feature-icon">
+                            <!-- User/Group Icon -->
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="9" cy="7" r="4" stroke="var(--text-accent)" />
+                                <path d="M17 21V19C17 16.7909 15.2091 15 13 15H5C2.79086 15 1 16.7909 1 19V21"
+                                    stroke="var(--text-accent)" stroke-linecap="round" />
+                                <path d="M16 3.13C16.86 3.48 17.5 4.14 17.5 5C17.5 6.45 15.86 7.28 15 8"
+                                    stroke="var(--text-secondary)" stroke-linecap="round" />
+                                <path d="M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5517"
+                                    stroke="var(--text-secondary)" stroke-linecap="round" />
+                            </svg>
+                        </div>
                     </div>
-                    <h3>Industry Mentor Network</h3>
-                    <p>Learn directly from professionals at top tech companies like Google & Amazon.</p>
+                    <h3>Elite Mentor Network</h3>
+                    <p>Direct access to engineers from MAANG and high-growth startups for code reviews and referrals.
+                    </p>
                 </div>
             </div>
         </section>
@@ -473,7 +552,8 @@
             <div style="margin-top: 4rem; text-align: center;">
                 <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 1.1rem;">For performance,
                     efficiency and engineering depth.</p>
-                <a href="#" class="btn-showcase" aria-label="View student showcase projects">View Student Showcase</a>
+                <a href="#tracks" class="btn-showcase" aria-label="View student showcase projects">Start Building
+                    Projects</a>
             </div>
         </section>
 
@@ -481,36 +561,64 @@
         <section class="section" style="text-align: center;">
             <h2 class="text-gradient" style="margin-bottom: 3rem;">What Our <span
                     style="color: #7c3aed;">Students</span> Say</h2>
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
+            <!-- Bento Grid Testimonials -->
+            <div class="testimonial-bento-grid">
+                <!-- Large Card 1 (Netflix) -->
+                <div class="testimonial-card large reveal">
                     <div class="test-header">
-                        <div class="avatar-circle" style="background: linear-gradient(135deg, #ef4444, #f59e0b);">MC
+                        <div class="avatar-circle" style="background: linear-gradient(135deg, #ef4444, #b91c1c);">SJ
                         </div>
                         <div class="test-info">
-                            <h3>Michael Chen</h3><span>Data Science</span>
+                            <h3>Sarah Jenkins</h3><span>Frontend Lead @ Netflix</span>
                         </div>
                     </div>
-                    <p>"Transformed my career. Hands-on projects made all the difference."</p>
+                    <div class="test-content">
+                        <p class="quote-large">"Zeosys didn't just teach me React. It taught me how to <strong>think
+                                like a senior engineer</strong>."</p>
+                        <p class="quote-detail">"The system design module is gold. I use the scalability patterns I
+                            learned here every single day in production."</p>
+                    </div>
                 </div>
-                <div class="testimonial-card">
+
+                <!-- Small Card 1 (Amazon) -->
+                <div class="testimonial-card reveal">
                     <div class="test-header">
-                        <div class="avatar-circle" style="background: linear-gradient(135deg, #10b981, #3b82f6);">ER
+                        <div class="avatar-circle" style="background: linear-gradient(135deg, #f59e0b, #d97706);">MR
                         </div>
                         <div class="test-info">
-                            <h3>Emily Rodriguez</h3><span>Web Dev</span>
+                            <h3>Marcus Ross</h3><span>SDE II @ Amazon</span>
                         </div>
                     </div>
-                    <p>"Cutting-edge tech with industry-relevant curriculum. Highly recommended!"</p>
+                    <p>"Failed interviews for 2 years. After Zeosys, cracked Amazon and Uber. Life changing."</p>
                 </div>
-                <div class="testimonial-card">
+
+                <!-- Small Card 2 (Stripe) -->
+                <div class="testimonial-card reveal">
                     <div class="test-header">
-                        <div class="avatar-circle" style="background: linear-gradient(135deg, #8b5cf6, #ec4899);">DT
+                        <div class="avatar-circle" style="background: linear-gradient(135deg, #6366f1, #4338ca);">AL
                         </div>
                         <div class="test-info">
-                            <h3>David Thompson</h3><span>AI/ML Student</span>
+                            <h3>Anita Lin</h3><span>Full Stack @ Stripe</span>
                         </div>
                     </div>
-                    <p>"Exceeded all expectations. Amazing practical skills gained."</p>
+                    <p>"My mentor reviewed my PRs line-by-line. You don't get this level of detail elsewhere."</p>
+                </div>
+
+                <!-- Large Card 2 (Uber) -->
+                <div class="testimonial-card large reveal">
+                    <div class="test-header">
+                        <div class="avatar-circle" style="background: linear-gradient(135deg, #000000, #333333);">DK
+                        </div>
+                        <div class="test-info">
+                            <h3>David Kim</h3><span>Backend Dev @ Uber</span>
+                        </div>
+                    </div>
+                    <div class="test-content">
+                        <p class="quote-large">"Recruiters actually clicked my GitHub links. <strong>Production-grade
+                                projects</strong> made all the difference."</p>
+                        <p class="quote-detail">"I didn't just build a Todo app. I built a real-time collaborative
+                            editor with WebSockets and Redis."</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -591,9 +699,9 @@
                 </div>
                 <div class="footer-links-group">
                     <div class="footer-col-simple">
-                        <a href="#">Manifesto</a>
-                        <a href="#">Curriculum</a>
-                        <a href="#">Mentors</a>
+                        <a href="#methodology">Manifesto</a>
+                        <a href="#tracks">Curriculum</a>
+                        <a href="#tracks">Mentors</a>
                     </div>
                     <div class="footer-col-simple">
                         <a href="#">Privacy</a>

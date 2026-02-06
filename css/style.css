@@ -431,7 +431,7 @@ h4 {
     max-width: 900px;
     margin: 0 auto;
     left: 0;
-    right: 0;
+    right: 1.5rem;
     z-index: 100;
     padding: 0 var(--space-4);
 }
@@ -2254,6 +2254,22 @@ main {
     border-radius: 24px;
     max-width: 500px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    animation: hubPulse 4s ease-in-out infinite;
+    /* Breathing Glow */
+}
+
+@keyframes hubPulse {
+
+    0%,
+    100% {
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        border-color: var(--border);
+    }
+
+    50% {
+        box-shadow: 0 20px 60px rgba(124, 58, 237, 0.25);
+        border-color: var(--text-accent);
+    }
 }
 
 .hub-center h2 {
@@ -2267,7 +2283,8 @@ main {
     font-size: 3rem;
     margin-bottom: 1.5rem;
     display: inline-block;
-    filter: drop-shadow(0 0 20px rgba(234, 179, 8, 0.3));
+    filter: drop-shadow(0 0 20px var(--text-accent));
+    /* Theme Purple Glow */
 }
 
 .spoke-side {
@@ -2290,6 +2307,36 @@ main {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
     position: relative;
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: floatSpoke 6s ease-in-out infinite;
+}
+
+/* Staggered Floating */
+.spoke-side .spoke-item:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.spoke-side .spoke-item:nth-child(2) {
+    animation-delay: 1.5s;
+}
+
+.spoke-side.right .spoke-item:nth-child(1) {
+    animation-delay: 0.75s;
+}
+
+.spoke-side.right .spoke-item:nth-child(2) {
+    animation-delay: 2.25s;
+}
+
+@keyframes floatSpoke {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-12px);
+    }
 }
 
 .spoke-item:hover {
@@ -2322,7 +2369,10 @@ main {
     stroke-width: 2;
     opacity: 0.3;
     stroke-dasharray: 10;
-    animation: dashFlow 20s linear infinite;
+    animation: dashFlow 8s linear infinite;
+    /* Faster Flow */
+    filter: drop-shadow(0 0 5px var(--text-accent));
+    /* Glowing Lines */
 }
 
 @keyframes dashFlow {
@@ -2348,14 +2398,18 @@ main {
     background: var(--bg-surface);
     border: 1px solid var(--border);
     border-radius: 12px;
-    padding: 1.5rem;
+    padding: 0;
     margin-bottom: 1rem;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .faq-item:hover {
-    border-color: var(--border-hover);
+    border-color: var(--text-accent);
+    transform: scale(1.015);
+    background: var(--bg-surface-hover);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    z-index: 10;
 }
 
 .faq-item[open] {
@@ -2367,8 +2421,10 @@ main {
     color: var(--text-primary);
     list-style: none;
     position: relative;
-    padding-right: 2rem;
+    padding: 1.5rem;
+    padding-right: 3.5rem;
     font-size: 1.05rem;
+    outline: none;
 }
 
 .faq-item summary::-webkit-details-marker {
@@ -2378,7 +2434,7 @@ main {
 .faq-item summary::after {
     content: '+';
     position: absolute;
-    right: 0;
+    right: 1.5rem;
     top: 50%;
     transform: translateY(-50%);
     font-size: 1.5rem;
@@ -2393,10 +2449,10 @@ main {
 
 .faq-item p {
     color: var(--text-secondary);
-    margin-top: 1rem;
+    margin-top: 0;
     line-height: 1.6;
     font-size: 0.95rem;
-    padding-right: 1rem;
+    padding: 0 1.5rem 1.5rem 1.5rem;
 }
 
 /* --- Minimal CTA Section --- */
@@ -2529,7 +2585,7 @@ main {
         display: flex;
         justify-content: center;
         left: 0;
-        right: 0;
+        right: 1.5rem;
         padding: 0 1rem;
     }
 
@@ -2755,4 +2811,383 @@ main {
         overflow: hidden;
         /* Clip SVG overflow */
     }
+}
+
+/* Scroll Animations */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+    will-change: opacity, transform;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- Partner Logos Marquee --- */
+.logo-marquee {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.logo-marquee-content {
+    display: flex;
+    white-space: nowrap;
+    gap: var(--space-8);
+    animation: scroll-logos 40s linear infinite;
+    width: max-content;
+    will-change: transform;
+}
+
+.trust-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    padding: 0 1rem;
+    flex-shrink: 0;
+    filter: grayscale(1);
+    opacity: 0.6;
+    transition: all 0.3s;
+}
+
+.trust-logo:hover {
+    filter: grayscale(0);
+    opacity: 1;
+    color: var(--text-primary);
+}
+
+.trust-logo svg {
+    width: 24px;
+    height: 24px;
+}
+
+@keyframes scroll-logos {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* Pause on hover for accessibility */
+.logo-marquee:hover .logo-marquee-content {
+    animation-play-state: paused;
+}
+
+/* --- Engineering Track Cards (Glow & Icons) --- */
+.card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    /* Vital for glow containment */
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.card:hover {
+    border-color: var(--text-accent);
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+}
+
+/* Glow Effect Overlay */
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* Radial Gradient tracking mouse variables */
+    background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+            rgba(124, 58, 237, 0.15),
+            transparent 40%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.card:hover::before {
+    opacity: 1;
+}
+
+/* Content Z-Index to sit above glow */
+.card>* {
+    position: relative;
+    z-index: 1;
+}
+
+/* Track Icons */
+.card-icon-wrapper {
+    margin-bottom: 1.5rem;
+}
+
+.track-icon {
+    width: 48px;
+    height: 48px;
+    color: var(--text-secondary);
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.card:hover .track-icon {
+    color: var(--text-accent);
+    transform: scale(1.1);
+}
+
+/* --- Showcase Wireframes & Metrics --- */
+/* Browser Header */
+.mock-header {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    width: 100%;
+}
+
+.mock-address {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 0.6rem;
+    color: var(--text-secondary);
+    margin-left: 1rem;
+    flex: 1;
+    text-align: center;
+    font-family: monospace;
+}
+
+/* Skeleton UI Base */
+.wireframe-ui {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.wf-sidebar {
+    width: 20%;
+    height: 80%;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+}
+
+.wf-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.wf-hero {
+    width: 100%;
+    height: 30%;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.wf-row {
+    display: flex;
+    gap: 0.5rem;
+    height: 40%;
+}
+
+.wf-box {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+}
+
+.wf-icon-overlay {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    font-size: 2.5rem;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+/* Doc/Notion UI */
+.wf-doc {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.wf-line {
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    width: 100%;
+}
+
+.wf-line.title {
+    height: 12px;
+    width: 60%;
+    background: rgba(255, 255, 255, 0.2);
+    margin-bottom: 0.5rem;
+}
+
+.wf-line.short {
+    width: 40%;
+}
+
+.wf-img {
+    height: 60px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    margin: 0.5rem 0;
+}
+
+/* Mini Charts */
+.chart-mini {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 60px;
+    width: 80px;
+}
+
+.bar {
+    width: 100%;
+    background: var(--text-accent);
+    border-radius: 2px 2px 0 0;
+    opacity: 0.7;
+}
+
+/* Mini Product */
+.product-card-mini {
+    width: 60px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    padding: 6px;
+}
+
+.prod-img {
+    width: 100%;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    margin-bottom: 4px;
+}
+
+.prod-line {
+    width: 80%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    margin-bottom: 4px;
+}
+
+.prod-btn {
+    width: 100%;
+    height: 8px;
+    background: var(--text-accent);
+    border-radius: 2px;
+}
+
+/* Badges & Meta */
+.showcase-meta-row {
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.meta-right {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.badge-glass {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 99px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary);
+}
+
+.badge-live {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 99px;
+    background: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    font-weight: 600;
+}
+
+.showcase-meta-compact {
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.meta-tags {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+/* --- Spotlight Glow Effect & Icons (Added) --- */
+
+/* Spotlight Glow Effect */
+.spotlight-card {
+    position: relative;
+    overflow: hidden;
+    /* Ensure glow doesn't spill out */
+    background: var(--bg-surface);
+    /* Ensure solid background for content */
+    z-index: 1;
+}
+
+/* The Glow Overlay */
+.spotlight-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(124, 58, 237, 0.15), transparent 40%);
+    opacity: 1;
+    /* Always visible, gradient moves */
+    transition: opacity 0.5s;
+    pointer-events: none;
+    z-index: -1;
+    /* Behind text but over bg */
+}
+
+/* Card Icon Styling */
+.card-icon svg {
+    width: 100%;
+    height: 100%;
+    stroke-width: 1.5;
+    filter: drop-shadow(0 4px 12px rgba(124, 58, 237, 0.3));
+    transition: transform 0.3s ease;
+}
+
+.spotlight-card:hover .card-icon svg {
+    transform: scale(1.1);
+    stroke: var(--text-accent);
 }

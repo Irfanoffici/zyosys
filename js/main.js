@@ -15,8 +15,93 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize Smooth Scroll
     initSmoothScroll();
 
+    // Initialize Scroll Animations
+    initScrollAnimations();
+
     initTechTooltips();
+    initNewsletter();
 });
+
+// --- Feature: Footer Newsletter (Async Simulation) ---
+function initNewsletter() {
+    const input = document.querySelector('.newsletter-input');
+    const btn = document.querySelector('.newsletter-btn');
+    // Save original button content for reset
+    const originalContent = btn ? btn.innerHTML : '';
+
+    if (input && btn) {
+        const handleSubscribe = async (e) => {
+            if (e) e.preventDefault();
+            const email = input.value.trim();
+
+            if (!email || !/\S+@\S+\.\S+/.test(email)) {
+                input.focus();
+                input.style.borderColor = '#ef4444'; // Red ERROR border
+                return;
+            }
+
+            // 1. UI: Loading State
+            btn.innerHTML = '<span class="loader"></span>'; // Simple loader or "..."
+            btn.style.opacity = '0.7';
+            btn.style.pointerEvents = 'none'; // Lock button
+            input.disabled = true; // Lock input
+            input.style.borderColor = ''; // Reset border
+
+            try {
+                // 2. Real Network Request (Formspree)
+                const response = await fetch('https://formspree.io/f/mojnakzj', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email: email })
+                });
+
+                if (response.ok) {
+                    // 3. UI: Success State
+                    btn.innerHTML = '✓';
+                    btn.style.background = '#10b981'; // Green
+                    btn.style.color = 'white';
+                    btn.style.opacity = '1';
+
+                    input.value = ''; // Clear input
+                    input.placeholder = 'Subscribed!';
+
+                    // Console Success
+                    console.log(`[Newsletter] Sent to Formspree: ${email}`);
+                } else {
+                    throw new Error('Formspree submission failed');
+                }
+
+            } catch (error) {
+                console.error(error);
+                btn.innerHTML = '❌'; // Error state
+                btn.style.background = '#ef4444';
+            } finally {
+                // 5. Reset UI after delay
+                setTimeout(() => {
+                    btn.innerHTML = originalContent;
+                    btn.style.background = ''; // Default
+                    btn.style.color = '';      // Default
+                    btn.style.pointerEvents = 'all';
+                    input.disabled = false;
+                    input.placeholder = 'email@domain.com'; // Restore placeholder
+                }, 3000);
+            }
+        };
+
+        btn.addEventListener('click', handleSubscribe);
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleSubscribe(e);
+        });
+
+        // Clear Error on typing
+        input.addEventListener('input', () => {
+            input.style.borderColor = '';
+        });
+    }
+}
 
 // --- Feature: Dynamic Tech Tooltips ---
 // --- Feature: Dynamic Tech Tooltips (Optimized) ---
@@ -167,19 +252,26 @@ function renderTracks() {
 
     ZEOSYS_CONFIG.courses.forEach(course => {
         const card = document.createElement('div');
-        card.className = 'card';
+        card.className = 'card spotlight-card'; // Added spotlight-card class
 
         // Chips HTML
         const techHtml = course.tech.map(t =>
             `<span class="chip" title="${t.desc}">${t.name}</span>`
         ).join('');
 
+        // Icon HTML (New)
+        const iconHtml = course.icon ?
+            `<div class="card-icon" style="color: var(--text-accent); margin-bottom: 1.5rem; width: 48px; height: 48px;">
+                ${course.icon}
+            </div>` : '';
+
         card.innerHTML = `
-            <div style="font-size: 0.8rem; color: var(--text-accent); font-weight: 700; margin-bottom: 0.5rem; text-transform: uppercase;">
+            ${iconHtml}
+            <div style="font-size: 0.8rem; color: var(--text-accent); font-weight: 700; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.1em;">
                 ${course.duration}
             </div>
-            <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--text-primary); transition: color 0.2s;">${course.title}</h3>
-            <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.5rem; line-height: 1.6;">${course.outcome}</p>
+            <h3 style="font-size: 1.75rem; margin-bottom: 0.75rem; color: var(--text-primary); transition: color 0.2s;">${course.title}</h3>
+            <p style="color: var(--text-secondary); font-size: 1rem; margin-bottom: 1.5rem; line-height: 1.6; flex-grow: 1;">${course.outcome}</p>
             <div style="margin-top: auto; display: flex; flex-direction: column; gap: 1rem;">
                 <div>${techHtml}</div>
                 <!-- WhatsApp Enrollment Integration -->
@@ -187,7 +279,7 @@ function renderTracks() {
             </div>
         `;
 
-        // Simple Interaction
+        // Simple Interaction (Text Color)
         card.addEventListener('mouseenter', () => {
             card.querySelector('h3').style.color = 'var(--text-accent)';
         });
@@ -199,7 +291,30 @@ function renderTracks() {
     });
 
     container.appendChild(fragment);
+
+    // Initialize Spotlight Effect
+    initSpotlightEffect();
 }
+
+// --- Feature: Spotlight (Glow) Effect ---
+function initSpotlightEffect() {
+    const container = document.getElementById('tracks-container');
+    if (!container) return;
+
+    container.addEventListener('mousemove', (e) => {
+        const cards = document.querySelectorAll('.spotlight-card');
+
+        cards.forEach(card => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+        });
+    });
+}
+
 
 // Helper: Generate WhatsApp Link
 function getWhatsappLink(courseTitle) {
@@ -242,6 +357,27 @@ function initSmoothScroll() {
     window.lenis = lenis;
 }
 
+function initScrollAnimations() {
+    // Auto-add reveal class to key elements
+    const targets = document.querySelectorAll('section:not(.hero), .feature-card, .stat-item, .hub-container, .tech-card-dark, .showcase-card, .testimonial-card, .faq-item');
+    targets.forEach(el => el.classList.add('reveal'));
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                // Optional: Stop observing once revealed
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px" // Trigger slightly before bottom
+    });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}
+
 // Advanced UI/UX Init
 function initAdvancedUI() {
     // 1. Scroll Guide
@@ -254,6 +390,8 @@ function initAdvancedUI() {
             progressBar.style.height = `${scrollPercent}%`;
         });
     }
+
+
 
     // 2. Metrics Counter Animation
     const metrics = document.querySelectorAll('.metric-number');
