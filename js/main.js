@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initTheme();
     renderTracks();
     initAdvancedUI();
+    initShowcaseTilt(); // Added 3D Tilt
 
     if (typeof gsap !== 'undefined') {
         // Parallax is handled inside initAdvancedUI or existing blocks
@@ -323,6 +324,54 @@ function getWhatsappLink(courseTitle) {
     return `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
 }
 
+// --- Feature: 3D Tilt Effect (Showcase) ---
+// --- Feature: 3D Tilt Effect (Showcase) ---
+function initShowcaseTilt() {
+    // Disable on touch devices or small screens for performance & usability
+    if (window.matchMedia('(hover: none)').matches || window.innerWidth <= 900) return;
+
+    const cards = document.querySelectorAll('.showcase-card');
+
+    cards.forEach(card => {
+        let isHovering = false;
+
+        card.addEventListener('mouseenter', () => {
+            isHovering = true;
+            // Remove the reset class immediately so movement is instant
+            card.classList.remove('animate-reset');
+        });
+
+        card.addEventListener('mousemove', (e) => {
+            if (!isHovering) return;
+
+            // Use rAF to decouple from mouse event rate
+            requestAnimationFrame(() => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                // Calculate percentage (0 to 1)
+                const xPct = x / rect.width;
+                const yPct = y / rect.height;
+
+                // Calculate rotation (-15deg to 15deg)
+                const rotateX = (0.5 - yPct) * 20;
+                const rotateY = (xPct - 0.5) * 20;
+
+                // Apply transform instantly (transition is removed in CSS)
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+            });
+        });
+
+        card.addEventListener('mouseleave', () => {
+            isHovering = false;
+            // Add reset class for smooth return
+            card.classList.add('animate-reset');
+            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+        });
+    });
+}
+
 // --- Feature: Advanced Smooth Scroll (Lenis) ---
 function initSmoothScroll() {
     if (typeof Lenis === 'undefined') return;
@@ -380,15 +429,23 @@ function initScrollAnimations() {
 
 // Advanced UI/UX Init
 function initAdvancedUI() {
-    // 1. Scroll Guide
+    // 1. Scroll Guide (Optimized)
     const progressBar = document.getElementById('scroll-progress');
     if (progressBar) {
+        let ticking = false;
+
         window.addEventListener('scroll', () => {
-            const scrollTop = window.scrollY;
-            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const scrollPercent = (scrollTop / docHeight) * 100;
-            progressBar.style.height = `${scrollPercent}%`;
-        });
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const scrollTop = window.scrollY;
+                    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                    const scrollPercent = (scrollTop / docHeight) * 100;
+                    progressBar.style.height = `${scrollPercent}%`;
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }, { passive: true });
     }
 
 
@@ -459,14 +516,22 @@ function initAdvancedUI() {
         });
     } else {
         // Fallback
+        // Fallback (Optimized)
+        let ticking = false;
         window.addEventListener('scroll', () => {
-            const scrolled = window.scrollY;
-            orbs.forEach(orb => {
-                const speed = orb.getAttribute('data-speed') || 0.05;
-                const yPos = -(scrolled * speed);
-                orb.style.transform = `translateY(${yPos}px)`;
-            });
-        });
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const scrolled = window.scrollY;
+                    orbs.forEach(orb => {
+                        const speed = orb.getAttribute('data-speed') || 0.05;
+                        const yPos = -(scrolled * speed);
+                        orb.style.transform = `translateY(${yPos}px)`;
+                    });
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }, { passive: true });
     }
 
     // 4. GSAP Parallax Footer Reveal

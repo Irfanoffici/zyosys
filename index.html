@@ -50,8 +50,11 @@
     }
     </script>
 
-    <!-- Resource Hints: Removed aggressive preloads to prevent bandwidth contention -->
+    <!-- Resource Hints -->
     <link rel="stylesheet" href="css/style.css">
+
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
 
     <!-- GSAP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
@@ -508,41 +511,70 @@
             <h2 class="text-gradient" style="font-size: 3rem; margin-bottom: 3rem; line-height: 1.1;">The portfolio of
                 choice <br> when it matters</h2>
             <div class="showcase-grid">
-                <div class="showcase-card large">
+                <div class="showcase-card large" data-tilt>
                     <div class="showcase-preview" style="background: linear-gradient(45deg, #1e1e24, #2d2d35);">
                         <div class="mock-browser">
                             <div class="mock-dots"><span></span><span></span><span></span></div>
                             <div class="mock-content">
-                                <span style="font-size: 2rem;">🎙️</span>
+                                <span style="font-size: 2.5rem; margin-bottom: 1rem; display: block;">🎙️</span>
                                 <h3>Audible Clone</h3>
-                                <p>Next.js Audio Streaming</p>
+                                <p style="font-size: 0.9rem; opacity: 0.7;">Next.js Audio Streaming</p>
+                                <!-- Micro-Animation: Audio Bars -->
+                                <div class="audio-visualizer">
+                                    <div class="bar"></div>
+                                    <div class="bar"></div>
+                                    <div class="bar"></div>
+                                    <div class="bar"></div>
+                                    <div class="bar"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="showcase-meta"><span>Audio Engine</span><span>Next.js</span></div>
                 </div>
-                <div class="showcase-card">
+
+                <div class="showcase-card" data-tilt>
                     <div class="showcase-preview" style="background: linear-gradient(135deg, #0f172a, #1e293b);">
-                        <div class="mock-simple"><span style="font-size: 2rem;">📊</span>
+                        <div class="mock-simple">
+                            <!-- Micro-Animation: Animated Chart -->
+                            <div class="chart-loader">
+                                <div class="chart-bar"></div>
+                                <div class="chart-bar"></div>
+                                <div class="chart-bar"></div>
+                            </div>
                             <h3>SaaS Analytics</h3>
                         </div>
                     </div>
+                    <div class="showcase-meta-compact">
+                        <div class="meta-tags"><span class="chip">Postgres</span><span class="chip">D3.js</span></div>
+                    </div>
                 </div>
-                <div class="showcase-card">
+
+                <div class="showcase-card" data-tilt>
                     <div class="showcase-preview" style="background: linear-gradient(135deg, #2e1065, #4c1d95);">
-                        <div class="mock-simple"><span style="font-size: 2rem;">🛍️</span>
+                        <div class="mock-simple">
+                            <!-- Micro-Animation: Floating Item -->
+                            <div class="floating-shoe">
+                                <span
+                                    style="font-size: 3rem; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));">👟</span>
+                            </div>
                             <h3>Nike Store</h3>
                         </div>
                     </div>
+                    <div class="showcase-meta-compact">
+                        <div class="meta-tags"><span class="chip">Redux</span><span class="chip">Stripe</span></div>
+                    </div>
                 </div>
-                <div class="showcase-card large">
+
+                <div class="showcase-card large" data-tilt>
                     <div class="showcase-preview" style="background: linear-gradient(45deg, #171717, #262626);">
                         <div class="mock-browser">
                             <div class="mock-dots"><span></span><span></span><span></span></div>
                             <div class="mock-content">
                                 <span style="font-size: 2rem;">📝</span>
                                 <h3>Notion Clone</h3>
-                                <p>Real-time Collab</p>
+                                <p style="font-size: 0.9rem; opacity: 0.7;">Real-time Collaborative Editor <span
+                                        class="cursor-blink">|</span></p>
                             </div>
                         </div>
                     </div>
