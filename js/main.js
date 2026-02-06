@@ -3,6 +3,7 @@
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
     initTheme();
+    initDraggableToggle(); // New Feature
     renderTracks();
     initAdvancedUI();
     initShowcaseTilt(); // Added 3D Tilt
@@ -254,8 +255,134 @@ function initTheme() {
         setTheme(next);
     };
 
-    if (toggleBtnFixed) toggleBtnFixed.addEventListener('click', toggleTheme);
+    if (toggleBtnFixed) {
+        toggleBtnFixed.addEventListener('click', (e) => {
+            // Prevent toggle if it was a drag action
+            if (toggleBtnFixed.dataset.isDragging === 'true') {
+                e.preventDefault();
+                e.stopPropagation();
+                return;
+            }
+            toggleTheme();
+        });
+    }
     if (toggleBtnNav) toggleBtnNav.addEventListener('click', toggleTheme);
+}
+
+// --- Feature: Draggable Toggle ---
+function initDraggableToggle() {
+    const el = document.getElementById('theme-toggle');
+    if (!el) return;
+
+    let isDragging = false;
+    let startX, startY, initialLeft, initialTop;
+    let hasMoved = false;
+
+    // Load saved position
+    const savedPos = localStorage.getItem('themeTogglePos');
+    if (savedPos) {
+        const { x, y } = JSON.parse(savedPos);
+        // Basic boundary check (optional, but good if window resized significantly)
+        const maxX = window.innerWidth - el.offsetWidth;
+        const maxY = window.innerHeight - el.offsetHeight;
+
+        // Clamp to current viewport
+        const clampX = Math.min(Math.max(0, x), maxX);
+        const clampY = Math.min(Math.max(0, y), maxY);
+
+        el.style.left = `${clampX}px`;
+        el.style.top = `${clampY}px`;
+        // Ensure we clear bottom/right if they were set by CSS
+        el.style.bottom = 'auto';
+        el.style.right = 'auto';
+    }
+
+    const onMouseDown = (e) => {
+        // Only left click
+        if (e.type === 'mousedown' && e.button !== 0) return;
+
+        isDragging = true;
+        hasMoved = false;
+        el.style.transition = 'none'; // Disable transition for direct follow
+        el.dataset.isDragging = 'false'; // Reset flag
+
+        const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+        const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+
+        startX = clientX;
+        startY = clientY;
+
+        const rect = el.getBoundingClientRect();
+        initialLeft = rect.left;
+        initialTop = rect.top;
+
+        // Attach global listeners
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', onMouseUp);
+        document.addEventListener('touchmove', onMouseMove, { passive: false });
+        document.addEventListener('touchend', onMouseUp);
+    };
+
+    const onMouseMove = (e) => {
+        if (!isDragging) return;
+
+        e.preventDefault(); // Prevent scrolling on touch
+
+        const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+        const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+
+        const dx = clientX - startX;
+        const dy = clientY - startY;
+
+        // If moved more than small threshold, consider it a drag
+        if (Math.abs(dx) > 3 || Math.abs(dy) > 3) {
+            hasMoved = true;
+            el.dataset.isDragging = 'true';
+        }
+
+        let newLeft = initialLeft + dx;
+        let newTop = initialTop + dy;
+
+        // Boundaries
+        const maxLeft = window.innerWidth - el.offsetWidth;
+        const maxTop = window.innerHeight - el.offsetHeight;
+
+        newLeft = Math.min(Math.max(0, newLeft), maxLeft);
+        newTop = Math.min(Math.max(0, newTop), maxTop);
+
+        el.style.left = `${newLeft}px`;
+        el.style.top = `${newTop}px`;
+    };
+
+    const onMouseUp = () => {
+        if (!isDragging) return;
+        isDragging = false;
+
+        // Re-enable transition for hover effects
+        el.style.transition = '';
+
+        // Save position
+        const rect = el.getBoundingClientRect();
+        const pos = { x: rect.left, y: rect.top };
+        localStorage.setItem('themeTogglePos', JSON.stringify(pos));
+
+        // Cleanup
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
+        document.removeEventListener('touchmove', onMouseMove);
+        document.removeEventListener('touchend', onMouseUp);
+
+        // Note: The click event fire AFTER mouseup. 
+        // We rely on el.dataset.isDragging check in the click handler.
+
+        // Small timeout to reset the dragging flag so subsequent legitimate clicks work
+        setTimeout(() => {
+            el.dataset.isDragging = 'false';
+        }, 50);
+    };
+
+    el.addEventListener('mousedown', onMouseDown);
+    el.addEventListener('touchstart', onMouseDown, { passive: false });
 }
 
 function renderTracks() {

@@ -407,10 +407,20 @@ h4 {
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
+    cursor: grab;
+    /* Indicates draggable */
     z-index: 1000;
-    transition: background-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition: background-color 0.3s, border-color 0.3s, transform 0.1s;
+    /* Reduced transform lag */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    touch-action: none;
+    /* Prevent scrolling while dragging */
+    user-select: none;
+}
+
+.theme-toggle:active {
+    cursor: grabbing;
+    transform: scale(0.95);
 }
 
 .theme-toggle:hover {
