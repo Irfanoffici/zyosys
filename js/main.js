@@ -94,7 +94,8 @@ function initTechTooltips() {
         const winW = window.innerWidth;
         const winH = window.innerHeight;
         const tipRect = tooltip.getBoundingClientRect();
-
+        const tipW = tipRect.width || 200;
+        const tipH = tipRect.height || 50;
         let finalX = x + offsetX;
         let finalY = y + offsetY;
         if (finalX + tipW > winW - pad) {
@@ -199,10 +200,21 @@ function initDraggableToggle() {
         const maxY = window.innerHeight - el.offsetHeight;
         const clampX = Math.min(Math.max(0, x), maxX);
         const clampY = Math.min(Math.max(0, y), maxY);
-        el.style.left = `${clampX}px`;
-        el.style.top = `${clampY}px`;
-        el.style.bottom = 'auto';
-        el.style.right = 'auto';
+        // Use transform for positioning to avoid layout thrashing
+        el.style.transform = `translate3d(${clampX}px, ${clampY}px, 0)`;
+        el.style.left = '0';
+        el.style.top = '0';
+        // Store current position for drag calculations
+        el.dataset.posX = clampX;
+        el.dataset.posY = clampY;
+    } else {
+        // Initialize default position
+        const rect = el.getBoundingClientRect();
+        el.dataset.posX = rect.left;
+        el.dataset.posY = rect.top;
+        el.style.left = '0';
+        el.style.top = '0';
+        el.style.transform = `translate3d(${rect.left}px, ${rect.top}px, 0)`;
     }
     const onMouseDown = (e) => {
         if (e.type === 'mousedown' && e.button !== 0) return;
@@ -214,9 +226,14 @@ function initDraggableToggle() {
         const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
         startX = clientX;
         startY = clientY;
-        const rect = el.getBoundingClientRect();
-        initialLeft = rect.left;
-        initialTop = rect.top;
+        // Get current transform values or default to computed style
+        const transform = new WebKitCSSMatrix(window.getComputedStyle(el).transform);
+        initialLeft = transform.m41;
+        initialTop = transform.m42;
+
+        // Update stored position
+        el.dataset.posX = initialLeft;
+        el.dataset.posY = initialTop;
         document.addEventListener('mousemove', onMouseMove);
         document.addEventListener('mouseup', onMouseUp);
         document.addEventListener('touchmove', onMouseMove, { passive: false });
@@ -239,15 +256,17 @@ function initDraggableToggle() {
         const maxTop = window.innerHeight - el.offsetHeight;
         newLeft = Math.min(Math.max(0, newLeft), maxLeft);
         newTop = Math.min(Math.max(0, newTop), maxTop);
-        el.style.left = `${newLeft}px`;
-        el.style.top = `${newTop}px`;
+
+        el.style.transform = `translate3d(${newLeft}px, ${newTop}px, 0)`;
+        el.dataset.posX = newLeft;
+        el.dataset.posY = newTop;
     };
     const onMouseUp = () => {
         if (!isDragging) return;
         isDragging = false;
         el.style.transition = '';
         const rect = el.getBoundingClientRect();
-        const pos = { x: rect.left, y: rect.top };
+        const pos = { x: parseFloat(el.dataset.posX), y: parseFloat(el.dataset.posY) };
         localStorage.setItem('themeTogglePos', JSON.stringify(pos));
         document.removeEventListener('mousemove', onMouseMove);
         document.removeEventListener('mouseup', onMouseUp);
@@ -354,10 +373,8 @@ function initSmoothScroll() {
         direction: 'vertical',
         gestureDirection: 'vertical',
         smooth: true,
-        smooth: true,
         mouseMultiplier: 0.8,
         smoothTouch: false,
-        touchMultiplier: 2,
         touchMultiplier: 2,
     });
     if (typeof ScrollTrigger !== 'undefined') {
@@ -432,8 +449,6 @@ function initAdvancedUI() {
             });
         } else {
             let current = 0;
-        } else {
-            let current = 0;
             const duration = 2000;
             const step = target / (duration / 16);
             const timer = setInterval(() => {
@@ -491,7 +506,7 @@ function initAdvancedUI() {
                 {
                     yPercent: -50,
                     opacity: 1,
-                    filter: "blur(20px) brightness(0.5)"
+                    filter: "blur(20px) brightness(0.5)" // Restored blur effect
                 },
                 {
                     yPercent: 0,
