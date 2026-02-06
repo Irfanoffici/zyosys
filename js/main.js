@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
     initTheme();
-    initDraggableToggle(); 
+    initDraggableToggle();
     renderTracks();
     initAdvancedUI();
-    initShowcaseTilt(); 
+    initShowcaseTilt();
     if (typeof gsap !== 'undefined') {
     }
     initSmoothScroll();
@@ -24,7 +24,7 @@ function initNewsletter() {
                 input.style.borderColor = '#ef4444';
                 return;
             }
-            btn.innerHTML = '<span class="loader"></span>';            btn.style.opacity = '0.7';
+            btn.innerHTML = '<span class="loader"></span>';
             btn.style.opacity = '0.7';
             btn.style.pointerEvents = 'none';
             input.disabled = true;
@@ -50,18 +50,14 @@ function initNewsletter() {
                 }
             } catch (error) {
                 console.error(error);
-            } catch (error) {
-                console.error(error);
                 btn.innerHTML = '❌';
                 btn.style.background = '#ef4444';
             } finally {
                 setTimeout(() => {
                     btn.innerHTML = originalContent;
-                    btn.innerHTML = originalContent;
                     btn.style.background = '';
                     btn.style.color = '';
                     btn.style.pointerEvents = 'all';
-                    input.disabled = false;
                     input.disabled = false;
                     input.placeholder = 'email@domain.com';
                 }, 3000);
@@ -98,10 +94,7 @@ function initTechTooltips() {
         const winW = window.innerWidth;
         const winH = window.innerHeight;
         const tipRect = tooltip.getBoundingClientRect();
-        const winH = window.innerHeight;
-        const tipRect = tooltip.getBoundingClientRect();
-        const tipW = tipRect.width || 200;
-        const tipH = tipRect.height || 50;
+
         let finalX = x + offsetX;
         let finalY = y + offsetY;
         if (finalX + tipW > winW - pad) {
@@ -150,8 +143,8 @@ function initTechTooltips() {
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('/sw.js')
-            .then(reg => {  })
-            .catch(err => {  });
+            .then(reg => { })
+            .catch(err => { });
     });
 }
 function initTheme() {
@@ -215,10 +208,8 @@ function initDraggableToggle() {
         if (e.type === 'mousedown' && e.button !== 0) return;
         isDragging = true;
         hasMoved = false;
-        isDragging = true;
-        hasMoved = false;
         el.style.transition = 'none';
-        el.dataset.isDragging = 'false'; 
+        el.dataset.isDragging = 'false';
         const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
         const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
         startX = clientX;
@@ -231,8 +222,6 @@ function initDraggableToggle() {
         document.addEventListener('touchmove', onMouseMove, { passive: false });
         document.addEventListener('touchend', onMouseUp);
     };
-    const onMouseMove = (e) => {
-        if (!isDragging) return;
     const onMouseMove = (e) => {
         if (!isDragging) return;
         e.preventDefault();
@@ -277,10 +266,7 @@ function renderTracks() {
     const fragment = document.createDocumentFragment();
     ZYOSYS_CONFIG.courses.forEach(course => {
         const card = document.createElement('div');
-    ZYOSYS_CONFIG.courses.forEach(course => {
-        const card = document.createElement('div');
         card.className = 'card spotlight-card';
-        const techHtml = course.tech.map(t =>
         const techHtml = course.tech.map(t =>
             `<span class="chip" title="${t.desc}">${t.name}</span>`
         ).join('');
@@ -371,7 +357,7 @@ function initSmoothScroll() {
         smooth: true,
         mouseMultiplier: 0.8,
         smoothTouch: false,
-        touchMultiplier: 2, 
+        touchMultiplier: 2,
         touchMultiplier: 2,
     });
     if (typeof ScrollTrigger !== 'undefined') {
@@ -401,7 +387,7 @@ function initScrollAnimations() {
         });
     }, {
         threshold: 0.1,
-        rootMargin: "0px 0px -50px 0px" 
+        rootMargin: "0px 0px -50px 0px"
     });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 }
@@ -450,7 +436,6 @@ function initAdvancedUI() {
             let current = 0;
             const duration = 2000;
             const step = target / (duration / 16);
-            const timer = setInterval(() => { 
             const timer = setInterval(() => {
                 current += step;
                 if (current >= target) {
@@ -471,8 +456,6 @@ function initAdvancedUI() {
                 ease: "none",
                 scrollTrigger: {
                     trigger: document.body,
-                    start: "top top",
-                    end: "bottom bottom",
                     start: "top top",
                     end: "bottom bottom",
                     scrub: 0
@@ -507,14 +490,10 @@ function initAdvancedUI() {
             gsap.fromTo(footerBg,
                 {
                     yPercent: -50,
-                {
-                    yPercent: -50,
                     opacity: 1,
                     filter: "blur(20px) brightness(0.5)"
                 },
                 {
-                    yPercent: 0,
-                    opacity: 1,
                     yPercent: 0,
                     opacity: 1,
                     filter: "blur(0px) brightness(1)",
