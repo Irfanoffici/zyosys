@@ -2,6 +2,8 @@
 
 > **Engineering Your Future.** A premium, high-performance landing page for the next generation of software engineering training.
 
+**Live Site:** [zyosys.g7a.in](https://zyosys.g7a.in)
+
 ![Zyosys Banner](https://placehold.co/1200x600/0a0a0a/7c3aed?text=Zyosys+Technologies)
 
 ## 🚀 Overview
@@ -83,3 +85,4 @@ The site features a responsive "Dynamic Island" style navigation bar on mobile d
 ---
 
 **© 2026 Zyosys Technologies.** All rights reserved.
+Developed by [Mohammed Irfan](mailto:mailtomohemmedirfank@gmail.com).

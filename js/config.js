@@ -3,7 +3,7 @@ const ZYOSYS_CONFIG = {
         name: "Zyosys",
         slogan: "Learn. Lead. Level up.",
         whatsapp: "919876543210",
-        email: "admissions@zyosys.com"
+        email: "admissions@zyosys.g7a.in"
     },
     courses: [
         {
