@@ -106,14 +106,18 @@ function initNewsletter() {
 
 // --- Feature: Dynamic Tech Tooltips ---
 // --- Feature: Dynamic Tech Tooltips (Optimized) ---
+// --- Feature: Dynamic Tech Tooltips (Optimized) ---
 function initTechTooltips() {
     const skills = document.querySelectorAll('.skill-item');
     if (!skills.length) return;
 
     // Create Tooltip Element
-    const tooltip = document.createElement('div');
-    tooltip.className = 'tech-tooltip';
-    document.body.appendChild(tooltip);
+    let tooltip = document.querySelector('.tech-tooltip');
+    if (!tooltip) {
+        tooltip = document.createElement('div');
+        tooltip.className = 'tech-tooltip';
+        document.body.appendChild(tooltip);
+    }
 
     // GSAP Setup
     let xSet, ySet;
@@ -124,14 +128,55 @@ function initTechTooltips() {
         ySet = gsap.quickSetter(tooltip, "y", "px");
     }
 
+    const updatePosition = (x, y) => {
+        // Offset for cursor
+        const offsetX = 15;
+        const offsetY = 15;
+
+        // Viewport Constraints
+        const pad = 10;
+        const winW = window.innerWidth;
+        const winH = window.innerHeight;
+        const tipRect = tooltip.getBoundingClientRect();
+        const tipW = tipRect.width || 200; // Estimate if hidden
+        const tipH = tipRect.height || 50;
+
+        let finalX = x + offsetX;
+        let finalY = y + offsetY;
+
+        // Right edge check
+        if (finalX + tipW > winW - pad) {
+            finalX = x - tipW - offsetX;
+        }
+
+        // Bottom edge check
+        if (finalY + tipH > winH - pad) {
+            finalY = y - tipH - offsetY;
+        }
+
+        if (xSet && ySet) {
+            xSet(finalX);
+            ySet(finalY);
+        } else {
+            tooltip.style.transform = `translate(${finalX}px, ${finalY}px)`;
+        }
+    };
+
     skills.forEach(skill => {
         // Hover In
-        skill.addEventListener('mouseenter', () => {
+        skill.addEventListener('mouseenter', (e) => {
             const desc = skill.getAttribute('data-desc');
             if (desc) {
                 tooltip.textContent = desc;
-                tooltip.classList.add('visible');
-                isVisible = true;
+
+                // 1. Set Initial Position IMMEDIATELY before showing
+                updatePosition(e.clientX, e.clientY);
+
+                // 2. Show
+                requestAnimationFrame(() => {
+                    tooltip.classList.add('visible');
+                    isVisible = true;
+                });
             }
         });
 
@@ -139,6 +184,13 @@ function initTechTooltips() {
         skill.addEventListener('mouseleave', () => {
             tooltip.classList.remove('visible');
             isVisible = false;
+        });
+
+        // Mouse Move (updates position while visible)
+        skill.addEventListener('mousemove', (e) => {
+            if (isVisible) {
+                updatePosition(e.clientX, e.clientY);
+            }
         });
 
         // Click -> Open URL
@@ -149,44 +201,6 @@ function initTechTooltips() {
             }
         });
     });
-
-    // Follow Cursor (Constrained to Section)
-    window.addEventListener('mousemove', (e) => {
-        if (!isVisible) return;
-
-        const section = document.querySelector('.skills-section');
-        if (!section) return; // Fallback or strict
-
-        const rect = section.getBoundingClientRect();
-        const tooltipRect = tooltip.getBoundingClientRect();
-
-        let x = e.clientX + 15;
-        let y = e.clientY + 15;
-
-        // Constraint Logic: Clamp X and Y to stay within the section
-        // Math.max(min, Math.min(val, max))
-
-        // Horizontal Clamp
-        const minX = rect.left + 5; // Padding
-        const maxX = rect.right - tooltipRect.width - 5;
-        x = Math.max(minX, Math.min(x, maxX));
-
-        // Vertical Clamp
-        const minY = rect.top + 5;
-        const maxY = rect.bottom - tooltipRect.height - 5;
-        y = Math.max(minY, Math.min(y, maxY));
-
-        if (xSet && ySet) {
-            xSet(x);
-            ySet(y);
-        } else {
-            tooltip.style.left = `${x}px`;
-            tooltip.style.top = `${y}px`;
-        }
-    });
-
-    // Mobile Ease: Tap to show is tricky with hover logic, usually better to ignore on touch
-    // or rely on active state. We'll stick to hover focus for now.
 
     // Make skills look clickable
     skills.forEach(skill => skill.style.cursor = 'pointer');

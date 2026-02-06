@@ -1208,7 +1208,23 @@ footer .orb-f2 {
     margin-bottom: 5rem;
     z-index: 2;
     border: 1px solid var(--border);
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    /* Neon Pulse Animation */
+    box-shadow: 0 0 10px rgba(139, 92, 246, 0.2);
+    animation: neonPulse 3s infinite ease-in-out;
+}
+
+@keyframes neonPulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 10px rgba(139, 92, 246, 0.2), 0 0 2px rgba(139, 92, 246, 0.1);
+        border-color: var(--border);
+    }
+
+    50% {
+        box-shadow: 0 0 25px rgba(139, 92, 246, 0.5), 0 0 5px rgba(139, 92, 246, 0.3);
+        border-color: rgba(139, 92, 246, 0.5);
+    }
 }
 
 .circuit-chip span {
@@ -1216,7 +1232,6 @@ footer .orb-f2 {
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: var(--text-primary);
-    /* Fallback */
     color: var(--text-primary);
     font-weight: 700;
     letter-spacing: 0.15em;
@@ -1245,6 +1260,18 @@ footer .orb-f2 {
     }
 }
 
+@keyframes floatIcon {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
 /* Connectivity Lines */
 /* 1. Vertical Line from Chip */
 .chip-lines-bottom {
@@ -1255,7 +1282,6 @@ footer .orb-f2 {
     width: 1px;
     height: 5rem;
     background: var(--border);
-    /* Variable */
     overflow: hidden;
 }
 
@@ -1286,7 +1312,6 @@ footer .orb-f2 {
     content: '';
     position: absolute;
     top: -2rem;
-    /* The Horizontal Bus */
     left: 16.5%;
     right: 16.5%;
     height: 1px;
@@ -1308,30 +1333,52 @@ footer .orb-f2 {
     z-index: 1;
 }
 
-/* 3. Tech Cards (Themed) */
+/* 3. Tech Cards (Themed & Glassy) */
 .tech-card-dark {
-    background-color: var(--bg-surface);
+    /* Glassmorphism */
+    background: var(--bg-glass);
+    /* Use variable for theme support */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border: 1px solid var(--border);
     border-radius: 12px;
     padding: 2rem;
     text-align: left;
     position: relative;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     height: 100%;
+    overflow: hidden;
+    /* For pulse effect */
+    /* Link Styles */
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
 }
 
 .tech-card-dark:hover {
-    border-color: var(--border-hover);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-card, 0 4px 20px rgba(0, 0, 0, 0.5));
-    /* Fallback to dark shadow */
+    border-color: var(--text-accent);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px -10px rgba(124, 58, 237, 0.3), inset 0 0 20px rgba(124, 58, 237, 0.1);
+}
+
+/* Inner Glow on Hover (Before Pseudo) */
+.tech-card-dark:hover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(124, 58, 237, 0.15), transparent 70%);
+    pointer-events: none;
+    z-index: 0;
 }
 
 /* Vertical Line to Card */
 .tech-card-dark::before {
+    /* Revert to line style if not hover, wait... multiple ::before conflict. */
+    /* Use specific class logic or separate element if needed, but for now let's keep the line external or distinct */
+    /* Renaming this pseudo for the line connection to avoid conflict with hover glow */
     content: '';
     position: absolute;
     top: -2rem;
@@ -1339,6 +1386,7 @@ footer .orb-f2 {
     width: 1px;
     height: 2rem;
     background: var(--border);
+    z-index: 1;
 }
 
 .tech-card-dark::after {
@@ -1357,15 +1405,19 @@ footer .orb-f2 {
 }
 
 .tech-icon-large {
-    font-size: 2rem;
+    /* SVG Container sizing */
+    width: 48px;
+    height: 48px;
     margin-bottom: 1.5rem;
-    filter: grayscale(100%);
-    /* Start monochrome */
-    transition: filter 0.3s;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    z-index: 2;
 }
 
 .tech-card-dark:hover .tech-icon-large {
-    filter: grayscale(0%);
+    /* Bounce/Float effect */
+    animation: floatIcon 2s ease-in-out infinite;
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
 }
 
 .tech-card-dark h3 {
@@ -1700,18 +1752,19 @@ footer .orb-f2 {
 }
 
 .btn-showcase {
-    background: white;
-    color: black;
+    background: var(--text-primary);
+    color: var(--bg-body);
     padding: 1rem 2.5rem;
     border-radius: 8px;
     text-decoration: none;
     font-weight: 700;
-    transition: background-color 0.2s, transform 0.2s;
+    transition: background-color 0.2s, transform 0.2s, color 0.2s;
     display: inline-block;
 }
 
 .btn-showcase:hover {
-    background: #f0f0f0;
+    background: var(--text-accent);
+    color: white;
     transform: translateY(-2px);
 }
 
@@ -3377,4 +3430,35 @@ main {
 .spotlight-card:hover .card-icon svg {
     transform: scale(1.1);
     stroke: var(--text-accent);
+}
+
+/* Tech Tooltip (Fixed Positioning) */
+.tech-tooltip {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: var(--bg-surface-hover);
+    /* Theme aware background */
+    border: 1px solid var(--border);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    /* Theme aware color */
+    pointer-events: none;
+    z-index: 9999;
+    box-shadow: var(--shadow-card);
+    opacity: 0;
+    transition: opacity 0.2s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transform: scale(0.9);
+    /* Start slightly smaller */
+    max-width: 250px;
+    will-change: transform;
+}
+
+.tech-tooltip.visible {
+    opacity: 1;
+    /* Transformation is handled by JS translate, but we can animate scale via a child or just rely on opacity for simplicity to avoid conflict with JS translate */
+    /* Wait, if JS controls transform (translate), we can't easily animate scale on the same element without conflict or complex logic. */
+    /* Better approach: Use opacity only for now to ensure position is rock solid, OR use a wrapper. NOT modifying transform here to avoid conflict with JS x/y setter. */
 }
