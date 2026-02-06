@@ -17,10 +17,13 @@
     --nav-border: rgba(255, 255, 255, 0.05);
     --max-width: 1200px;
     --radius: 12px;
-    --bg-glass: rgba(10, 10, 10, 0.85);
+    --bg-glass: rgba(10, 10, 10, 0.95);
+    /* More opaque for performance */
     --bg-footer: radial-gradient(circle at 50% 100%, #1a1a2e 0%, #000000 100%);
-    --shadow-container: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    --border-glass: rgba(255, 255, 255, 0.03);
+    --shadow-container: none;
+    /* Removed heavy shadow */
+    --border-glass: rgba(255, 255, 255, 0.05);
+    /* Slightly more visible border to replace shadow */
 }
 
 [data-theme="light"] {
@@ -35,10 +38,11 @@
     --border-hover: rgba(124, 58, 237, 0.25);
     --nav-bg: rgba(255, 255, 255, 0.9);
     --nav-border: rgba(0, 0, 0, 0.05);
-    --shadow-card: 0 20px 40px -10px rgba(0, 0, 0, 0.08), 0 10px 20px -5px rgba(0, 0, 0, 0.04);
-    --bg-glass: rgba(255, 255, 255, 0.85);
+    --shadow-card: none;
+    /* Removed heavy/multi-layer shadows */
+    --bg-glass: rgba(255, 255, 255, 0.95);
     --bg-footer: radial-gradient(circle at 50% 100%, #e0e7ff 0%, #f4f4f5 100%);
-    --shadow-container: 0 40px 80px -20px rgba(0, 0, 0, 0.15);
+    --shadow-container: none;
     --border-glass: rgba(0, 0, 0, 0.05);
 }
 
@@ -137,7 +141,8 @@ body {
     /* Reduced blur for mobile */
     opacity: 0.1;
     transform-origin: center;
-    will-change: transform;
+    transform-origin: center;
+    /* Removed will-change for mobile */
     transform: translate3d(0, 0, 0);
     /* No animation by default on mobile */
 }
@@ -199,7 +204,7 @@ body {
     opacity: 0;
     transform: translateY(30px) translateZ(0);
     transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
-    will-change: opacity, transform;
+    /* Removed will-change to prevent layer explosion on low-end devices */
 }
 
 .reveal.active {
@@ -399,7 +404,7 @@ h4 {
     opacity: 0;
     transform: scale(0.95);
     transition: opacity 0.2s ease, transform 0.2s ease;
-    will-change: transform;
+    /* Removed will-change */
     transform: translateZ(0);
     backdrop-filter: blur(12px);
     border: 1px solid var(--border);
@@ -434,7 +439,7 @@ h4 {
     font-weight: 500;
     z-index: 1001;
     display: none;
-    will-change: transform;
+    /* Removed will-change */
 }
 
 .nav-wrapper {
