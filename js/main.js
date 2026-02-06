@@ -1,16 +1,23 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Critical: Apply theme immediately to prevent flash
     initTheme();
-    initDraggableToggle();
-    renderTracks();
-    initAdvancedUI();
-    initShowcaseTilt();
-    if (typeof gsap !== 'undefined') {
-    }
-    initSmoothScroll();
-    initScrollAnimations();
-    initTechTooltips();
-    initNewsletter();
-    initLazyFooter(); // Add lazy load listener
+
+    // Visual: Render content in the next available frame
+    requestAnimationFrame(() => {
+        renderTracks();
+        initShowcaseTilt();
+        initNewsletter();
+        initTechTooltips();
+    });
+
+    // Background: Defer heavy listeners and observers to unblock Main Thread
+    setTimeout(() => {
+        initDraggableToggle();
+        initAdvancedUI(); // Calculating scrollHeight triggers reflow, so we defer it
+        initSmoothScroll();
+        initScrollAnimations(); // IntersectionObservers are heavy to init
+        initLazyFooter();
+    }, 50);
 });
 function initNewsletter() {
     const input = document.querySelector('.newsletter-input');
