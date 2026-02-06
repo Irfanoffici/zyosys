@@ -264,31 +264,73 @@ function initDraggableToggle() {
 }
 
 function initLazyFooter() {
-    // If desktop (> 1366px), footer is already visible via CSS. No JS needed.
-    if (window.innerWidth > 1366) return;
+    const footer = document.querySelector('footer');
+    if (!footer) return;
 
-    // Passive listener to reveal footer at 90% scroll
+    // Logic to check if footer should be hidden/shown
+    const checkFooterVisibility = () => {
+        // If desktop (> 1366px), just show it (remove the hidden state class if we used one, or rely on CSS)
+        // Actually, CSS handles opacity:0 via .reveal logic or specific footer styles.
+        // We need to ensure that if we go from small -> large, it becomes visible.
+
+        // However, our current CSS hides it by default on small screens via .footer-bg usually?
+        // Wait, the lazy load logic adds 'footer-visible' to BODY.
+
+        if (window.innerWidth > 1366) {
+            // On large screens, ensure it's visible or let CSS handle it.
+            // If we previously added footer-visible, keep it. 
+            // If we haven't, and we resize UP, we might need to add it or ensure CSS overrides.
+            // For now, let's just re-run the scroll check if needed or rely on CSS media queries.
+            // Actually, simplest fix: proper media query in CSS makes it visible > 1366.
+            // We just need to make sure we don't accidentally HIDE it.
+        } else {
+            // On small screens, we need the scroll listener if not already visible.
+            if (!document.body.classList.contains('footer-visible')) {
+                addScrollListener();
+            }
+        }
+    };
+
+    const addScrollListener = () => {
+        // Prevent duplicate listeners
+        window.removeEventListener('scroll', onScroll);
+        window.addEventListener('scroll', onScroll, { passive: true });
+    };
+
     const onScroll = () => {
         const scrolled = window.scrollY + window.innerHeight;
         const threshold = document.documentElement.scrollHeight * 0.90;
 
-        if (scrolled >= threshold) {
+        if (window.innerWidth <= 1366 && scrolled >= threshold) {
             document.body.classList.add('footer-visible');
 
-            // Force GSAP/ScrollTrigger to re-calculate positions now that footer is visible
             if (typeof ScrollTrigger !== 'undefined') {
-                // Small delay to allow display:block to render layout
                 setTimeout(() => {
                     ScrollTrigger.refresh();
                 }, 100);
             }
-
-            // Remove listener immediately - Run Once
             window.removeEventListener('scroll', onScroll);
         }
     };
 
-    window.addEventListener('scroll', onScroll, { passive: true });
+    // Initial check
+    if (window.innerWidth <= 1366) {
+        addScrollListener();
+    }
+
+    // Check on resize (debounced slightly)
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            if (window.innerWidth <= 1366 && !document.body.classList.contains('footer-visible')) {
+                addScrollListener();
+            }
+        }, 200);
+    }, { passive: true });
+}
+
+window.addEventListener('scroll', onScroll, { passive: true });
 }
 
 function renderTracks() {
