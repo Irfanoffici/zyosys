@@ -53,7 +53,7 @@ Since this is a static site, no build step is strictly required for development.
 
 1.  **Clone the repository**:
     ```bash
-    git clone https://github.com/your-username/zyosys.git
+    git clone https://github.com/irfanoffici/zyosys.git
     ```
 2.  **Open `index.html`** in your browser.
     -   *Recommended*: Use VS Code's "Live Server" extension for the best experience.
