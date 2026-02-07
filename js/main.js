@@ -1,21 +1,43 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Extreme Performance: Network-Aware Potato Mode
+    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    const isSlow = connection ? (connection.effectiveType === '2g' || connection.effectiveType === 'slow-2g' || connection.saveData) : false;
+
+    if (isSlow) {
+        document.body.classList.add('potato-mode');
+        // Disable heavy effects immediately
+        window.GSAP_DISABLED = true;
+        console.log('🥔 Potato Mode Active: 20x Throttle Detected. Disabling heavy effects.');
+
+        // Kill background orbs and cursors
+        document.querySelectorAll('.ambient-orb, .cursor-dot, .cursor-outline, .bg-grid').forEach(el => el.style.display = 'none');
+    }
+
     // Critical: Apply theme immediately to prevent flash
     initTheme();
 
     // Visual: Render content in the next available frame
     requestAnimationFrame(() => {
-        renderTracks();
-        initShowcaseTilt();
-        initNewsletter();
-        initTechTooltips();
+        if (!isSlow) {
+            renderTracks();
+            initShowcaseTilt();
+            initNewsletter();
+            initTechTooltips();
+        } else {
+            // Simplified render for slow connections
+            renderTracks(); // Tracks are content, must render
+            // Skip tilt, tooltips, fancy stuff
+        }
     });
 
     // Background: Defer heavy listeners and observers to unblock Main Thread
     setTimeout(() => {
         initDraggableToggle();
-        initAdvancedUI(); // Calculating scrollHeight triggers reflow, so we defer it
-        initSmoothScroll();
-        initScrollAnimations(); // IntersectionObservers are heavy to init
+        if (!isSlow) {
+            initAdvancedUI(); // Parallax, orb movements
+            initSmoothScroll(); // Heavy scroll listeners
+        }
+        initScrollAnimations(); // IntersectionObservers are heavy to init (keep for reveal but maybe simplified)
         initLazyFooter();
     }, 50);
 });
