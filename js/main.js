@@ -1,18 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Extreme Performance: Network-Aware Potato Mode
-    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-    const isSlow = connection ? (connection.effectiveType === '2g' || connection.effectiveType === 'slow-2g' || connection.saveData) : false;
-
-    if (isSlow) {
-        document.body.classList.add('potato-mode');
-        // Disable heavy effects immediately
-        window.GSAP_DISABLED = true;
-        console.log('🥔 Potato Mode Active: 20x Throttle Detected. Disabling heavy effects.');
-
-        // Kill background orbs and cursors
-        document.querySelectorAll('.ambient-orb, .cursor-dot, .cursor-outline, .bg-grid').forEach(el => el.style.display = 'none');
-    }
-
     // Critical: Apply theme immediately to prevent flash
     // Critical: Apply theme immediately to prevent flash
     try { initTheme(); } catch (e) { console.error(e); }
@@ -25,16 +11,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // Defer EVERYTHING else to unclog the main thread for LCP
         const deferHeavyTasks = () => {
             const runTasks = () => {
-                if (!isSlow) {
-                    initShowcaseTilt();
-                    initNewsletter();
-                    initTechTooltips();
-                    initAdvancedUI(); // Parallax, orb movements
-                    initSmoothScroll(); // Heavy scroll listeners
-                }
+                initShowcaseTilt();
+                initNewsletter();
+                initTechTooltips();
+                initAdvancedUI(); // Parallax, orb movements
+                initSmoothScroll(); // Heavy scroll listeners
                 initScrollAnimations(); // IntersectionObservers
-                initLazyFooter();
                 initDraggableToggle();
+                initSpotlightEffect(); // Spotlight effect
             };
 
             if ('requestIdleCallback' in window) {
@@ -189,15 +173,47 @@ if ('serviceWorker' in navigator) {
     });
 }
 function initTheme() {
-    // Theme logic moved to inline script in index.html for zero-latency.
-    // This function is kept empty to prevent ReferenceErrors if called elsewhere.
+    const toggleBtnFixed = document.getElementById('theme-toggle');
+    const toggleBtnNav = document.getElementById('theme-toggle-nav');
+    const html = document.documentElement;
+    const moonIcon = '<svg class="theme-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>';
+    const sunIcon = '<svg class="theme-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>';
+    const saved = localStorage.getItem('theme') || 'dark';
+    setTheme(saved);
+    function setTheme(theme) {
+        html.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        const icon = theme === 'dark' ? moonIcon : sunIcon;
+        const label = theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+        if (toggleBtnFixed) {
+            toggleBtnFixed.innerHTML = icon;
+            toggleBtnFixed.setAttribute('aria-label', label);
+        }
+        if (toggleBtnNav) {
+            toggleBtnNav.innerHTML = icon;
+            toggleBtnNav.setAttribute('aria-label', label);
+        }
+    }
+    const toggleTheme = () => {
+        const current = localStorage.getItem('theme') || 'dark';
+        const next = current === 'dark' ? 'light' : 'dark';
+        setTheme(next);
+    };
+    if (toggleBtnFixed) {
+        toggleBtnFixed.addEventListener('click', (e) => {
+            if (toggleBtnFixed.dataset.isDragging === 'true') {
+                e.preventDefault();
+                e.stopPropagation();
+                return;
+            }
+            toggleTheme();
+        });
+    }
+    if (toggleBtnNav) toggleBtnNav.addEventListener('click', toggleTheme);
 }
 function initDraggableToggle() {
     const el = document.getElementById('theme-toggle');
     if (!el) return;
-
-    // Disable dragging on slow connections to prevent blocking main thread
-    if (document.body.classList.contains('potato-mode')) return;
 
     let isDragging = false;
     let startX, startY, initialLeft, initialTop;
@@ -241,7 +257,7 @@ function initDraggableToggle() {
         const dy = clientY - startY;
         if (Math.abs(dx) > 3 || Math.abs(dy) > 3) {
             hasMoved = true;
-            el.setAttribute('data-is-dragging', 'true');
+            el.dataset.isDragging = 'true';
         }
         let newLeft = initialLeft + dx;
         let newTop = initialTop + dy;
@@ -326,9 +342,6 @@ function initSpotlightEffect() {
     const container = document.getElementById('tracks-container');
     if (!container) return;
 
-    // ABORT if potato mode (save CPU for clicks)
-    if (document.body.classList.contains('potato-mode')) return;
-
     // Performance: Throttle mouse events using requestAnimationFrame
     let ticking = false;
 
@@ -355,7 +368,7 @@ function getWhatsappLink(courseTitle) {
     return `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
 }
 function initShowcaseTilt() {
-    if (document.body.classList.contains('potato-mode') || window.matchMedia('(hover: none)').matches || window.innerWidth <= 1024) return;
+    if (window.matchMedia('(hover: none)').matches || window.innerWidth <= 1024) return;
     const cards = document.querySelectorAll('.showcase-card');
     cards.forEach(card => {
         let isHovering = false;
@@ -384,10 +397,34 @@ function initShowcaseTilt() {
     });
 }
 function initSmoothScroll() {
-    // We are using native CSS smooth scrolling for maximum performance and battery efficiency per user request.
-    // This function is kept empty or for any future minimal polyfills if absolutely needed.
-    // Ensure <html> has scroll-behavior: smooth in CSS.
-    document.documentElement.style.scrollBehavior = 'smooth';
+    if (typeof Lenis !== 'undefined') {
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            gestureDirection: 'vertical',
+            smooth: true,
+            mouseMultiplier: 1,
+            smoothTouch: false,
+            touchMultiplier: 2,
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+
+        requestAnimationFrame(raf);
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                lenis.scrollTo(this.getAttribute('href'));
+            });
+        });
+    } else {
+        document.documentElement.style.scrollBehavior = 'smooth';
+    }
 }
 function initScrollAnimations() {
     // Reveal elements on scroll
@@ -404,16 +441,13 @@ function initScrollAnimations() {
     });
 
     document.querySelectorAll('.reveal').forEach(el => {
-        // Only hide if NOT potato mode (checked via global or class)
-        if (!document.body.classList.contains('potato-mode')) {
-            el.classList.add('pending-reveal');
-        }
+        el.classList.add('pending-reveal');
         observer.observe(el);
     });
 }
 function initAdvancedUI() {
-    // Disable scroll progress on mobile OR potato mode
-    if (window.innerWidth > 768 && !document.body.classList.contains('potato-mode')) {
+    // Disable scroll progress on mobile
+    if (window.innerWidth > 768) {
         const progressBar = document.getElementById('scroll-progress');
         if (progressBar) {
             let ticking = false;

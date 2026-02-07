@@ -220,23 +220,14 @@ body {
 }
 
 .reveal {
-    opacity: 1 !important;
-    /* Force visibility even if JS fails */
-    transform: translateY(0) !important;
-    transition: none !important;
-    /* Disable transition for immediate LCP */
-}
-
-/* Only enable reveal logic if JS successfully adds this class AND we are not on slow network */
-.reveal.pending-reveal {
-    opacity: 0 !important;
-    transform: translateY(30px) translateZ(0) !important;
-    transition: all 0.8s cubic-bezier(0.5, 0, 0, 1) !important;
+    opacity: 0;
+    transform: translateY(30px) translateZ(0);
+    transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
 }
 
 .reveal.active {
-    opacity: 1 !important;
-    transform: translateY(0) !important;
+    opacity: 1;
+    transform: translateY(0);
 }
 
 main {
