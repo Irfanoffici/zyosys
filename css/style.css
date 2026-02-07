@@ -380,38 +380,24 @@ h4 {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     touch-action: none;
     user-select: none;
+    /* Prevent CLS */
+    min-width: 48px;
+    min-height: 48px;
+    box-sizing: border-box;
 }
 
-.theme-toggle:active {
-    cursor: grabbing;
-    transform: scale(0.95);
+/* Hide heavy orbs on mobile or slow connections to improve INP/CLS */
+@media (max-width: 768px) {
+
+    .ambient-orb,
+    .accent-orb {
+        display: none !important;
+    }
 }
 
-.theme-toggle:hover {
-    background: rgba(255, 255, 255, 0.1);
-    transform: rotate(15deg) scale(1.05);
-    border-color: var(--text-accent);
-}
-
-.theme-toggle:active {
-    transform: scale(0.95);
-}
-
-.theme-toggle svg {
-    width: 20px;
-    height: 20px;
-    fill: none;
-    transition: all 0.3s ease;
-}
-
-[data-theme="light"] .theme-toggle {
-    background: rgba(0, 0, 0, 0.05);
-    border-color: rgba(0, 0, 0, 0.1);
-    color: var(--text-primary);
-}
-
-[data-theme="light"] .theme-toggle:hover {
-    background: rgba(0, 0, 0, 0.1);
+.potato-mode .ambient-orb,
+.potato-mode .accent-orb {
+    display: none !important;
 }
 
 .tech-tooltip {
@@ -1709,11 +1695,7 @@ footer .orb-f2 {
     }
 }
 
-.footer-bg,
-.testimonials-grid {
-    content-visibility: auto;
-    contain-intrinsic-size: 1px 500px;
-}
+/* content-visibility removed to prevent CLS */
 
 .mission-card {
     background: var(--bg-surface);
