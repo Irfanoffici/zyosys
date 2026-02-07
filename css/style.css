@@ -93,6 +93,32 @@ html {
     overflow-x: hidden;
     scroll-behavior: smooth;
     /* Native hardware-accelerated smooth scroll */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+    background-color: var(--text-accent);
+    color: white;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-body);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--border);
+    border-radius: 4px;
+    border: 2px solid var(--bg-body);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--text-secondary);
 }
 
 html.lenis,
@@ -578,6 +604,19 @@ h4 {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+.btn-primary.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+}
+
+.btn:active {
+    transform: scale(0.98) translateY(0);
+}
+
+.btn:active {
+    transform: scale(0.98) translateY(0);
+}
+
 .hero {
     min-height: 90vh;
     display: grid;
@@ -1001,8 +1040,16 @@ footer .orb-f2 {
 }
 
 .workshops-section {
-    padding: var(--space-8) var(--space-4) !important;
+    padding: var(--space-16) var(--space-4);
+    position: relative;
+    /* Performance: Isolate layout recalculations */
+    contain: content;
     max-width: 900px;
+}
+
+.card {
+    /* Performance: Isolate layout recalculations */
+    contain: content;
 }
 
 .card-compact {
