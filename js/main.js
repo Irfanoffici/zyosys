@@ -323,6 +323,10 @@ function initLazyFooter() {
 function renderTracks() {
     const container = document.getElementById('tracks-container');
     if (!container || typeof ZYOSYS_CONFIG === 'undefined') return;
+
+    // Clear fallback content (skeleton/static html)
+    container.innerHTML = '';
+
     const fragment = document.createDocumentFragment();
     ZYOSYS_CONFIG.courses.forEach(course => {
         const card = document.createElement('div');
