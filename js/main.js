@@ -2,20 +2,24 @@ document.addEventListener('DOMContentLoaded', () => {
     // Critical: Apply theme immediately to prevent flash
     initTheme();
 
-    // Visual: Render content in the next available frame
+    // Critical Content: Render immediately (don't wait for frame/idle)
+    renderTracks();
+
+    // Critical Interactivity: Initialize scroll observers early so content is visible "above fold" or just below
+    initScrollAnimations();
+
+    // Visual: Defer non-critical visuals
     requestAnimationFrame(() => {
-        renderTracks();
         initShowcaseTilt();
         initNewsletter();
         initTechTooltips();
     });
 
-    // Background: Defer heavy listeners and observers to unblock Main Thread
+    // Background: Defer heavy/optional listeners
     setTimeout(() => {
         initDraggableToggle();
-        initAdvancedUI(); // Calculating scrollHeight triggers reflow, so we defer it
+        initAdvancedUI();
         initSmoothScroll();
-        initScrollAnimations(); // IntersectionObservers are heavy to init
         initLazyFooter();
     }, 50);
 });
@@ -418,7 +422,8 @@ function initScrollAnimations() {
         });
     }, {
         threshold: 0.1,
-        rootMargin: "0px 0px -50px 0px"
+        // Eager load: Trigger reveal 200px BEFORE element enters viewport
+        rootMargin: "0px 0px 200px 0px"
     });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 }
