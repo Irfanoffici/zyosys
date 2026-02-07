@@ -347,10 +347,16 @@ function initSpotlightEffect() {
         if (!ticking) {
             window.requestAnimationFrame(() => {
                 const cards = document.querySelectorAll('.spotlight-card');
+                const updates = [];
+                // 1. Batch Reads
                 cards.forEach(card => {
                     const rect = card.getBoundingClientRect();
                     const x = e.clientX - rect.left;
                     const y = e.clientY - rect.top;
+                    updates.push({ card, x, y });
+                });
+                // 2. Batch Writes
+                updates.forEach(({ card, x, y }) => {
                     card.style.setProperty('--mouse-x', `${x}px`);
                     card.style.setProperty('--mouse-y', `${y}px`);
                 });
