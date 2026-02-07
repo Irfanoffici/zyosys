@@ -306,9 +306,11 @@ function renderTracks() {
     const container = document.getElementById('tracks-container');
     if (!container || typeof ZYOSYS_CONFIG === 'undefined') return;
     const fragment = document.createDocumentFragment();
-    ZYOSYS_CONFIG.courses.forEach(course => {
+    ZYOSYS_CONFIG.courses.forEach((course, index) => {
         const card = document.createElement('div');
-        card.className = 'card spotlight-card';
+        card.className = 'card spotlight-card reveal';
+        // Stagger delay: 100ms per item
+        card.style.setProperty('--reveal-delay', `${index * 100}ms`);
         const techHtml = course.tech.map(t =>
             `<span class="chip" title="${t.desc}">${t.name}</span>`
         ).join('');
@@ -426,6 +428,15 @@ function initScrollAnimations() {
         rootMargin: "0px 0px 200px 0px"
     });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Stagger logic for grids (Testimonials, Showcase, etc.)
+    const grids = document.querySelectorAll('.testimonial-bento-grid, .showcase-grid, .stats-grid');
+    grids.forEach(grid => {
+        const children = grid.querySelectorAll('.reveal');
+        children.forEach((child, index) => {
+            child.style.setProperty('--reveal-delay', `${index * 100}ms`);
+        });
+    });
 }
 function initAdvancedUI() {
     // Disable scroll progress on mobile
