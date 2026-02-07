@@ -14,7 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Critical: Apply theme immediately to prevent flash
-    initTheme();
+    // Critical: Apply theme immediately to prevent flash
+    try { initTheme(); } catch (e) { console.error(e); }
 
     // Visual: Render content in the next available frame
     requestAnimationFrame(() => {
@@ -304,8 +305,7 @@ function initDraggableToggle() {
 function initLazyFooter() {
 }
 
-// Remove listener immediately - Run Once
-window.removeEventListener('scroll', onScroll);
+
 
 
 function renderTracks() {
