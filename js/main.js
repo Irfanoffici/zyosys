@@ -230,6 +230,10 @@ function initTheme() {
 function initDraggableToggle() {
     const el = document.getElementById('theme-toggle');
     if (!el) return;
+
+    // Disable dragging on slow connections to prevent blocking main thread
+    if (document.body.classList.contains('potato-mode')) return;
+
     let isDragging = false;
     let startX, startY, initialLeft, initialTop;
     let hasMoved = false;
@@ -357,6 +361,9 @@ function initSpotlightEffect() {
     const container = document.getElementById('tracks-container');
     if (!container) return;
 
+    // ABORT if potato mode (save CPU for clicks)
+    if (document.body.classList.contains('potato-mode')) return;
+
     // Performance: Throttle mouse events using requestAnimationFrame
     let ticking = false;
 
@@ -383,7 +390,7 @@ function getWhatsappLink(courseTitle) {
     return `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
 }
 function initShowcaseTilt() {
-    if (window.matchMedia('(hover: none)').matches || window.innerWidth <= 1024) return;
+    if (document.body.classList.contains('potato-mode') || window.matchMedia('(hover: none)').matches || window.innerWidth <= 1024) return;
     const cards = document.querySelectorAll('.showcase-card');
     cards.forEach(card => {
         let isHovering = false;
@@ -440,8 +447,8 @@ function initScrollAnimations() {
     });
 }
 function initAdvancedUI() {
-    // Disable scroll progress on mobile
-    if (window.innerWidth > 768) {
+    // Disable scroll progress on mobile OR potato mode
+    if (window.innerWidth > 768 && !document.body.classList.contains('potato-mode')) {
         const progressBar = document.getElementById('scroll-progress');
         if (progressBar) {
             let ticking = false;
