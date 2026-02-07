@@ -3203,7 +3203,3 @@ main {
 }
 
 /* Ensure links in footer have distinct destinations (handled in HTML) */
-/* Ensure no empty links cause issues */
-a[href="#"]:not([aria-label]) {
-    display: none;
-}
