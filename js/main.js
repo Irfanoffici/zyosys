@@ -204,14 +204,23 @@ function initDraggableToggle() {
     if (!el) return;
     let isDragging = false;
     let startX, startY, initialLeft, initialTop;
+    let maxLeft, maxTop; // Cache boundaries
     let hasMoved = false;
     const savedPos = localStorage.getItem('themeTogglePos');
+
+    const updateBoundaries = () => {
+        maxLeft = window.innerWidth - el.offsetWidth;
+        maxTop = window.innerHeight - el.offsetHeight;
+    };
+
+    // Initial calc
+    updateBoundaries();
+    window.addEventListener('resize', updateBoundaries, { passive: true });
+
     if (savedPos) {
         const { x, y } = JSON.parse(savedPos);
-        const maxX = window.innerWidth - el.offsetWidth;
-        const maxY = window.innerHeight - el.offsetHeight;
-        const clampX = Math.min(Math.max(0, x), maxX);
-        const clampY = Math.min(Math.max(0, y), maxY);
+        const clampX = Math.min(Math.max(0, x), maxLeft); // Use cached
+        const clampY = Math.min(Math.max(0, y), maxTop);  // Use cached
         el.style.left = `${clampX}px`;
         el.style.top = `${clampY}px`;
         el.style.bottom = 'auto';
@@ -223,6 +232,10 @@ function initDraggableToggle() {
         hasMoved = false;
         el.style.transition = 'none';
         el.dataset.isDragging = 'false';
+
+        // Cache dimensions ONCE on start (avoids layout thrashing in move loop)
+        updateBoundaries();
+
         const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
         const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
         startX = clientX;
@@ -248,10 +261,11 @@ function initDraggableToggle() {
         }
         let newLeft = initialLeft + dx;
         let newTop = initialTop + dy;
-        const maxLeft = window.innerWidth - el.offsetWidth;
-        const maxTop = window.innerHeight - el.offsetHeight;
+
+        // Use cached boundaries (No DOM read = No Reflow)
         newLeft = Math.min(Math.max(0, newLeft), maxLeft);
         newTop = Math.min(Math.max(0, newTop), maxTop);
+
         el.style.left = `${newLeft}px`;
         el.style.top = `${newTop}px`;
     };
@@ -349,10 +363,20 @@ function initSpotlightEffect() {
     // Performance: Throttle mouse events using requestAnimationFrame
     let ticking = false;
 
+    // Cache DOM query (don't query inside loop)
+    let cards = null;
+    const updateCards = () => cards = document.querySelectorAll('.spotlight-card');
+
+    // Initial fetch + update on dynamic changes if needed
+    updateCards();
+
+    // Optional: MutationObserver if cards are added dynamically, but for now we assume renderTracks is done.
+
     container.addEventListener('mousemove', (e) => {
         if (!ticking) {
             window.requestAnimationFrame(() => {
-                const cards = document.querySelectorAll('.spotlight-card');
+                if (!cards || cards.length === 0) updateCards();
+
                 const updates = [];
                 // 1. Batch Reads
                 cards.forEach(card => {
@@ -382,14 +406,19 @@ function initShowcaseTilt() {
     const cards = document.querySelectorAll('.showcase-card');
     cards.forEach(card => {
         let isHovering = false;
+        let rect = null; // Cache rect
+
         card.addEventListener('mouseenter', () => {
             isHovering = true;
             card.classList.remove('animate-reset');
+            // Cache rect ONCE on enter
+            rect = card.getBoundingClientRect();
         });
+
         card.addEventListener('mousemove', (e) => {
-            if (!isHovering) return;
+            if (!isHovering || !rect) return;
             requestAnimationFrame(() => {
-                const rect = card.getBoundingClientRect();
+                // Use cached rect (avoid reflow)
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
                 const xPct = x / rect.width;
