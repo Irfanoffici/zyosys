@@ -18,28 +18,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Visual: Render content in the next available frame
     requestAnimationFrame(() => {
-        if (!isSlow) {
-            renderTracks();
-            initShowcaseTilt();
-            initNewsletter();
-            initTechTooltips();
+        // Always render tracks (content)
+        renderTracks();
+
+        // Defer EVERYTHING else to unclog the main thread for LCP
+        const deferHeavyTasks = () => {
+            const runTasks = () => {
+                if (!isSlow) {
+                    initShowcaseTilt();
+                    initNewsletter();
+                    initTechTooltips();
+                    initAdvancedUI(); // Parallax, orb movements
+                    initSmoothScroll(); // Heavy scroll listeners
+                }
+                initScrollAnimations(); // IntersectionObservers
+                initLazyFooter();
+                initDraggableToggle();
+            };
+
+            if ('requestIdleCallback' in window) {
+                requestIdleCallback(() => runTasks(), { timeout: 2000 });
+            } else {
+                setTimeout(runTasks, 200);
+            }
+        };
+
+        if (document.readyState === 'complete') {
+            deferHeavyTasks();
         } else {
-            // Simplified render for slow connections
-            renderTracks(); // Tracks are content, must render
-            // Skip tilt, tooltips, fancy stuff
+            window.addEventListener('load', deferHeavyTasks);
         }
     });
-
-    // Background: Defer heavy listeners and observers to unblock Main Thread
-    setTimeout(() => {
-        initDraggableToggle();
-        if (!isSlow) {
-            initAdvancedUI(); // Parallax, orb movements
-            initSmoothScroll(); // Heavy scroll listeners
-        }
-        initScrollAnimations(); // IntersectionObservers are heavy to init (keep for reveal but maybe simplified)
-        initLazyFooter();
-    }, 50);
 });
 function initNewsletter() {
     const input = document.querySelector('.newsletter-input');
