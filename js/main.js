@@ -302,36 +302,18 @@ function initDraggableToggle() {
 }
 
 function initLazyFooter() {
-    // If desktop (> 1366px), footer is already visible via CSS. No JS needed.
-    if (window.innerWidth > 1366) return;
-
-    // Passive listener to reveal footer at 90% scroll
-    const onScroll = () => {
-        const scrolled = window.scrollY + window.innerHeight;
-        const threshold = document.documentElement.scrollHeight * 0.90;
-
-        if (scrolled >= threshold) {
-            document.body.classList.add('footer-visible');
-
-            // Force GSAP/ScrollTrigger to re-calculate positions now that footer is visible
-            if (typeof ScrollTrigger !== 'undefined') {
-                // Small delay to allow display:block to render layout
-                setTimeout(() => {
-                    ScrollTrigger.refresh();
-                }, 100);
-            }
-
-            // Remove listener immediately - Run Once
-            window.removeEventListener('scroll', onScroll);
-        }
-    };
-
-    window.addEventListener('scroll', onScroll, { passive: true });
 }
+
+// Remove listener immediately - Run Once
+window.removeEventListener('scroll', onScroll);
+
 
 function renderTracks() {
     const container = document.getElementById('tracks-container');
     if (!container || typeof ZYOSYS_CONFIG === 'undefined') return;
+
+    // Only render if container is empty (hydration)
+    if (container.children.length > 0) return;
 
     // Clear fallback content (skeleton/static html)
     container.innerHTML = '';
@@ -436,20 +418,26 @@ function initSmoothScroll() {
     document.documentElement.style.scrollBehavior = 'smooth';
 }
 function initScrollAnimations() {
-    const targets = document.querySelectorAll('section:not(.hero), .feature-card, .stat-item, .hub-container, .tech-card-dark, .showcase-card, .testimonial-card, .faq-item');
-    targets.forEach(el => el.classList.add('reveal'));
+    // Reveal elements on scroll
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('active');
-                observer.unobserve(entry.target);
+                entry.target.classList.remove('pending-reveal');
             }
         });
     }, {
         threshold: 0.1,
         rootMargin: "0px 0px -50px 0px"
     });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    document.querySelectorAll('.reveal').forEach(el => {
+        // Only hide if NOT potato mode (checked via global or class)
+        if (!document.body.classList.contains('potato-mode')) {
+            el.classList.add('pending-reveal');
+        }
+        observer.observe(el);
+    });
 }
 function initAdvancedUI() {
     // Disable scroll progress on mobile
