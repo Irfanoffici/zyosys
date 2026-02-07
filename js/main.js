@@ -189,43 +189,8 @@ if ('serviceWorker' in navigator) {
     });
 }
 function initTheme() {
-    const toggleBtnFixed = document.getElementById('theme-toggle');
-    const toggleBtnNav = document.getElementById('theme-toggle-nav');
-    const html = document.documentElement;
-    const moonIcon = '<svg class="theme-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>';
-    const sunIcon = '<svg class="theme-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>';
-    const saved = localStorage.getItem('theme') || 'dark';
-    setTheme(saved);
-    function setTheme(theme) {
-        html.setAttribute('data-theme', theme);
-        localStorage.setItem('theme', theme);
-        const icon = theme === 'dark' ? moonIcon : sunIcon;
-        const label = theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode';
-        if (toggleBtnFixed) {
-            toggleBtnFixed.innerHTML = icon;
-            toggleBtnFixed.setAttribute('aria-label', label);
-        }
-        if (toggleBtnNav) {
-            toggleBtnNav.innerHTML = icon;
-            toggleBtnNav.setAttribute('aria-label', label);
-        }
-    }
-    const toggleTheme = () => {
-        const current = localStorage.getItem('theme') || 'dark';
-        const next = current === 'dark' ? 'light' : 'dark';
-        setTheme(next);
-    };
-    if (toggleBtnFixed) {
-        toggleBtnFixed.addEventListener('click', (e) => {
-            if (toggleBtnFixed.dataset.isDragging === 'true') {
-                e.preventDefault();
-                e.stopPropagation();
-                return;
-            }
-            toggleTheme();
-        });
-    }
-    if (toggleBtnNav) toggleBtnNav.addEventListener('click', toggleTheme);
+    // Theme logic moved to inline script in index.html for zero-latency.
+    // This function is kept empty to prevent ReferenceErrors if called elsewhere.
 }
 function initDraggableToggle() {
     const el = document.getElementById('theme-toggle');
@@ -254,7 +219,7 @@ function initDraggableToggle() {
         isDragging = true;
         hasMoved = false;
         el.style.transition = 'none';
-        el.dataset.isDragging = 'false';
+        el.setAttribute('data-is-dragging', 'false');
         const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
         const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
         startX = clientX;
@@ -276,7 +241,7 @@ function initDraggableToggle() {
         const dy = clientY - startY;
         if (Math.abs(dx) > 3 || Math.abs(dy) > 3) {
             hasMoved = true;
-            el.dataset.isDragging = 'true';
+            el.setAttribute('data-is-dragging', 'true');
         }
         let newLeft = initialLeft + dx;
         let newTop = initialTop + dy;
@@ -299,7 +264,7 @@ function initDraggableToggle() {
         document.removeEventListener('touchmove', onMouseMove);
         document.removeEventListener('touchend', onMouseUp);
         setTimeout(() => {
-            el.dataset.isDragging = 'false';
+            el.setAttribute('data-is-dragging', 'false');
         }, 50);
     };
     el.addEventListener('mousedown', onMouseDown);
