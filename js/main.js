@@ -1,39 +1,23 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Critical: Apply theme immediately to prevent flash
-    // Critical: Apply theme immediately to prevent flash
-    try { initTheme(); } catch (e) { console.error(e); }
+    initTheme();
 
     // Visual: Render content in the next available frame
     requestAnimationFrame(() => {
-        // Always render tracks (content)
         renderTracks();
-
-        // Defer EVERYTHING else to unclog the main thread for LCP
-        const deferHeavyTasks = () => {
-            const runTasks = () => {
-                initShowcaseTilt();
-                initNewsletter();
-                initTechTooltips();
-                initAdvancedUI(); // Parallax, orb movements
-                initSmoothScroll(); // Heavy scroll listeners
-                initScrollAnimations(); // IntersectionObservers
-                initDraggableToggle();
-                initSpotlightEffect(); // Spotlight effect
-            };
-
-            if ('requestIdleCallback' in window) {
-                requestIdleCallback(() => runTasks(), { timeout: 2000 });
-            } else {
-                setTimeout(runTasks, 200);
-            }
-        };
-
-        if (document.readyState === 'complete') {
-            deferHeavyTasks();
-        } else {
-            window.addEventListener('load', deferHeavyTasks);
-        }
+        initShowcaseTilt();
+        initNewsletter();
+        initTechTooltips();
     });
+
+    // Background: Defer heavy listeners and observers to unblock Main Thread
+    setTimeout(() => {
+        initDraggableToggle();
+        initAdvancedUI(); // Calculating scrollHeight triggers reflow, so we defer it
+        initSmoothScroll();
+        initScrollAnimations(); // IntersectionObservers are heavy to init
+        initLazyFooter();
+    }, 50);
 });
 function initNewsletter() {
     const input = document.querySelector('.newsletter-input');
@@ -214,7 +198,6 @@ function initTheme() {
 function initDraggableToggle() {
     const el = document.getElementById('theme-toggle');
     if (!el) return;
-
     let isDragging = false;
     let startX, startY, initialLeft, initialTop;
     let hasMoved = false;
@@ -235,7 +218,7 @@ function initDraggableToggle() {
         isDragging = true;
         hasMoved = false;
         el.style.transition = 'none';
-        el.setAttribute('data-is-dragging', 'false');
+        el.dataset.isDragging = 'false';
         const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
         const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
         startX = clientX;
@@ -280,7 +263,7 @@ function initDraggableToggle() {
         document.removeEventListener('touchmove', onMouseMove);
         document.removeEventListener('touchend', onMouseUp);
         setTimeout(() => {
-            el.setAttribute('data-is-dragging', 'false');
+            el.dataset.isDragging = 'false';
         }, 50);
     };
     el.addEventListener('mousedown', onMouseDown);
@@ -288,21 +271,36 @@ function initDraggableToggle() {
 }
 
 function initLazyFooter() {
+    // If desktop (> 1366px), footer is already visible via CSS. No JS needed.
+    if (window.innerWidth > 1366) return;
+
+    // Passive listener to reveal footer at 90% scroll
+    const onScroll = () => {
+        const scrolled = window.scrollY + window.innerHeight;
+        const threshold = document.documentElement.scrollHeight * 0.90;
+
+        if (scrolled >= threshold) {
+            document.body.classList.add('footer-visible');
+
+            // Force GSAP/ScrollTrigger to re-calculate positions now that footer is visible
+            if (typeof ScrollTrigger !== 'undefined') {
+                // Small delay to allow display:block to render layout
+                setTimeout(() => {
+                    ScrollTrigger.refresh();
+                }, 100);
+            }
+
+            // Remove listener immediately - Run Once
+            window.removeEventListener('scroll', onScroll);
+        }
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
 }
-
-
-
 
 function renderTracks() {
     const container = document.getElementById('tracks-container');
     if (!container || typeof ZYOSYS_CONFIG === 'undefined') return;
-
-    // Only render if container is empty (hydration)
-    if (container.children.length > 0) return;
-
-    // Clear fallback content (skeleton/static html)
-    container.innerHTML = '';
-
     const fragment = document.createDocumentFragment();
     ZYOSYS_CONFIG.courses.forEach(course => {
         const card = document.createElement('div');
@@ -397,53 +395,26 @@ function initShowcaseTilt() {
     });
 }
 function initSmoothScroll() {
-    if (typeof Lenis !== 'undefined') {
-        const lenis = new Lenis({
-            duration: 1.2,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            direction: 'vertical',
-            gestureDirection: 'vertical',
-            smooth: true,
-            mouseMultiplier: 1,
-            smoothTouch: false,
-            touchMultiplier: 2,
-        });
-
-        function raf(time) {
-            lenis.raf(time);
-            requestAnimationFrame(raf);
-        }
-
-        requestAnimationFrame(raf);
-
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                lenis.scrollTo(this.getAttribute('href'));
-            });
-        });
-    } else {
-        document.documentElement.style.scrollBehavior = 'smooth';
-    }
+    // We are using native CSS smooth scrolling for maximum performance and battery efficiency per user request.
+    // This function is kept empty or for any future minimal polyfills if absolutely needed.
+    // Ensure <html> has scroll-behavior: smooth in CSS.
+    document.documentElement.style.scrollBehavior = 'smooth';
 }
 function initScrollAnimations() {
-    // Reveal elements on scroll
+    const targets = document.querySelectorAll('section:not(.hero), .feature-card, .stat-item, .hub-container, .tech-card-dark, .showcase-card, .testimonial-card, .faq-item');
+    targets.forEach(el => el.classList.add('reveal'));
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('active');
-                entry.target.classList.remove('pending-reveal');
+                observer.unobserve(entry.target);
             }
         });
     }, {
         threshold: 0.1,
         rootMargin: "0px 0px -50px 0px"
     });
-
-    document.querySelectorAll('.reveal').forEach(el => {
-        el.classList.add('pending-reveal');
-        observer.observe(el);
-    });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 }
 function initAdvancedUI() {
     // Disable scroll progress on mobile

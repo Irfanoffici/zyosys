@@ -223,6 +223,7 @@ body {
     opacity: 0;
     transform: translateY(30px) translateZ(0);
     transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+    /* Removed will-change to prevent layer explosion on low-end devices */
 }
 
 .reveal.active {
@@ -250,7 +251,7 @@ main {
     z-index: 10;
     border-radius: 0 0 2rem 2rem;
     box-shadow: var(--shadow-container);
-    margin-bottom: 0;
+    margin-bottom: 400px;
 }
 
 @media (min-width: 1024px) {
@@ -373,24 +374,38 @@ h4 {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     touch-action: none;
     user-select: none;
-    /* Prevent CLS */
-    min-width: 48px;
-    min-height: 48px;
-    box-sizing: border-box;
 }
 
-/* Hide heavy orbs on mobile or slow connections to improve INP/CLS */
-@media (max-width: 768px) {
-
-    .ambient-orb,
-    .accent-orb {
-        display: none !important;
-    }
+.theme-toggle:active {
+    cursor: grabbing;
+    transform: scale(0.95);
 }
 
-.potato-mode .ambient-orb,
-.potato-mode .accent-orb {
-    display: none !important;
+.theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: rotate(15deg) scale(1.05);
+    border-color: var(--text-accent);
+}
+
+.theme-toggle:active {
+    transform: scale(0.95);
+}
+
+.theme-toggle svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    transition: all 0.3s ease;
+}
+
+[data-theme="light"] .theme-toggle {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .theme-toggle:hover {
+    background: rgba(0, 0, 0, 0.1);
 }
 
 .tech-tooltip {
@@ -820,13 +835,12 @@ h4 {
 }
 
 footer {
-    position: relative;
-    bottom: auto;
+    position: fixed;
+    bottom: 0;
     left: 0;
     width: 100%;
-    height: auto;
-    min-height: 400px;
-    z-index: 1;
+    height: 400px;
+    z-index: -10;
     border-top: 1px solid var(--border);
     padding: var(--space-16) 0;
     color: var(--text-secondary);
@@ -1688,7 +1702,11 @@ footer .orb-f2 {
     }
 }
 
-/* content-visibility removed to prevent CLS */
+.footer-bg,
+.testimonials-grid {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 500px;
+}
 
 .mission-card {
     background: var(--bg-surface);
